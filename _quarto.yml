@@ -1,0 +1,41 @@
+project:
+  type: website
+
+execute:
+  freeze: auto  # re-render only when source changes
+
+website:
+  title: "Data Science Concepts / Data Science Tools"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Syllabus
+        
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - text: "Syllabus"
+        file: index.qmd
+      - text: "**Schedule**"
+        file: schedule.qmd
+      - text: "Onboarding Late-arriving"
+        file: late.qmd
+      - text: "Homework Projects"
+        file: homework.qmd
+      - text: "Final Project"
+        file: final.qmd
+      - text: "Help Project Work"
+        file: help.qmd
+      - text: "Literature"
+        file: literature.qmd
+      
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    number-sections: true
+
+
+
