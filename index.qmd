@@ -7,7 +7,7 @@ title: "Data Science Concepts / Data Science Tools"
 
 This is NOT the official syllabus of the [Master program: Data Science for Society and Business (online)](https://constructor.university/programs/online-programs/data-science-for-society-and-business)! 
 
-You have modules with the same names in your program and also the instructors are the same, but the Modules are different! Look it up in your [DSSB (online) handbook](https://constructor.university/sites/default/files/2024-06/DSSB_MSc_2024.pdf). Most importantly, your course will give you more ECTS, so do NOT count on the passing and grading requirements communicated here, they are not valid for you!
+You have modules with the same names in your program and also the instructors are the same, but the Modules are different! Look it up in your [DSSB (online) handbook]({{< var link.handbook_online >}}). Most importantly, your course will give you more ECTS, so do NOT count on the information here. 
 
 You are free to also use the material provided here, but look in the handbook and the learning platform for the official information!
 :::
@@ -17,12 +17,6 @@ You are free to also use the material provided here, but look in the handbook an
 ## Developing Syllabus
 This syllabus may change during the course of the semester with some additions and clarifications.   
 All substantial changes will marked here with date. 
-
-[Update Nov 10, 2024: **Specification of module passing requirement for Data Science Tools!** (See below.)]{style='color:red;'} 
-
-[Important Links:]{style='color:red;'} 
-GitHub organization: [{{< var org.name >}}]({{< var org.link >}})  
-[Course-Organization-Resources]({{< var org.link-org-repo >}}) (private repository, you need to be logged in on GitHub)
 :::
 
 ## Module Names
@@ -32,7 +26,7 @@ This syllabus is for two modules which require each other.
 - MDSSSB-DSOC-02 Data Science Concepts (Core area, 5 credits)
 - MDSSSB-MET-01 Data Science Tools (Methods area, 5 credits)
 
-Offered in the [Master program: Data Science for Society and Business (DSSB)](https://constructor.university/programs/graduate-education/data-science-for-society-business). See the module description in the [DSSB Handbook](https://constructor.university/sites/default/files/2023-09/DSSB_MSc_Handbook_16-08-2023_Track%20changes%20.pdf). 
+Offered in the [Master program: Data Science for Society and Business (DSSB)]({{< var link.program_onsite >}}). See the module description in the [DSSB Handbook]({{< var link.handbook_onsite >}}). 
 
 
 ## Module Components
@@ -49,14 +43,17 @@ The Concepts treated in the lectures are applied in exercises and homework in th
 ## Class Meeting Information
 
 **Data Science Concepts:**   
-Monday **09:45-11:00** and **11:15-12:30**    
-Location: **East Hall 2** in-person  
-*Video streaming* (self-organized) in Microsoft Teams provided for late-arriving students: Team **F24_MDSSB-DSOC-02_Data Science Concepts**, General Channel 
+{{< var session1.concepts >}}    
+{{< var session2.concepts >}}       
+Location: {{< var room.concepts >}} in-person    
+*Video streaming and recording* in Microsoft Teams is provided for late-arriving students: 
+Team **{{< var teams.concepts.name >}}**, [General Channel]({{< var teams.concepts.link >}}) 
 
 **Data Science Tools:**   
-Thursday **09:45-11:00** and **11:15-12:30**    
-Location: **see campusnet** in-person  
-*Video streaming* (self-organized) in Teams provided for late-arriving students: Teams **F24_MDSSB-MET-01-A_Data Science Tools in R** and **F24_MDSSB-MET-01-B_Data Science Tools in python**, General Channel
+{{< var session1.tools >}}    
+{{< var session2.tools >}}       
+Location: **see campusnet** in-person     
+*Video streaming and recording* in Microsoft Teams is provided for late-arriving students. Coordinates tba, you should also find them in Teams
 
 Note: The R and python courses are provided in the same time slot. Details in the schedule. 
 
@@ -66,9 +63,11 @@ Concepts:
 [**Jan Lorenz**](http://janlo.de) Email: <jlorenz@constructor.univeristy>
 
 Tools in R and python:   
-[**Armin Müller**](https://info.constructor.university/directory/armm%C3%BCller) Email: <armmueller@constructor.university>
+**Armin Müller** Email: <armmueller@constructor.university>
 
-Student Assistants: *to be updated when contracted*
+Student Assistants:    
+**Matvei Trifanov** Email: <mtrifanov@constructor.university>  
+**Mustafa Ansari** Email: <muansari@constructor.university>
 
 
 ## Format and Workload
@@ -84,7 +83,7 @@ Homework assignments are given along the concepts treated in *Concepts* to be so
 
 ## Intended Learning Outcomes
 
-The module descriptions can be found in the [DSSB Handbook](https://constructor.university/sites/default/files/2023-09/DSSB_MSc_Handbook_16-08-2023_Track%20changes%20.pdf)  
+The module descriptions can be found in the [DSSB Handbook]({{< var link.handbook_onsite >}}).  
 
 ### From the handbook
 
@@ -143,7 +142,7 @@ There are no additional achievements necessary and there are no bonus options.
 ### *Tools* Module
 
 **Module achievement: 50% of the assignments correctly solved**   
-Programming and analysis assignments will appear step by step during the courses.   
+Programming and analysis assignments will appear step by step during the courses as Homework Projects.   
 To pass the module you have to solve half of them by the end of the semester. 
 
 Assessment Type: **Project Report**   
@@ -153,14 +152,12 @@ Scope: All intended learning outcomes of the module.
 
 **More information of project formats and grading rubric:** [Final Projects](final.qmd)
 
-**Bonus option:** Students receive **0.33 points** grade improvements on their project grade on the numerical grade as specified in the [Grading Table](https://constructor.university/sites/default/files/2023-02/Grading_Table_2023.pdf) when all assignments are solved by the end of the semester.  (Note, the bonus is not necessary to reach the best grade in the module.)
+**Bonus option:** Students receive **0.33 points** grade improvements on their project grade on the numerical grade as specified in the [Grading Table]({{< var link.grading >}}) when all assignments are solved by the end of the semester.  (Note, the bonus is not necessary to reach the best grade in the module.)
 
-All assignments and the final project must be delivered in personalized repositories in the [GitHub organization](https://github.com/CU-F24-MDSSB-01-Concepts-Tools).
+All assignments and the final project must be delivered in personalized repositories in the [GitHub organization]({{< var org.link >}}).
 
 
-[Update Nov 10, 2024:]{style='color:red;'}
-
-:::{.callout-important collapse=false appearance='default' icon=true}
+<!-- :::{.callout-important collapse=false appearance='default' icon=true}
 ## Homework Specification for Passing and Bonus
 
 By the end of the semester, all Homework repositories will be assessed as 
@@ -173,7 +170,7 @@ By the end of the semester, all Homework repositories will be assessed as
 To **pass the module** (50% Module Achievement such that the student can be assessed on the final project) a student needs to have all Homework Projects at least as "Just Passed" (no "Fail"). However, a "Fail" in one Homework can be compensated by a another Homework being "Passed" or "Bonus". 
 
 To receive the **bonus** for the module assessments a student needs to have more than half of the Homework Projects at "Bonus" and all others at "Passed" (no "Fail" or "Just Passed").  
-:::
+::: -->
 
 
 
@@ -200,7 +197,7 @@ We instructors encourage exploring AI tools for these purposes:
 
   - **Learning by dialog with a chatbot.** AI chatbots can be helpful to explain you concepts *on your desired level* and get a feeling about how topics are treated. You can ask for an easier or more detailed explanation or focus on certain aspects. Note: The capabilities are limited and you likely receive also false information! An AI chat can be a good entry point to learn about a specific topic but the more specific it gets the more likely it is that AI will start to deliver useless or wrong answers. Using chatbots should remain a small part of your learning process. Rule of thumb: Spend not more than 25% of the learning time with chatting with AI. There is no way around reading textbooks, reading software documentation, learning and understanding concepts, searching for help online, asking instructors or fellow students.
   - **Have code snippets written.** Tools like GitHub Copilot can be a great help in coding! Try them, many coders do it. Maybe the GitHub Copilot is stil free to use for students and teachers who join [GitHub Education](https://github.com/education)), they can be integrated in your programming IDE like RStudio and VSCode. Copilots can speed up writing. However, they may deliver bad code. There is no way around understanding yourself what code is doing! Do not spend endless hours asking for new code with new prompts, spend time understanding a language and the functions and objects you are using! AI chatbots and Copilots can also help you to understand code. Copilots can be a great help to get a skeleton of code and an idea how your solution *might* look. They rarely deliver the complete code. Expect that the code does not work, expect that the code seems to works but the results are wrong! [You are 100% accountable for the code you produce, with or without the help of a copilot!]{style='color:red;'} When a task in a Homework project can be well solved by Copilot we are happy if you drop us a note, same when it is totally off, it is interesting to explore what AI can do well and what not. 
-  - **Have a draft text snippet written.** Formulating and describing research questions, describing data, documenting code, interpreting results, and deriving conclusion form the results is an essential part of data science. Chatbots are good in writing text which appears well readable. You can use this to inspire you and to polish and improve your texts. However, you are 100% accountable for the text you deliver. You are expected to know what your text is about and to be able to answer questions about what your text means! With text generated purely by chatbots, it is often evident for us that students do not understand. We consider such cases worse than incomplete but sensible self-written text. Text written by chatbots is often very generic and not specific. In general, we value more specific text higher than generic text. [Long generic text is considered **worse** than a shorter more specific text.]{style='color:red;'} 
+  - **Have a draft text snippet written.** I do not recommend to use AI for writing. Writing is to a large extent thinking and this is important. It is not "forbidden" to use AI for writing. However, you are 100% accountable for the text you deliver. You are expected to know what your text is about and to be able to answer questions about what your text means! With text generated purely by chatbots, it is often evident for us that students do not understand. We consider such cases worse than incomplete but sensible self-written text. Text written by chatbots is often very generic and not specific. In general, we value more specific text higher than generic text. [Generic text is considered **worse** than specific self-written text.]{style='color:red;'} 
 
 Note: **Philosophical and legal questions around the training and use of chatbots and code copilots are controversially contested and re-examined constantly!** We encourage to engage with such questions and become aware of arguments and debates.
 
@@ -215,10 +212,6 @@ The [**Schedule**](schedule.qmd) is on an extra page and will be updated continu
 - Some questions which you should be able to answer after each week.  
 
 Read about the concepts of our [**Homework Projects**](homework.qmd). 
-
-
-
-
 
 
 

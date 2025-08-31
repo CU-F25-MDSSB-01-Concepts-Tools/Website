@@ -4,46 +4,42 @@ title: "Schedule"
 
 :::{.callout-important collapse=false appearance='default' icon=true}
 ## Developing Schedule
-The schedule is tentative it will be continuously updated also with readings/viewings, homework and learnings.
-
-[Important Links:]{style='color:red;'}    
-GitHub organization: [{{< var org.name >}}]({{< var org.link >}})  
-[Course-Organization-Resources]({{< var org.link-org-repo >}}) (private repository, you need to be logged in on GitHub)
+The schedule will be continuously updated also with readings, homework, lecture slides, and achievement check lists.
 :::
 
 # Tabular Schedule  {.unnumbered}
 
 Date format MM-DD (month-day) (09-05 is Sep, 5) 
 
-**Data Science Tools** is Thursdays. First meeting: **09-05**.   
-**Data Science Concepts** is Mondays. First meeting:  **09-09**. 
+**Data Science Tools** is Thursdays. First meeting: **09-04**.   
+**Data Science Concepts** is Mondays. First meeting:  **09-08**. 
 
 | Week | Dates Concepts  | **Concepts Topics**                                | Dates Tools  | **Tools Topic**    |
 |------|--------|-------------------------------------------------------------|----------|:------------:|
-| 1    | 09-02  | *No class, Academic Opening*                                | 09-05    | R            |
-| 2    | 09-09  | W#1 [What is Data Science?](https://docs.google.com/presentation/d/1xoUAOMptSXCGi3DpaqRmBdNKVcaijT4u7G0R2pvrmBM/pub?start=false&loop=false&delayms=3000) <br> [Achievements W#-@sec-week1] | 09-12    | R            |
-| 3    | 09-16  | W#2 Data Visualization, Data Formats [Slides Part 1](https://docs.google.com/presentation/d/1xX06QXjfzI1FXBgJRh0vqsP_TKUutW2gUJTvJfi5krw/pub?start=false&loop=false&delayms=3000) [Slides Part 2](W02.qmd) <br> [Achievements W#-@sec-week2]| 09-19    | R            |
-| 4    | 09-23  | W#3 [Recap: Toolkit](W03-toolkit.qmd) <br> [ Data Import, Data Wrangling](W03.qmd) <br> [Achievements W#-@sec-week3]  | 09-26    | R            |
-| 5    | 09-30  | W#4 [Relational Data, Math: Sets and Functions, Shift-Scale Transformation, Function Programming](W04.qmd) <br> [Achievements W#-@sec-week4] | 10-03    | *no class, Public Holiday* |
-| 6    | 10-07  | W#5 [Descriptive Statistics, Exploratory Data Analysis](W05.qmd) <br> [Achievements W#-@sec-week5] | 10-10    | R            |
-| 7    | 10-14  | W#6 [Principal Component Analysis, Math: Exponentiations and Logarithms, Epidemic Modeling, Calculus](W06.qmd) <br> [Achievements W#-@sec-week6] | 10-17    | R            |
-| 8    | 10-21  | W#07 [Models in Science, Linear Model, Interaction Effects, Nonlinear Models](W07.qmd) <br> [Achievements W#-@sec-week7]| 10-24    | python       |
-| 9    | 10-28  | W#08 [Predicting Categorical Variables, Logistic Regression, Classification Problems](W08.qmd) <br> [Achievements W#-@sec-week8] | 10-31    | *no class, Public Holiday* |
-| 10   | 11-04  | [**Final Projects Info**](final.qmd) <br> W#09 [Hypothesis Testing, Classification and Regression with Decision Trees, Overfitting](W09.qmd) | 11-07    | python       |
-| 11   | 11-11  | W#10 [Overfitting, Clustering Algorithms](W10.qmd)  | 11-14    | python       |
-| 12   | 11-18  | W#11 [Final Projects](https://github.com/CU-F24-MDSSB-01-Concepts-Tools/Course-Organization-Resources/blob/main/STUDENT_PROJECTS.md) [Collaborative Git, Bootstrapping, Cross validation, Bias-Variance Tradeoff](W11.qmd)  | 11-21    | python       |
-| 13   | 11-25  | *Probability, Random Variables, Probability Distributions, Central Limit Theorem* | 11-28    | python / R   |
-| 14   | 12-02  | Course Review, Exam Preparation                             | 12-05    | student project presentations |
-| Exam | 12-16  | **The exam takes place as an online exam <br> Monday, Dec 16 09:00-11:00**  |  |  |
-| Project |        | **Deadline for submission of the Final Project is Saturday, Dec 21** (see [academic calendar]({{< var link.academic-calendar >}})) | 12-21 |   |
+| 1    | 09-01  | *No class, Academic Opening*                                | 09-04    | R            |
+| 2    | 09-08  | W#1 What is Data Science?  | 09-11    | R            |
+| 3    | 09-15  | W#2 Data Visualization, Data Formats | 09-18    | R            |
+| 4    | 09-22  | W#3 Recap: Toolkit; Data Import, Data Wrangling | 09-25    | R            |
+| 5    | 09-29  | W#4 Relational Data, Math: Sets and Functions, Shift-Scale Transformation, Function Programming  | 10-02    | R |
+| 6    | 10-06  | W#5 Descriptive Statistics, Exploratory Data Analysis | 10-09    | R            |
+| 7    | 10-13  | W#6 Principal Component Analysis, Math: Exponentiations and Logarithms, Epidemic Modeling, Calculus | 10-16    | R            |
+| 8    | 10-20  | W#07 Models in Science, Linear Model, Interaction Effects, Nonlinear Models| 10-23    | python       |
+| 9    | 10-27  | W#08 Predicting Categorical Variables, Logistic Regression, Classification Problems | 10-30    | python |
+| 10   | 11-03  | **Final Projects Info** Hypothesis Testing, Classification and Regression with Decision Trees, Overfitting | 11-06    | python       |
+| 11   | 11-10  | W#10 Overfitting, Clustering Algorithms  | 11-13    | python       |
+| 12   | 11-17  | W#11 Collaborative Git, Bootstrapping, Cross validation, Bias-Variance Tradeoff | 11-20    | python  |
+| 13   | 11-24  | W#12 Probability, Random Variables, Probability Distributions, Central Limit Theorem | 11-27    | python / R   |
+| 14   | 12-01  | *No Class* Exam Preparation with a Mock Exam       | 12-04    | Student projects |
+| Exam | tbd  | *To be scheduled by the admin.* **The exam takes place as an online exam**  |  |  |
+| Project |        | **Deadline for submission of the Final Project marked in the [academic calendar]({{< var link.academic-calendar >}})) | 12-21 |   |
 |      |        | *2025* |  |  |
 | 2nd <br> Exam |   | Those who fail the exam and those who are officially excused can sit in the second exam end of January 2025. <br> *To be scheduled by the admin.*  |   |   |
-|      |        | Those who fail to deliver their final project or are officially excused must deliver it by January 31, 2025 (see [academic calendar]({{< var link.academic-calendar >}})) |    |   |
+|      |        | Those who fail to deliver their final project or are officially excused must deliver it by the second deadline next year (see [academic calendar]({{< var link.academic-calendar >}})) |    |   |
 
-*Final note on official assessment scheduling: This semester provides two options to pass. The final 3rd attempt (in particular the exam) is offered again in the fall semester 2025.*
+<!-- *Final note on official assessment scheduling: This semester provides two options to pass. The final 3rd attempt (in particular the exam) is offered again in the fall semester 2025.* -->
 
 
-# Achievements W#1 {#sec-week1}
+<!-- # Achievements W#1 {#sec-week1}
 
 You  
 
@@ -211,7 +207,7 @@ You
 - can make sense of the various derived measures of a classifier like accuracy, sensitivity, specificity, precision, recall (you are not expected to memorize the exact definition you can look them up)
 - can explain why data is split into training and testing data and how this relates to the goals of prediction (but not to explanation)
 - can explain how a classifier can manage the trade-off between sensitivity and specificity from the ROC-curve (by changing the threshold probability) 
-- can explain what the AUC of a ROC-curve is
+- can explain what the AUC of a ROC-curve is -->
 
 
 

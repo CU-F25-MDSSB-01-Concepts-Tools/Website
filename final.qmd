@@ -2,6 +2,10 @@
 title: "Final Project"
 ---
 
+::: {.callout-caution}
+Project check-in starts in the second half of the semester! Before there is no need to register or contact instructors on your project teams or ideas. However, you can start thinking about it and read the guidelines below.
+:::
+
 
 These are specifications and guidelines for the final **Data Science Project** and the **Project report**, the assessment for the *Data Science Tools* (see [Syllabus](index.qmd)): How to write it, when and how to deliver it, and how it will be graded. 
 

@@ -4,8 +4,7 @@ title: "Need help for Homework?"
 
 ## Setting up the basic toolkit
 
-- For R, RStudio, git, quarto you find instruction videos in the Team "Data Science Tools" -> Homepage -> Scroll down to the bottom an click the Video for your Operating System (Windows or  MacOS)
-
+- For [R](https://cloud.r-project.org/), [positron](https://positron.posit.co/), and [git](https://git-scm.com/downloads) you find instructions on the websites and help in "Data Science Tools"
 
 ## Good practices
 

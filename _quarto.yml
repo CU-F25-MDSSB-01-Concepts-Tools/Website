@@ -1,6 +1,13 @@
 project:
   type: website
-
+  render:
+    - index.qmd
+    - schedule.qmd
+    - final.qmd
+    - homework.qmd
+    - literature.qmd
+    - help.qmd
+    
 execute:
   freeze: auto  # re-render only when source changes
 
@@ -10,6 +17,9 @@ website:
     left:
       - href: index.qmd
         text: Syllabus
+    right:
+      - href: "{{< var org.link >}}"
+        text: "{{< var org.name >}}" 
         
   sidebar:
     style: "docked"
@@ -19,16 +29,16 @@ website:
         file: index.qmd
       - text: "**Schedule**"
         file: schedule.qmd
-      - text: "Onboarding Late-arriving"
-        file: late.qmd
+      - text: "Literature"
+        file: literature.qmd
+      # - text: "Onboarding Late-arriving"
+      #   file: late.qmd
       - text: "Homework Projects"
         file: homework.qmd
       - text: "Final Project"
         file: final.qmd
       - text: "Help Project Work"
         file: help.qmd
-      - text: "Literature"
-        file: literature.qmd
       
 format:
   html:
