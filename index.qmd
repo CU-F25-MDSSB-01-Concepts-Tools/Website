@@ -23,8 +23,8 @@ All substantial changes will marked here with date.
 
 This syllabus is for two modules which require each other.
 
-- MDSSSB-DSOC-02 Data Science Concepts (Core area, 5 credits)
-- MDSSSB-MET-01 Data Science Tools (Methods area, 5 credits)
+- MDSSB-DSOC-02 Data Science Concepts (Core area, 5 credits)
+- MDSSB-MET-01 Data Science Tools (Methods area, 5 credits)
 
 Offered in the [Master program: Data Science for Society and Business (DSSB)]({{< var link.program_onsite >}}). See the module description in the [DSSB Handbook]({{< var link.handbook_onsite >}}). 
 

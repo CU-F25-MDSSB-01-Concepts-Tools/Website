@@ -19,6 +19,7 @@ session1:
   concepts: "Mon 9:45 - 11:00"
   tools: "Thu 9:45 - 11:00"
 session2: 
+  concepts: "Mon 11:15 - 12:30"
   tools: "Thu 11:15 - 12:30"
   
 instructor:
