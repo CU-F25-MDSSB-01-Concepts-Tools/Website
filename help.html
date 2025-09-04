@@ -96,8 +96,8 @@ ul.task-list li input[type="checkbox"] {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/CU-F25-MSDSSB-01-Concepts-Tools"> 
-<span class="menu-text">CU-F25-MSDSSB-01-Concepts-Tools</span></a>
+    <a class="nav-link" href="https://github.com/CU-F25-MDSSB-01-Concepts-Tools"> 
+<span class="menu-text">CU-F25-MDSSB-01-Concepts-Tools</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -140,6 +140,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./schedule.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><strong>Schedule</strong></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Technical Setup</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -208,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="setting-up-the-basic-toolkit" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="setting-up-the-basic-toolkit"><span class="header-section-number">1</span> Setting up the basic toolkit</h2>
 <ul>
-<li>For <a href="https://cloud.r-project.org/">R</a>, <a href="https://positron.posit.co/">positron</a>, and <a href="https://git-scm.com/downloads">git</a> you find instructions on the websites and help in “Data Science Tools”</li>
+<li>Go through the <a href="./setup.html">Checklist Technical Setup</a> and make sure everything works.</li>
 </ul>
 </section>
 <section id="good-practices" class="level2" data-number="2">
@@ -326,7 +332,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/CU-F25-MSDSSB-01-Concepts-Tools\.github\.io\/Website\/");
+        var filterRegex = new RegExp("https:\/\/CU-F25-MDSSB-01-Concepts-Tools\.github\.io\/Website\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

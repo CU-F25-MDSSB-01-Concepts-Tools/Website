@@ -4,7 +4,7 @@
     "href": "help.html",
     "title": "Need help for Homework?",
     "section": "",
-    "text": "For R, positron, and git you find instructions on the websites and help in “Data Science Tools”",
+    "text": "Go through the Checklist Technical Setup and make sure everything works.",
     "crumbs": [
       "Syllabus",
       "Help Project Work"
@@ -15,7 +15,7 @@
     "href": "help.html#setting-up-the-basic-toolkit",
     "title": "Need help for Homework?",
     "section": "",
-    "text": "For R, positron, and git you find instructions on the websites and help in “Data Science Tools”",
+    "text": "Go through the Checklist Technical Setup and make sure everything works.",
     "crumbs": [
       "Syllabus",
       "Help Project Work"
@@ -143,14 +143,14 @@
     ]
   },
   {
-    "objectID": "schedule.html",
-    "href": "schedule.html",
-    "title": "Schedule",
+    "objectID": "setup.html",
+    "href": "setup.html",
+    "title": "Checklist Technical Setup",
     "section": "",
-    "text": "Developing Schedule\n\n\n\n\n\nThe schedule will be continuously updated also with readings, homework, lecture slides, and achievement check lists.\n\n\n\n\nTabular Schedule\nDate format MM-DD (month-day) (09-05 is Sep, 5)\nData Science Tools is Thursdays. First meeting: 09-04.\nData Science Concepts is Mondays. First meeting: 09-08.\n\n\n\nWeek\nDates Concepts\nConcepts Topics\nDates Tools\nTools Topic\n\n\n\n\n1\n09-01\nNo class, Academic Opening\n09-04\nR\n\n\n2\n09-08\nW#1 What is Data Science?\n09-11\nR\n\n\n3\n09-15\nW#2 Data Visualization, Data Formats\n09-18\nR\n\n\n4\n09-22\nW#3 Recap: Toolkit; Data Import, Data Wrangling\n09-25\nR\n\n\n5\n09-29\nW#4 Relational Data, Math: Sets and Functions, Shift-Scale Transformation, Function Programming\n10-02\nR\n\n\n6\n10-06\nW#5 Descriptive Statistics, Exploratory Data Analysis\n10-09\nR\n\n\n7\n10-13\nW#6 Principal Component Analysis, Math: Exponentiations and Logarithms, Epidemic Modeling, Calculus\n10-16\nR\n\n\n8\n10-20\nW#07 Models in Science, Linear Model, Interaction Effects, Nonlinear Models\n10-23\npython\n\n\n9\n10-27\nW#08 Predicting Categorical Variables, Logistic Regression, Classification Problems\n10-30\npython\n\n\n10\n11-03\nFinal Projects Info Hypothesis Testing, Classification and Regression with Decision Trees, Overfitting\n11-06\npython\n\n\n11\n11-10\nW#10 Overfitting, Clustering Algorithms\n11-13\npython\n\n\n12\n11-17\nW#11 Collaborative Git, Bootstrapping, Cross validation, Bias-Variance Tradeoff\n11-20\npython\n\n\n13\n11-24\nW#12 Probability, Random Variables, Probability Distributions, Central Limit Theorem\n11-27\npython / R\n\n\n14\n12-01\nNo Class Exam Preparation with a Mock Exam\n12-04\nStudent projects\n\n\nExam\ntbd\nTo be scheduled by the admin. The exam takes place as an online exam\n\n\n\n\nProject\n\n**Deadline for submission of the Final Project marked in the academic calendar)\n12-21\n\n\n\n\n\n2025\n\n\n\n\n2nd  Exam\n\nThose who fail the exam and those who are officially excused can sit in the second exam end of January 2025.  To be scheduled by the admin.\n\n\n\n\n\n\nThose who fail to deliver their final project or are officially excused must deliver it by the second deadline next year (see academic calendar)",
+    "text": "You need a GitHub account and become member of the GitHub Organization: CU-F25-MDSSB-01-Concepts-Tools of the course. Follow the instructions on the linked page of the organization.\nYou need a computer with Windows, MacOS, or Linux (maybe also other exotic operating systems). A tablet, phone or Chromebook is probably not sufficient.\nYou need to install software on your computer. Here is what you need including links where to download and find instructions for you operating system:\n\nStatistical Programming Language: R, later we will alos use python. Instructions will come in class.\nVersion Control System: Git\nIntegrated Development Environments (IDE): The instructors uses positron. All instructions will be based on this. In the past the instructors used RStudio. Positron is developed by the same people and is somehow its modern version.\n\n\nWhen R, Git, positron are installed, open positron and test that everything works together:\n\nIs R running? On the top right you should see the R-symbol and its version numbers. That should be your current session. If not click on it, maybe it lists a python session or Start Session. Then a Select Interpreter Session dialog should pop up and you can start a new one and find R. If R is not offered solve this first by finding out how Positron can find the R installation. Usually it is detected automatically.\nAnother check: Go the CONSOLE tab (usually at the bottom). Scroll to the beginning. It should start with something like R 4.5.1 started. At the end of the console you should see a &gt;-prompt. Type version and hit ENTER. You should see the version of printed.\nDo you have access to the tidyverse? In R, you will use packages in the package family tidyverse. You can install it by running install.packages(\"tidyverse\") in the CONSOLE.\nDo git and quarto run from the TERMINAL? Go to the TERMINAL tab besides the CONSOLE. Type git --version and hit ENTER. You should see the version of git printed. Then type quarto --version and hit ENTER. You should see the version of quarto printed.\nNote: You can also write R and hit ENTER. You start an R session in the Terminal. We do not need it, so type q() and ENTER to leave R again. (No need to save the workspace, just hit ENTER again if asked.)\n\nLearning: Understand the difference between the CONSOLE and the TERMINAL! Both are command line interfaces (CLI).\n\nThe CONSOLE is for R commands in the current session in positron.\nThe TERMINAL is for system commands. It is also called SHELL (or also Console …, but that is confusing here). It also works outside of positron. You can control your whole computer using the TERMINAL. It does not start with a simple &gt; but first with a name of your machine and then with the current working directory. Working directory means where in your file system the computer will operate your next command. We the command line tools mainly for git and quarto. For both we will also use short cuts and convenient click and point interfaces in positron. But it is important to understand what happens in the background and that you can always use the TERMINAL directly for all the things of git and quarto.",
     "crumbs": [
       "Syllabus",
-      "**Schedule**"
+      "Technical Setup"
     ]
   },
   {
@@ -284,6 +284,17 @@
     ]
   },
   {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "Developing Schedule\n\n\n\n\n\nThe schedule will be continuously updated also with readings, homework, lecture slides, and achievement check lists.\n\n\n\n\nTabular Schedule\nDate format MM-DD (month-day) (09-05 is Sep, 5)\nData Science Tools is Thursdays. First meeting: 09-04.\nData Science Concepts is Mondays. First meeting: 09-08.\n\n\n\nWeek\nDates Concepts\nConcepts Topics\nDates Tools\nTools Topic\n\n\n\n\n1\n09-01\nNo class, Academic Opening\n09-04\nR\n\n\n2\n09-08\nW#1 What is Data Science?\n09-11\nR\n\n\n3\n09-15\nW#2 Data Visualization, Data Formats\n09-18\nR\n\n\n4\n09-22\nW#3 Recap: Toolkit; Data Import, Data Wrangling\n09-25\nR\n\n\n5\n09-29\nW#4 Relational Data, Math: Sets and Functions, Shift-Scale Transformation, Function Programming\n10-02\nR\n\n\n6\n10-06\nW#5 Descriptive Statistics, Exploratory Data Analysis\n10-09\nR\n\n\n7\n10-13\nW#6 Principal Component Analysis, Math: Exponentiations and Logarithms, Epidemic Modeling, Calculus\n10-16\nR\n\n\n8\n10-20\nW#07 Models in Science, Linear Model, Interaction Effects, Nonlinear Models\n10-23\npython\n\n\n9\n10-27\nW#08 Predicting Categorical Variables, Logistic Regression, Classification Problems\n10-30\npython\n\n\n10\n11-03\nFinal Projects Info Hypothesis Testing, Classification and Regression with Decision Trees, Overfitting\n11-06\npython\n\n\n11\n11-10\nW#10 Overfitting, Clustering Algorithms\n11-13\npython\n\n\n12\n11-17\nW#11 Collaborative Git, Bootstrapping, Cross validation, Bias-Variance Tradeoff\n11-20\npython\n\n\n13\n11-24\nW#12 Probability, Random Variables, Probability Distributions, Central Limit Theorem\n11-27\npython / R\n\n\n14\n12-01\nNo Class Exam Preparation with a Mock Exam\n12-04\nStudent projects\n\n\nExam\ntbd\nTo be scheduled by the admin. The exam takes place as an online exam\n\n\n\n\nProject\n\n**Deadline for submission of the Final Project marked in the academic calendar)\n12-21\n\n\n\n\n\n2025\n\n\n\n\n2nd  Exam\n\nThose who fail the exam and those who are officially excused can sit in the second exam end of January 2025.  To be scheduled by the admin.\n\n\n\n\n\n\nThose who fail to deliver their final project or are officially excused must deliver it by the second deadline next year (see academic calendar)",
+    "crumbs": [
+      "Syllabus",
+      "**Schedule**"
+    ]
+  },
+  {
     "objectID": "final.html",
     "href": "final.html",
     "title": "Final Project",
@@ -332,7 +343,7 @@
     "href": "final.html#delivery",
     "title": "Final Project",
     "section": "4 Delivery",
-    "text": "4 Delivery\n\nDelivery is via GitHub in a private repository (the same way as Homework Projects).\nThe repository for the final project will be created in the CU-F25-MSDSSB-01-Concepts-Tools by the instructors upon team and project approval.\nThe source file as well as the rendered html-file should be included.\nThe assessment will start after the deadline with the latest commit.\nAssessment will be done based on reading the HTML-file. Additionally and if necessary, the Quarto Markdown File and other provided files may be looked at. Ideally, the HTML-Report is sufficient to assess the project! (To test if the HTML file looks good for the instructors do the following: Clone the repository anew to a temporaty directory on your computer, open the HTML file from this newly cloned directory. Check if it looks good. This is what instructors will do.)",
+    "text": "4 Delivery\n\nDelivery is via GitHub in a private repository (the same way as Homework Projects).\nThe repository for the final project will be created in the CU-F25-MDSSB-01-Concepts-Tools by the instructors upon team and project approval.\nThe source file as well as the rendered html-file should be included.\nThe assessment will start after the deadline with the latest commit.\nAssessment will be done based on reading the HTML-file. Additionally and if necessary, the Quarto Markdown File and other provided files may be looked at. Ideally, the HTML-Report is sufficient to assess the project! (To test if the HTML file looks good for the instructors do the following: Clone the repository anew to a temporaty directory on your computer, open the HTML file from this newly cloned directory. Check if it looks good. This is what instructors will do.)",
     "crumbs": [
       "Syllabus",
       "Final Project"
