@@ -2,9 +2,74 @@
   {
     "objectID": "material/M01.html",
     "href": "material/M01.html",
-    "title": "Material W#01: What is Data Science?",
+    "title": "W#01",
     "section": "",
-    "text": "1 iframe with slide from W01"
+    "text": "Reconsider the Lecture Material, consider the Additional Readings and Material, and check the Achievements for yourself.",
+    "crumbs": [
+      "Syllabus",
+      "Schedule",
+      "W#01"
+    ]
+  },
+  {
+    "objectID": "material/M01.html#what-is-data-science",
+    "href": "material/M01.html#what-is-data-science",
+    "title": "W#01",
+    "section": "",
+    "text": "Reconsider the Lecture Material, consider the Additional Readings and Material, and check the Achievements for yourself.",
+    "crumbs": [
+      "Syllabus",
+      "Schedule",
+      "W#01"
+    ]
+  },
+  {
+    "objectID": "material/M01.html#lecture-material",
+    "href": "material/M01.html#lecture-material",
+    "title": "W#01",
+    "section": "1 Lecture Material",
+    "text": "1 Lecture Material\nSlides: Direct Link\n\nFind the live recording in the Course’s Team’s Recording Folder.",
+    "crumbs": [
+      "Syllabus",
+      "Schedule",
+      "W#01"
+    ]
+  },
+  {
+    "objectID": "material/M01.html#additional-readings-and-material",
+    "href": "material/M01.html#additional-readings-and-material",
+    "title": "W#01",
+    "section": "2 Additional Readings and Material",
+    "text": "2 Additional Readings and Material\n\nQuarto: Watch https://www.youtube.com/watch?v=_f3latmOhew from Mine Çetinkaya-Rundel (co-developer of quarto, R for Data Science, datasciencebox).\nR: Read the following sections in R for Data Science\n\nIntroduction\nWhole Game (the outline of the part)",
+    "crumbs": [
+      "Syllabus",
+      "Schedule",
+      "W#01"
+    ]
+  },
+  {
+    "objectID": "material/M01.html#achievements",
+    "href": "material/M01.html#achievements",
+    "title": "W#01",
+    "section": "3 Achievements",
+    "text": "3 Achievements\nYou\n\nhave read the Syllabus and understood the course organization and the relations between Data Science Concepts and Data Science Tools\nhave a running R with Positron installation on you computer and can check all marks on the Checklist Technical Setup\nhave done the git-GitHub dance and know what the tools are in principle\nhave rendered quarto documents and understood its idea\nhave made your first steps with R\nhave filled out the Data Science Profile Survey",
+    "crumbs": [
+      "Syllabus",
+      "Schedule",
+      "W#01"
+    ]
+  },
+  {
+    "objectID": "material/M01.html#homework-projects-progress-guides",
+    "href": "material/M01.html#homework-projects-progress-guides",
+    "title": "W#01",
+    "section": "4 Homework Projects Progress Guides",
+    "text": "4 Homework Projects Progress Guides\nFind the Repositories of your Homework Projects in the Course’s GitHub-Organization’s CU-F25-MDSSB-01-Concepts-Tools &gt; Repositories.\nProject’s INSTRUCTIONS you should have completed:\nProject_NYCFlights: 1. (one successful step of the git-GitHub-dance)\n\n\n\n\n\n\nNote\n\n\n\nDon’t panic, if you fell behind, just do it later. Find your own learning path. Better step by step than randomly skipping things. It is about learning not just completing!",
+    "crumbs": [
+      "Syllabus",
+      "Schedule",
+      "W#01"
+    ]
   },
   {
     "objectID": "literature.html",
@@ -14,7 +79,7 @@
     "text": "All the materials here are freely accessible, many are community standards. The Schedule might refer to specific sections in these materials.",
     "crumbs": [
       "Syllabus",
-      "Literature"
+      "Learning Resources"
     ]
   },
   {
@@ -25,7 +90,7 @@
     "text": "1 R\n\nR for Data Science (2nd Edition) https://r4ds.hadley.nz// by Hadley Wickham, Garrett Grolemand, Mine Çetinkaya-Rundel and the R data science community around is our core resource for self-learning data science with R using tidyverse tools.\nTidy Modeling with R https://www.tmwr.org/ by Max Kuhn and Julia Silge is the resource for learning to work with tidymodels building upon the tidyverse tools.\nPart of the course builds on or be inspired by material in Data Science in the Box https://datasciencebox.org/ by Mine Çetinkaya-Rundel and the data science education community around. You can also use the website for accompanying self-study on selected topics.",
     "crumbs": [
       "Syllabus",
-      "Literature"
+      "Learning Resources"
     ]
   },
   {
@@ -36,7 +101,7 @@
     "text": "2 python\n\nPython Data Science Handbook https://jakevdp.github.io/PythonDataScienceHandbook/ by Jake VanderPlas is a core resource for data science with python. Also there is a good video playlist https://www.youtube.com/playlist?list=PLWKjhJtqVAbkmRvnFmOd4KhDdlK1oIq23 and a 4-hour “full-course” video https://youtu.be/rfscVS0vtbw.",
     "crumbs": [
       "Syllabus",
-      "Literature"
+      "Learning Resources"
     ]
   },
   {
@@ -47,7 +112,7 @@
     "text": "3 Data Visualization\nggplot2: Elegant Graphics for Data Analysis https://ggplot2-book.org is a resource on understanding the logic of ggplot better.\nA great source for Graphic Design with ggplot2: https://rstudio-conf-2022.github.io/ggplot2-graphic-design/. Look at the Introduction to see what cool things are possible. Work through Concepts of the ggplot2 Package Pt. 1 and Concepts of the ggplot2 Package Pt. 2 for a full introduction to all of ggplot2.\nWebsites on how to decide for what visualization to choose:\nhttps://www.data-to-viz.com/\nhttps://datavizcatalogue.com/search.html",
     "crumbs": [
       "Syllabus",
-      "Literature"
+      "Learning Resources"
     ]
   },
   {
@@ -58,7 +123,7 @@
     "text": "4 Mathematics\nA video on how to read math https://www.youtube.com/watch?v=Kp2bYWRQylk. Essential to start reading text including math.\nAs a data scientist it is necessary to be able to delve into mathematical concepts in some depth. It is not necessary to become a mathematician and proof theorems. A lot can be learned when needed using short videos, wikipedia, and practice and play using your favorite programming environment. However, it makes sense to have an accessible text books to look up and learn some topics in a more systematic way.\nThe Open Intro project and their partner programs provide such math textbooks for free (you may need to “buy” the pdf of 0 EUR or a donation of your choice).\n\nStudy Pre-Calculus to refresh your basic math skill on functions including polynomials; root, radical, and power function, and exponential and logarithmic functions.\nGain the basic concepts of Calculus including limits, derivatives, and integrals.\nGain the basic concepts of Linear Algebra and how to read and understand matrix-language. Linear models, PCA and many other data science tools are most systematically understood using matrix language. On linear algebra this is a good video resource about the essence of linear algebra: https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab.\n\nFor Probability Theory the open textbook for the course Probability for Data Science is very useful.",
     "crumbs": [
       "Syllabus",
-      "Literature"
+      "Learning Resources"
     ]
   },
   {
@@ -69,7 +134,7 @@
     "text": "5 Statistics\nSome statisticians say that data science is statistics. There is some truth in it. However, data science is more than statistics and statiscics has a certain view point. To get a deeper understanding of it is useful to study data science concepts through the lense of statistics.\nThe Open Intro project also provide good open and free statistics textbooks.\nMany concepts in data science can be described as statistical learning. A core and very accessible resource for it is\nAn Introduction to Statistical Learning which provides a version with code in R as well as in python.",
     "crumbs": [
       "Syllabus",
-      "Literature"
+      "Learning Resources"
     ]
   },
   {
@@ -80,7 +145,7 @@
     "text": "6 Project-based learning\nProject-based learning (especially in programming) means to learn things by reproducing a project (or make your own project in a very similar way). This is a resource for various projects in various languages: https://github.com/practical-tutorials/project-based-learning/tree/master",
     "crumbs": [
       "Syllabus",
-      "Literature"
+      "Learning Resources"
     ]
   },
   {
@@ -91,7 +156,7 @@
     "text": "7 The Art of Data Science\nThe Art of Data Science https://bookdown.org/rdpeng/artofdatascience/ is a great resource for learning about the process of data science and how to communicate about it.",
     "crumbs": [
       "Syllabus",
-      "Literature"
+      "Learning Resources"
     ]
   },
   {
@@ -223,7 +288,7 @@
     "text": "Developing Schedule\n\n\n\n\n\nThe schedule will be continuously updated also with readings, homework, lecture slides, and achievement check lists.\n\n\n\n\nTabular Schedule\nDate format MM-DD (month-day) (09-05 is Sep, 5)\nData Science Tools is Thursdays. First meeting: 09-04.\nData Science Concepts is Mondays. First meeting: 09-08.\n\n\n\nWeek\nDates Concepts\nConcepts Topics\nDates Tools\nTools Topic\n\n\n\n\n1\n09-01\nNo class, Academic Opening\n09-04\nR\n\n\n2\n09-08\nW#1 What is Data Science?\n09-11\nR\n\n\n3\n09-15\nW#2 Data Visualization, Data Formats\n09-18\nR\n\n\n4\n09-22\nW#3 Recap: Toolkit; Data Import, Data Wrangling\n09-25\nR\n\n\n5\n09-29\nW#4 Relational Data, Math: Sets and Functions, Shift-Scale Transformation, Function Programming\n10-02\nR\n\n\n6\n10-06\nW#5 Descriptive Statistics, Exploratory Data Analysis\n10-09\nR\n\n\n7\n10-13\nW#6 Principal Component Analysis, Math: Exponentiations and Logarithms, Epidemic Modeling, Calculus\n10-16\nR\n\n\n8\n10-20\nW#07 Models in Science, Linear Model, Interaction Effects, Nonlinear Models\n10-23\npython\n\n\n9\n10-27\nW#08 Predicting Categorical Variables, Logistic Regression, Classification Problems\n10-30\npython\n\n\n10\n11-03\nFinal Projects Info Hypothesis Testing, Classification and Regression with Decision Trees, Overfitting\n11-06\npython\n\n\n11\n11-10\nW#10 Overfitting, Clustering Algorithms\n11-13\npython\n\n\n12\n11-17\nW#11 Collaborative Git, Bootstrapping, Cross validation, Bias-Variance Tradeoff\n11-20\npython\n\n\n13\n11-24\nW#12 Probability, Random Variables, Probability Distributions, Central Limit Theorem\n11-27\npython / R\n\n\n14\n12-01\nNo Class Exam Preparation with a Mock Exam\n12-04\nStudent projects\n\n\nExam\ntbd\nTo be scheduled by the admin. The exam takes place as an online exam\n\n\n\n\nProject\n\n**Deadline for submission of the Final Project marked in the academic calendar)\n12-21\n\n\n\n\n\n2025\n\n\n\n\n2nd  Exam\n\nThose who fail the exam and those who are officially excused can sit in the second exam end of January 2025.  To be scheduled by the admin.\n\n\n\n\n\n\nThose who fail to deliver their final project or are officially excused must deliver it by the second deadline next year (see academic calendar)",
     "crumbs": [
       "Syllabus",
-      "**Schedule**"
+      "Schedule"
     ]
   },
   {
@@ -364,7 +429,7 @@
     "text": "I have made a GitHub account and submitted it\nI have installed R\nI have installed git\nI have installed positron\nI have tested that R runs in positron\nI have installed the tidyverse package in R\nIf any of this does not work, read the details below and try to solve it. Many problems will depend on specific things of your operating system. Many problems may be easy once you got what the problem is. Some maybe harder. If it does not work, write to the instructors or assistants (Teams chat or email) describing exactly what you have done and where you get stuck. A clear and specific description of the problem is essential for getting help!",
     "crumbs": [
       "Syllabus",
-      "Technical Setup"
+      "Checklist Technical Setup"
     ]
   },
   {
@@ -375,7 +440,7 @@
     "text": "Details\nYou need a GitHub account and become member of the GitHub Organization: CU-F25-MDSSB-01-Concepts-Tools of the course. Follow the instructions on the linked page of the organization. - You need a computer with Windows, MacOS, or Linux (maybe also other exotic operating systems). A tablet, phone or Chromebook is probably not sufficient. - You need to install software on your computer. Here is what you need including links where to download and find instructions for you operating system: - Statistical Programming Language: R, later we will alos use python. Instructions will come in class. - Version Control System: Git - Integrated Development Environments (IDE): The instructors uses positron. All instructions will be based on this. In the past the instructors used RStudio. Positron is developed by the same people and is somehow its modern version.\nWhen R, Git, positron are installed, open positron and test that everything works together:\n\nIs R running? On the top right you should see the R-symbol and its version numbers. That should be your current session. If not click on it, maybe it lists a python session or Start Session. Then a Select Interpreter Session dialog should pop up and you can start a new one and find R. If R is not offered solve this first by finding out how Positron can find the R installation. Usually it is detected automatically.\nAnother check: Go the CONSOLE tab (usually at the bottom). Scroll to the beginning. It should start with something like R 4.5.1 started. At the end of the console you should see a &gt;-prompt. Type version and hit ENTER. You should see the version of printed.\nDo you have access to the tidyverse? In R, you will use packages in the package family tidyverse. You can install it by running install.packages(\"tidyverse\") in the CONSOLE.\nDo git and quarto run from the TERMINAL? Go to the TERMINAL tab besides the CONSOLE. Type git --version and hit ENTER. You should see the version of git printed. Then type quarto --version and hit ENTER. You should see the version of quarto printed.\nNote: You can also write R and hit ENTER. You start an R session in the Terminal. We do not need it, so type q() and ENTER to leave R again. (No need to save the workspace, just hit ENTER again if asked.)\n\nLearning: Understand the difference between the CONSOLE and the TERMINAL! Both are command line interfaces (CLI).\n\nThe CONSOLE is for R commands in the current session in positron.\nThe TERMINAL is for system commands. It is also called SHELL (or also Console …, but that is confusing here). It also works outside of positron. You can control your whole computer using the TERMINAL. It does not start with a simple &gt; but first with a name of your machine and then with the current working directory. Working directory means where in your file system the computer will operate your next command. We the command line tools mainly for git and quarto. For both we will also use short cuts and convenient click and point interfaces in positron. But it is important to understand what happens in the background and that you can always use the TERMINAL directly for all the things of git and quarto.",
     "crumbs": [
       "Syllabus",
-      "Technical Setup"
+      "Checklist Technical Setup"
     ]
   },
   {
@@ -474,7 +539,7 @@
     "text": "Go through the Checklist Technical Setup and make sure everything works.",
     "crumbs": [
       "Syllabus",
-      "Help Project Work"
+      "Need help for Homework?"
     ]
   },
   {
@@ -485,7 +550,7 @@
     "text": "Go through the Checklist Technical Setup and make sure everything works.",
     "crumbs": [
       "Syllabus",
-      "Help Project Work"
+      "Need help for Homework?"
     ]
   },
   {
@@ -496,7 +561,7 @@
     "text": "2 Good practices\n\nDo homework together with other students. Working together is encouraged!\nCommit and push your intermediate results often, instructors may check your code directly.\nRead error messages carefully! Often they are informative or even tell you what to do! (Hint: Uninformative error messages are also common. Maybe you get at least a hint where the problem lies. You will become more advanced on this, error messages which are not helpful now may become helpful in the future.)\nDo the homework before the next Data Science Tools Session and prepare questions to ask in class.",
     "crumbs": [
       "Syllabus",
-      "Help Project Work"
+      "Need help for Homework?"
     ]
   },
   {
@@ -507,7 +572,7 @@
     "text": "3 Good ways to ask for help\n\nAsk your fellow students, but show willingness to learn by being prepared. Do not “abuse” your students to fix your computer problems.\n\nIt is absolutely OK to ask instructors for help outside of class. We try to care, if we are not too busy with other things. If you do, please do first: Document and describe where you get stuck as precise as possible. Try to find out why as much as possible. Use Teams chat (or email)!",
     "crumbs": [
       "Syllabus",
-      "Help Project Work"
+      "Need help for Homework?"
     ]
   },
   {
@@ -518,7 +583,7 @@
     "text": "4 Problems with the git-GitHub-dance\nHappy Git with R is a great resource for helping you practically and for learning the version control concepts better. The site is well suited for our purpose of data science! Git was developed for software development and a lot of the advice and good practices you find by searching the internet are targeted for software engineering. Whenever you consult Happy Git with R for solutions for a problem, try to learn a bit about the basics. Git is not something to learn in one course but step by step while doing.\nProblems with getting started are likely related to the installation of software and connecting git and GitHub. Reading in Sections 4 - 14.\n\nAfter installing git, you need to Introduce yourself to Git (Use the email associated with your GitHub account.)\nThen you have to make the communication with GitHub possible as outlined by the introduction Can you here me now?. The default is to communicate via HTTPS (instead of SSH).\n\nIn the past you could authenticate via your GitHub-user password, now you need a personal access token which is something like a password created by GitHub which you can see and copy only once. (No worries, if loose the connection you can create a new one.)\nThese are the instructions for Personal access token for HTTPS. Ideally it works following the instructions in “TL;DR”. (Install the packages usethis and gitcreds in R.)\nNow, you should be able to clone the Homework repos analog to Connect RStudio to Git and GitHub.\nSometimes you have git installed but RStudio does not find it. Usually it works out of the box. If not, read Detect Git from RStudio\nFinally there is a page for problems which appear sometimes which you can scroll through looking if it is related to your problem: https://happygitwithr.com/troubleshooting\n\n\nFor problems appearing after your first successful git-GitHub-dance operations helpful sections are for example:\n\nYou want to bring your new versions to GitHub but when you push it does not work: Dealing with push rejection\nYou need to pull (to synchronize remote and local) but you made changes locally and get warnings: Pull, but you have local work\nIf you can not properly push and pull anymore and there are conflicts all over the place: Consider Burn it all down (Meaning to start again by cloning again …)",
     "crumbs": [
       "Syllabus",
-      "Help Project Work"
+      "Need help for Homework?"
     ]
   }
 ]
