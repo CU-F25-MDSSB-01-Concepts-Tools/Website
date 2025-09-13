@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="generator" content="quarto-1.7.33">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+    <title>W#02 Data Visualization Data Formats – Data Science Concepts / Data Science Tools</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      div.columns{display: flex; gap: min(4vw, 1.5em);}
+      div.column{flex: auto; overflow-x: auto;}
+      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+      ul.task-list{list-style: none;}
+      ul.task-list li input[type="checkbox"] {
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+        vertical-align: middle;
+      }
+      /* CSS for syntax highlighting */
+      html { -webkit-text-size-adjust: 100%; }
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+        }
+      pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+    </style>
+
+    <style>
+      body.hypothesis-enabled #quarto-embed-header {
+        padding-right: 36px;
+      }
+
+      #quarto-embed-header {
+        height: 3em;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px;
+      }
+
+      #quarto-embed-header h6 {
+        font-size: 1.1em;
+        padding-top: 0.6em;
+        margin-left: 1em;
+        margin-right: 1em;
+        font-weight: 400;
+      }
+
+      #quarto-embed-header a.quarto-back-link,
+      #quarto-embed-header a.quarto-download-embed {
+        font-size: 0.8em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+      }
+
+      .quarto-back-container {
+        padding-left: 0.5em;
+        display: flex;
+      }
+
+      .headroom {
+          will-change: transform;
+          transition: transform 200ms linear;
+      }
+
+      .headroom--pinned {
+          transform: translateY(0%);
+      }
+
+      .headroom--unpinned {
+          transform: translateY(-100%);
+      }      
+    </style>
+
+    <script>
+    window.document.addEventListener("DOMContentLoaded", function () {
+
+      var header = window.document.querySelector("#quarto-embed-header");
+      const titleBannerEl = window.document.querySelector("body > #title-block-header");
+      if (titleBannerEl) {
+        titleBannerEl.style.paddingTop = header.clientHeight + "px";
+      }
+      const contentEl = window.document.getElementById('quarto-content');
+      for (const child of contentEl.children) {
+        child.style.paddingTop = header.clientHeight + "px";
+        child.style.marginTop = "1em";
+      }
+
+      // Use the article root if the `back` call doesn't work. This isn't perfect
+      // but should typically work
+      window.quartoBackToArticle = () => {
+        var currentUrl = window.location.href;
+        window.history.back();
+        setTimeout(() => {
+            // if location was not changed in 100 ms, then there is no history back
+            if(currentUrl === window.location.href){              
+                // redirect to site root
+                window.location.href = '/';
+            }
+        }, 100);
+      }
+
+      const headroom = new window.Headroom(header, {
+        tolerance: 5,
+        onPin: function () {
+        },
+        onUnpin: function () {
+        },
+      });
+      headroom.init();
+    });
+    </script>
+
+    
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-d90c30c96bad360bae691b5c26d18f86.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+     <script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script> 
+        <link rel="stylesheet" href="../styles.css">
+      </head>
+
+  <body class="nav-sidebar docked nav-fixed quarto-notebook quarto-light">
+    <div id="quarto-embed-header" class="headroom fixed-top bg-primary">
+      
+      <a onclick="window.quartoBackToArticle(); return false;" class="btn btn-primary quarto-back-link"><i class="bi bi-caret-left"></i> Back to Article</a>
+      <h6><i class="bi bi-journal-code"></i> W#02 Data Visualization Data Formats</h6>
+
+            <a href="../lectures/W02.qmd" class="btn btn-primary quarto-download-embed" download="W02.qmd">Download Source</a>
+          </div>
+
+     <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Data Science Concepts / Data Science Tools</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/CU-F25-MDSSB-01-Concepts-Tools"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">CU-F25-MDSSB-01-Concepts-Tools</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">W#02 Data Visualization Data Formats</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../material/M01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">W#01</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../material/M02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">W#02</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Checklist Technical Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../literature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning Resources</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../homework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework Projects</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../final.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Final Project</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Need help for Homework?</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-shortest" id="toc-the-shortest" class="nav-link active" data-scroll-target="#the-shortest"><span class="header-section-number">1.7</span> The shortest</a></li>
+  <li><a href="#do-you-like-the-plot" id="toc-do-you-like-the-plot" class="nav-link" data-scroll-target="#do-you-like-the-plot"><span class="header-section-number">1.10</span> Do you like the plot?</a></li>
+  <li><a href="#check-overplotting-with-a-jitter" id="toc-check-overplotting-with-a-jitter" class="nav-link" data-scroll-target="#check-overplotting-with-a-jitter"><span class="header-section-number">1.13</span> Check overplotting with a <em>jitter</em></a></li>
+  <li><a href="#puzzle" id="toc-puzzle" class="nav-link" data-scroll-target="#puzzle"><span class="header-section-number">1.15</span> PUZZLE</a></li>
+  <li><a href="#ggplot-objects-altered-by-more" id="toc-ggplot-objects-altered-by-more" class="nav-link" data-scroll-target="#ggplot-objects-altered-by-more"><span class="header-section-number">1.18</span> ggplot-Objects altered by more “+…”</a></li>
+  <li><a href="#coordinate-system-specification" id="toc-coordinate-system-specification" class="nav-link" data-scroll-target="#coordinate-system-specification"><span class="header-section-number">1.19</span> Coordinate system specification</a></li>
+  <li><a href="#coordinate-system-specification-1" id="toc-coordinate-system-specification-1" class="nav-link" data-scroll-target="#coordinate-system-specification-1"><span class="header-section-number">1.20</span> Coordinate system specification</a></li>
+  <li><a href="#faceting-based-on-another-variable" id="toc-faceting-based-on-another-variable" class="nav-link" data-scroll-target="#faceting-based-on-another-variable"><span class="header-section-number">1.21</span> Faceting based on another variable</a></li>
+  <li><a href="#faceting-based-on-two-other-variables" id="toc-faceting-based-on-two-other-variables" class="nav-link" data-scroll-target="#faceting-based-on-two-other-variables"><span class="header-section-number">1.22</span> Faceting based on two other variables</a></li>
+  <li><a href="#scaling" id="toc-scaling" class="nav-link" data-scroll-target="#scaling"><span class="header-section-number">1.23</span> Scaling</a></li>
+  <li><a href="#axis-limits-and-labels" id="toc-axis-limits-and-labels" class="nav-link" data-scroll-target="#axis-limits-and-labels"><span class="header-section-number">1.24</span> Axis limits and labels</a></li>
+  <li><a href="#themes" id="toc-themes" class="nav-link" data-scroll-target="#themes"><span class="header-section-number">1.25</span> Themes</a></li>
+  <li><a href="#themes-1" id="toc-themes-1" class="nav-link" data-scroll-target="#themes-1"><span class="header-section-number">1.26</span> Themes</a></li>
+  <li><a href="#themes-2" id="toc-themes-2" class="nav-link" data-scroll-target="#themes-2"><span class="header-section-number">1.27</span> Themes</a></li>
+  <li><a href="#data-types-and-tidy-data" id="toc-data-types-and-tidy-data" class="nav-link" data-scroll-target="#data-types-and-tidy-data"><span class="header-section-number">2</span> Data Types and Tidy Data</a>
+  <ul class="collapse">
+  <li><a href="#let-us-test-coercion" id="toc-let-us-test-coercion" class="nav-link" data-scroll-target="#let-us-test-coercion"><span class="header-section-number">2.1</span> Let us test coercion</a></li>
+  </ul></li>
+  <li><a href="#summary-piping-and-tidying" id="toc-summary-piping-and-tidying" class="nav-link" data-scroll-target="#summary-piping-and-tidying"><span class="header-section-number">2.9</span> Summary piping and tidying</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">      <header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">W#02 Data Visualization Data Formats</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>     <div id="5d6f6d5f-e7c6-4eda-a216-edfd8f894c26" class="cell markdown">
+<p>Part 2 - A tour with code</p>
+<p>Jan Lorenz</p>
+<section id="grammar-of-graphics-with-ggplot" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Grammar of Graphics with <code>ggplot</code></h1>
+<section id="let-us-walk-through-the-workflow" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="let-us-walk-through-the-workflow"><span class="header-section-number">1.1</span> Let us walk through the workflow</h2>
+<p>We need the tidyverse packages</p>
+</section>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="01997889-e495-4129-a9f3-4270f4f05346" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>library(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.1.0     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div></div>
+<div id="d6fe4a48-9d24-4edb-af92-9700e8c81f97" class="cell markdown">
+<p>We use the <code>mpg</code> dataset which is in the ggplot library. Let’s take a look:</p>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="2dffca86-7294-4aab-a5d4-7e46db99c763" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>glimpse(mpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 234
+Columns: 11
+$ manufacturer &lt;chr&gt; "audi", "audi", "audi", "audi", "audi", "audi", "audi", "…
+$ model        &lt;chr&gt; "a4", "a4", "a4", "a4", "a4", "a4", "a4", "a4 quattro", "…
+$ displ        &lt;dbl&gt; 1.8, 1.8, 2.0, 2.0, 2.8, 2.8, 3.1, 1.8, 1.8, 2.0, 2.0, 2.…
+$ year         &lt;int&gt; 1999, 1999, 2008, 2008, 1999, 1999, 2008, 1999, 1999, 200…
+$ cyl          &lt;int&gt; 4, 4, 4, 4, 6, 6, 6, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 8, 8, …
+$ trans        &lt;chr&gt; "auto(l5)", "manual(m5)", "manual(m6)", "auto(av)", "auto…
+$ drv          &lt;chr&gt; "f", "f", "f", "f", "f", "f", "f", "4", "4", "4", "4", "4…
+$ cty          &lt;int&gt; 18, 21, 20, 21, 16, 18, 18, 18, 16, 20, 19, 15, 17, 17, 1…
+$ hwy          &lt;int&gt; 29, 29, 31, 30, 26, 26, 27, 26, 25, 28, 27, 25, 25, 25, 2…
+$ fl           &lt;chr&gt; "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p…
+$ class        &lt;chr&gt; "compact", "compact", "compact", "compact", "compact", "c…</code></pre>
+</div>
+</div></div>
+<div id="b7307dee-78a8-4497-b975-b1aa88489472" class="cell markdown">
+<p>For best learning, go through these slides and test the code!</p>
+<section id="first-plot-in-a-basic-specification" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="first-plot-in-a-basic-specification"><span class="header-section-number">1.2</span> First plot in a basic specification</h2>
+<p>We take <code>cty</code> = “city miles per gallon” as <code>x</code> and <code>hwy</code> = “highway miles per gallon” as <code>y</code></p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="7aafd4de-af4f-4142-b309-bacdd00c41d6" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ggplot(data <span class="op">=</span> mpg) <span class="op">+</span> geom_point(mapping <span class="op">=</span> aes(x <span class="op">=</span> cty, y <span class="op">=</span> hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="7c041c1c-acf4-41fc-bed8-2dde86694556" class="cell markdown">
+<p>Compare to “The complete template” from the <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf">cheat sheet</a></p>
+<p>It has all the required elements: We specify the data in the ggplot command, and the aesthetics (what variable is x and what variable is y) as mapping in the geom-function.</p>
+<section id="data-and-mapping-where" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="data-and-mapping-where"><span class="header-section-number">1.3</span> <code>data</code> and <code>mapping</code> where?</h2>
+<p>Looking at <a href="https://ggplot2.tidyverse.org/reference/ggplot.html"><code>?ggplot</code></a> and <a href="https://ggplot2.tidyverse.org/reference/geom_point.html"><code>?geom_point</code></a> we find that both need to specify <code>data</code> and <code>mapping</code>.</p>
+<p>Why do we have it only once here?</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>. . .</p>
+<ul>
+<li>The “+” in ggplot specifies that specifications will be taken from the object defined before the +.</li>
+<li>Technically <code>ggplot()</code> creates an ggplot object (the graphic) and <code>+geom_point()</code> adds more information to it.</li>
+<li>So, <code>data</code> was taken from the <code>ggplot</code> call, and <code>mapping</code> from <code>geom_point</code></li>
+</ul>
+</section>
+<section id="it-also-works-this-way" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="it-also-works-this-way"><span class="header-section-number">1.4</span> It also works this way</h2>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="a3c013a9-1d8f-424d-8e4b-45484c292e7e" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ggplot() <span class="op">+</span> geom_point(data <span class="op">=</span> mpg, mapping <span class="op">=</span> aes(x <span class="op">=</span> cty, y <span class="op">=</span> hwy)) <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="b1260fc3-a594-4ddd-9f88-f42befeb9f08" class="cell markdown">
+<ul>
+<li>In principle, we can specify new data and aesthetics in each geom-function in the same ggplot! Usually, we only have one dataset and one specification of aesthetics</li>
+</ul>
+<section id="and-also-this-way" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="and-also-this-way"><span class="header-section-number">1.5</span> And also this way</h2>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="1f016e41-6041-4dab-a271-cf6d26f894fc" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ggplot(data <span class="op">=</span> mpg, mapping <span class="op">=</span> aes(x <span class="op">=</span> cty, y <span class="op">=</span> hwy)) <span class="op">+</span> geom_point() <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="1b8d81b6-e2ee-4f5f-b7ce-1e72ed7aa065" class="cell markdown">
+<p>This is arguably the most common way.</p>
+<section id="even-shorter" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="even-shorter"><span class="header-section-number">1.6</span> Even shorter</h2>
+<p>As common practice we can shorten the code and remove the <code>data =</code> and the <code>mapping =</code> because the first argument will be taken as data (if not specified otherwise) and the second as mapping (if not specified otherwise). See function documentation <a href="https://ggplot2.tidyverse.org/reference/ggplot">?ggplot</a></p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="b8470af0-252f-4a00-b011-32597cc0c58f" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ggplot(mpg, aes(x <span class="op">=</span> cty, y <span class="op">=</span> hwy)) <span class="op">+</span> geom_point() <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="7fb53d40-c235-4748-9c3b-79d92e2e2b3f" class="cell markdown">
+<section id="the-shortest" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="the-shortest"><span class="header-section-number">1.7</span> The shortest</h2>
+<p>We can even remove the “x =” and “y =” if we look at the specification of <code>aes()</code> in <a href="https://ggplot2.tidyverse.org/reference/aes"><code>?aes</code></a></p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="256426b7-62af-4330-b987-885cb81e341e" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ggplot(mpg, aes(cty, hwy)) <span class="op">+</span> geom_point() <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="42d6fca7-8720-414b-ab69-33268fbcdd13" class="cell markdown">
+<section id="testing-do-the-following-lines-work" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="testing-do-the-following-lines-work"><span class="header-section-number">1.8</span> TESTING: Do the following lines work?</h2>
+<p>If not, why not? If yes, why?</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy), mpg) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy), <span class="at">data =</span> mpg) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>(mpg)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> mpg)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg,<span class="fu">aes</span>(hwy, <span class="at">x =</span> cty)) <span class="sc">+</span> <span class="fu">geom_point</span>() </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> hwy, <span class="at">x =</span> cty)) <span class="sc">+</span> <span class="fu">geom_point</span>(mpg) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>. . .</p>
+<p>Solutions:<br>
+1 No, data must be first<br>
+2 Yes, with named argument <code>data =</code> works also as second argument<br>
+3 No, data is missing<br>
+4 No, <code>aes()</code> is take wrongly as data in <code>ggplot</code><br>
+5 Yes, x is specified with named argument, so the unnamed first argument is take as the second default argument<br>
+6 No, in <code>geom_point</code> the first argument is <code>mapping</code>, so it must be <code>aes()</code></p>
+</section>
+<section id="more-aesthetics" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="more-aesthetics"><span class="header-section-number">1.9</span> More aesthetics</h2>
+<p>color, shape, size, fill …</p>
+<p>These need to be specified by name and cannot be left out.<br>
+Let us color the manufacturer, and make size by cylinders</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div id="20a002c2-af81-4ac7-aa1b-72513586172e" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ggplot(mpg, aes(cty, hwy, color <span class="op">=</span> manufacturer, size <span class="op">=</span> cyl)) <span class="op">+</span> geom_point()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="59703606-acaf-41aa-bdc7-36f8808f9e9d" class="cell markdown">
+<section id="do-you-like-the-plot" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="do-you-like-the-plot"><span class="header-section-number">1.10</span> Do you like the plot?</h2>
+<p>Some critique:</p>
+<ol type="1">
+<li>Too many colors</li>
+<li>Looks like several points are in the same place but we do not see it.</li>
+<li>Sizes look “unproportional” (4 is too small)</li>
+</ol>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [18]:</pre></div><div id="89016c8f-8faa-42d1-bcf0-2e59339da7f7" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ggplot(mpg, aes(cty, hwy, color <span class="op">=</span> manufacturer, size <span class="op">=</span> cyl)) <span class="op">+</span> geom_point()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="a9bf5c9f-4088-4e59-9d9c-eaee3a07682e" class="cell markdown">
+<section id="effective-visualization-is-your-task" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="effective-visualization-is-your-task"><span class="header-section-number">1.11</span> Effective visualization is your task!</h2>
+<ul>
+<li>The three problems are not technical problems of ggplot.<br>
+</li>
+<li>The grammar of graphics works fine.</li>
+<li>Finding effective visualization is a core skill for a data scientist.</li>
+<li>It develops naturally with practice.</li>
+<li>It needs programming skills, but the essence of it is not programming!</li>
+</ul>
+</section>
+<section id="work-with-scale_...-to-modify-aesthetics-look" class="level2" data-number="1.12">
+<h2 data-number="1.12" class="anchored" data-anchor-id="work-with-scale_...-to-modify-aesthetics-look"><span class="header-section-number">1.12</span> Work with <code>scale_...</code> to modify aesthetic’s look</h2>
+<p>Example: Scale the size differently</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [20]:</pre></div><div id="91cd9b1f-664c-4225-a81c-4596787e3dcb" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ggplot(mpg, aes(cty, hwy, color <span class="op">=</span> manufacturer, size <span class="op">=</span> cyl)) <span class="op">+</span> geom_point() <span class="op">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  scale_size_area()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="7b1caaf5-2fd0-4b51-84e7-20051afdab03" class="cell markdown">
+<section id="check-overplotting-with-a-jitter" class="level2" data-number="1.13">
+<h2 data-number="1.13" class="anchored" data-anchor-id="check-overplotting-with-a-jitter"><span class="header-section-number">1.13</span> Check overplotting with a <em>jitter</em></h2>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="b5bca307-011a-4859-8394-535d2ccdd28c" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ggplot(mpg, aes(cty, hwy)) <span class="op">+</span> geom_point() <span class="op">+</span> geom_jitter(color <span class="op">=</span> <span class="st">"green"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="a98818f5-aa9d-494e-a7a8-284e229c2b09" class="cell markdown">
+<p>Here, we do two new things:</p>
+<ol type="1">
+<li>We added another geom-function to an existing one. That is a core idea of the grammar of graphics. (However, for a final version, we would probably not do geom_point together with geom_jitter.)</li>
+<li>We specify the color by a word. Important: This is not within an <code>aes()</code> command!</li>
+</ol>
+<section id="another-example-for-two-geoms" class="level2" data-number="1.14">
+<h2 data-number="1.14" class="anchored" data-anchor-id="another-example-for-two-geoms"><span class="header-section-number">1.14</span> Another example for two geoms</h2>
+<p>Add a smooth line as summary statistic</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [24]:</pre></div><div id="d3b6e3af-20da-4a1d-886b-72365a47a8c6" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ggplot(mpg, aes(cty, hwy)) <span class="op">+</span> geom_point() <span class="op">+</span> geom_smooth()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-13-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="7e8f18d0-ec4d-4802-ab49-f33b402df3ff" class="cell markdown">
+<section id="puzzle" class="level2" data-number="1.15">
+<h2 data-number="1.15" class="anchored" data-anchor-id="puzzle"><span class="header-section-number">1.15</span> PUZZLE</h2>
+<p>What happens here? Why does green become red???</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [26]:</pre></div><div id="2cb72905-6ada-4b6c-867d-5c52a73ba88c" class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ggplot(mpg, aes(cty, hwy, color <span class="op">=</span> <span class="st">"green"</span>)) <span class="op">+</span> geom_point() <span class="co"># Shows dots supposed to be "green" in red?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="30bd434b-af82-440c-b490-554bfb600b50" class="cell markdown">
+<p>. . .</p>
+<p>This is because “green” is taken here as a variable (with only one value for all data points).<br>
+So, “green” is not a color but a string and ggplot chooses color automatically.</p>
+<p>. . .</p>
+<p>This makes green points:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy), <span class="at">color =</span> <span class="st">"green"</span>) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="ggplot-objects" class="level2" data-number="1.16">
+<h2 data-number="1.16" class="anchored" data-anchor-id="ggplot-objects"><span class="header-section-number">1.16</span> ggplot-Objects</h2>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [28]:</pre></div><div id="70e1024a-dab1-441c-a22f-d0b36e8e15ce" class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>our_plot <span class="op">&lt;-</span> ggplot(mpg, aes(cty, hwy)) <span class="op">+</span> geom_point(aes(color <span class="op">=</span> manufacturer))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div id="fcb3b126-4a28-49b9-96c5-9461961517e4" class="cell markdown">
+<p>This creates no output!<br>
+The graphic information is stored in the object <code>our_plot</code>.</p>
+<section id="call-the-object" class="level2" data-number="1.17">
+<h2 data-number="1.17" class="anchored" data-anchor-id="call-the-object"><span class="header-section-number">1.17</span> Call the object</h2>
+<p>As with other objects, when we write it in the console as such it provides an answer. In the case of ggplot-objects the answer is not some printed text in the console but a graphic output.</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [30]:</pre></div><div id="fde1de09-c636-4da0-be00-5db8cf5ab393" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>our_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="da919ca5-be5d-4d62-a9a8-6c3913d19735" class="cell markdown">
+<section id="ggplot-objects-altered-by-more" class="level2" data-number="1.18">
+<h2 data-number="1.18" class="anchored" data-anchor-id="ggplot-objects-altered-by-more"><span class="header-section-number">1.18</span> ggplot-Objects altered by more “+…”</h2>
+<p>Example</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [32]:</pre></div><div id="ee96d820-e28e-4bee-9659-1f66d4cd23bd" class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>our_plot <span class="op">+</span> geom_smooth()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-17-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="c8baeec9-3e60-435b-970a-30eb6a36e1a9" class="cell markdown">
+<section id="coordinate-system-specification" class="level2" data-number="1.19">
+<h2 data-number="1.19" class="anchored" data-anchor-id="coordinate-system-specification"><span class="header-section-number">1.19</span> Coordinate system specification</h2>
+<p>Example</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [34]:</pre></div><div id="fc0a4b3b-3e02-436f-bf96-8d45535deeba" class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>our_plot <span class="op">+</span> coord_flip() <span class="co"># flip x and y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="6f4ce0b5-165b-46c1-9afd-4f081924c791" class="cell markdown">
+<section id="coordinate-system-specification-1" class="level2" data-number="1.20">
+<h2 data-number="1.20" class="anchored" data-anchor-id="coordinate-system-specification-1"><span class="header-section-number">1.20</span> Coordinate system specification</h2>
+<p>Example</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [36]:</pre></div><div id="925fb3cd-1bcb-408f-91ad-87ffe832e751" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>our_plot <span class="op">+</span> coord_polar() <span class="co"># weird here but useful for some things</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="c1b72176-3fa4-4ec3-8d3c-bb740a50762a" class="cell markdown">
+<section id="faceting-based-on-another-variable" class="level2" data-number="1.21">
+<h2 data-number="1.21" class="anchored" data-anchor-id="faceting-based-on-another-variable"><span class="header-section-number">1.21</span> Faceting based on another variable</h2>
+<p>Example</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [38]:</pre></div><div id="7b4d5e5e-9cf4-4639-83d7-cdfa96289986" class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>our_plot <span class="op">+</span> facet_wrap(<span class="st">"manufacturer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="f5dd56d0-2593-4c24-98ae-9815cb5b2b00" class="cell markdown">
+<section id="faceting-based-on-two-other-variables" class="level2" data-number="1.22">
+<h2 data-number="1.22" class="anchored" data-anchor-id="faceting-based-on-two-other-variables"><span class="header-section-number">1.22</span> Faceting based on two other variables</h2>
+<p>Example</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [40]:</pre></div><div id="019e0644-ed9f-47c5-a26a-c26454fb5a66" class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>our_plot <span class="op">+</span> facet_grid(cyl <span class="op">~</span> fl) <span class="co"># fl is the fuel type</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="1cffd4ad-f6ce-45b7-9449-eb28ec8df9e8" class="cell markdown">
+<section id="scaling" class="level2" data-number="1.23">
+<h2 data-number="1.23" class="anchored" data-anchor-id="scaling"><span class="header-section-number">1.23</span> Scaling</h2>
+<p>Example</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [42]:</pre></div><div id="bfed8c2a-a180-497c-8abb-60fefdd88ec9" class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>our_plot <span class="op">+</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a> scale_x_log10() <span class="op">+</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a> scale_y_reverse() <span class="op">+</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a> scale_colour_hue(l <span class="op">=</span> <span class="dv">70</span>, c <span class="op">=</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="48eff5a4-fa76-4db0-90f5-a4f891e8dd87" class="cell markdown">
+<section id="axis-limits-and-labels" class="level2" data-number="1.24">
+<h2 data-number="1.24" class="anchored" data-anchor-id="axis-limits-and-labels"><span class="header-section-number">1.24</span> Axis limits and labels</h2>
+<p>Example</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [44]:</pre></div><div id="6d089af5-5ed9-4f12-9114-9305f572212a" class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>our_plot <span class="op">+</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a> xlim(c(<span class="dv">0</span>,<span class="dv">40</span>)) <span class="op">+</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a> xlab(<span class="st">"City miles per gallon"</span>) <span class="op">+</span> ylab(<span class="st">"Highway miles per gallon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="70a919f9-2ab0-4745-8528-9293e28cff06" class="cell markdown">
+<section id="themes" class="level2" data-number="1.25">
+<h2 data-number="1.25" class="anchored" data-anchor-id="themes"><span class="header-section-number">1.25</span> Themes</h2>
+<p>Example</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [46]:</pre></div><div id="be845263-4e54-4e37-8cac-ef1320d69232" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>our_plot <span class="op">+</span> theme_bw()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="49877248-9ab1-409b-832d-50de5a0dd456" class="cell markdown">
+<section id="themes-1" class="level2" data-number="1.26">
+<h2 data-number="1.26" class="anchored" data-anchor-id="themes-1"><span class="header-section-number">1.26</span> Themes</h2>
+<p>Example</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [48]:</pre></div><div id="45fff088-183a-45d4-b32c-c99bd3e8ee77" class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>our_plot <span class="op">+</span> theme_void()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-25-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="1c086f5a-4213-41de-9144-4391ac475909" class="cell markdown">
+<section id="themes-2" class="level2" data-number="1.27">
+<h2 data-number="1.27" class="anchored" data-anchor-id="themes-2"><span class="header-section-number">1.27</span> Themes</h2>
+<p>Example</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [50]:</pre></div><div id="e9d8d482-d365-4fb0-9c5f-8d1b200481ed" class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>our_plot <span class="op">+</span> theme_dark()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><img src="W02.embed_files/figure-html/cell-26-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div id="b0824568-910f-4b2d-9b13-588314a6038e" class="cell markdown">
+<section id="data-types-and-tidy-data" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Data Types and Tidy Data</h1>
+<section id="let-us-test-coercion" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="let-us-test-coercion"><span class="header-section-number">2.1</span> Let us test coercion</h2>
+</section>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [52]:</pre></div><div id="c3275b61-3abd-4b6e-84e7-411eedb58087" class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">&lt;-</span> TRUE</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">&lt;-</span> <span class="dv">2L</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>a <span class="op">&lt;-</span> <span class="st">"4"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [53]:</pre></div><div id="38795817-2028-4432-a33e-f4e37c257e8d" class="cell" data-output-location="column-fragment">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>c(x,y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2</code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [54]:</pre></div><div id="66ee573e-30d5-4572-b62f-115b91960b6a" class="cell" data-output-location="column-fragment">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>c(y,z) <span class="op">|&gt;</span> typeof()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "double"</code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [55]:</pre></div><div id="70ac665f-01e3-4296-a49e-1c9febe0353f" class="cell" data-output-location="column-fragment">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>c(z,a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "3" "4"</code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [56]:</pre></div><div id="b518b3fe-1203-4121-9a49-6fbf78302fe4" class="cell" data-output-location="column-fragment">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>c(x,a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "TRUE" "4"   </code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [57]:</pre></div><div id="11902145-98dd-41eb-a7ca-eab5cb857eea" class="cell" data-output-location="column-fragment">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>c(c(x,y),a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1" "2" "4"</code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [58]:</pre></div><div id="1e299dd9-901a-456d-b25b-5453d36d8e0b" class="cell" data-output-location="column-fragment">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">+</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [59]:</pre></div><div id="cde9b8dd-aaf4-4e13-929d-96b9ae4d580f" class="cell" data-output-location="column-fragment">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">as</span>.numeric(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [60]:</pre></div><div id="e225c41b-525f-458e-ae00-f66ffdc1f148" class="cell" data-output-location="column-fragment">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">==</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [61]:</pre></div><div id="217d799d-6c8e-48aa-ae3f-7e7f92987002" class="cell" data-output-location="column-fragment">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="im">as</span>.character(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2"</code></pre>
+</div>
+</div></div>
+<div id="8998347c-fd66-4354-9d61-9d1ee9237eea" class="cell markdown">
+<p>What about</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>z <span class="sc">+</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>. . .</p>
+<p>Not possible, because stings cannot be added.</p>
+<section id="danger-floating-point-numbers" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="danger-floating-point-numbers"><span class="header-section-number">2.2</span> Danger! Floating point numbers</h2>
+<p>We define <code>a</code> and <code>b</code> such that their are both 0.1 mathematically.</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [63]:</pre></div><div id="4d29d4a5-07b5-42d3-ab2b-9477c0a85cb7" class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">&lt;-</span> <span class="fl">0.1</span> <span class="op">+</span> <span class="fl">0.2</span> <span class="op">-</span> <span class="fl">0.2</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1</code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [64]:</pre></div><div id="cf04f89c-9cd1-4995-a2f2-ee03ef4716e9" class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>b <span class="op">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1</code></pre>
+</div>
+</div></div>
+<div id="54184196-f878-44ca-88cb-65968902c1e7" class="cell markdown">
+<p>But why is this false?</p>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [66]:</pre></div><div id="751ecbf1-032d-4945-ac17-acbfbaddf209" class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>(a <span class="op">-</span> b) <span class="op">==</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div></div>
+<div id="8e0f842a-381c-4f61-82f8-ec425552a7c1" class="cell markdown">
+<p>. . .</p>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [68]:</pre></div><div id="f91126ed-e179-42f8-a5cc-2f9e51aa37e0" class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">-</span> b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.775558e-17</code></pre>
+</div>
+</div></div>
+<div id="ee961b2c-c88b-4f04-bc97-cf864d7a7e85" class="cell markdown">
+<p>Aha, the difference is about <span class="math inline">\(2.8 \times 10^{-17}\)</span> (The <code>e</code> stands for <a href="https://en.wikipedia.org/wiki/Scientific_notation">scientific notation</a>, learn to read it!) Such problems can happen when subtracting and comparing floating point numbers!</p>
+<section id="tidying" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="tidying"><span class="header-section-number">2.3</span> Tidying</h2>
+<p>What is tidy depends to some extent on the purpose you want to use the data for.</p>
+<p>Let us practice the two important commands</p>
+<p><code>pivot_longer</code></p>
+<p><code>pivot_wider</code></p>
+</section>
+<section id="pivot_longer" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="pivot_longer"><span class="header-section-number">2.4</span> <code>pivot_longer</code></h2>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [70]:</pre></div><div id="8c066711-fb37-4535-858d-87d86531eb9e" class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>data_wide <span class="op">&lt;-</span> tibble(</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">id</span> <span class="op">=</span> <span class="dv">1</span>:<span class="dv">3</span>,</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  height_2023 <span class="op">=</span> c(<span class="dv">150</span>, <span class="dv">160</span>, <span class="dv">170</span>),</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  height_2024 <span class="op">=</span> c(<span class="dv">152</span>, <span class="dv">162</span>, <span class="dv">172</span>)</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>data_wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+     id height_2023 height_2024
+  &lt;int&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+1     1         150         152
+2     2         160         162
+3     3         170         172</code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [71]:</pre></div><div id="35d7c504-5440-4e56-a6d4-eda2c224e2ad" class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>data_longer <span class="op">&lt;-</span> pivot_longer(data <span class="op">=</span> data_wide, </span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>                            cols <span class="op">=</span> c(height_2023, height_2024),</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>                            names_to <span class="op">=</span> <span class="st">"year"</span>, values_to <span class="op">=</span> <span class="st">"height"</span>)</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>data_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+     id year        height
+  &lt;int&gt; &lt;chr&gt;        &lt;dbl&gt;
+1     1 height_2023    150
+2     1 height_2024    152
+3     2 height_2023    160
+4     2 height_2024    162
+5     3 height_2023    170
+6     3 height_2024    172</code></pre>
+</div>
+</div></div>
+<div id="5bd24c48-2dcb-45c0-b438-ad5d0c23c915" class="cell markdown">
+<section id="input-the-pipe" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="input-the-pipe"><span class="header-section-number">2.5</span> Input: The pipe <code>|&gt;</code></h2>
+<p>In data wrangling it is common to do various data manipulations one after the other.<br>
+A common tool is to use the pipe to give it an ordered structure in the writing.</p>
+<p>The basic idea is:<br>
+<strong>Put what is before the pipe <code>|&gt;</code> as the first argument of the function coming after.</strong></p>
+<p>When <code>do_this</code> is a function and <code>to_this</code> is an object like a dataframe then</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do_this</span>(to_this)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">R</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="at">is the same as </span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="st">```</span>R</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>to_this <span class="sc">|&gt;</span> <span class="fu">do_this</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>. . .</p>
+<p>It also works for longer nested functions:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">function3</span>(<span class="fu">function2</span>(<span class="fu">function1</span>(data)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>is the same as</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> <span class="fu">function1</span>() <span class="sc">|&gt;</span> <span class="fu">function2</span>() <span class="sc">|&gt;</span> <span class="fu">function3</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="with-the-pipe" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="with-the-pipe"><span class="header-section-number">2.6</span> With the pipe</h2>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [73]:</pre></div><div id="bf71c565-d1ca-4340-ba9e-4bedcb29651a" class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>data_longer <span class="op">&lt;-</span> data_wide <span class="op">|&gt;</span> </span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a> pivot_longer(cols <span class="op">=</span> c(height_2023, height_2024),</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>              names_to <span class="op">=</span> <span class="st">"year"</span>, values_to <span class="op">=</span> <span class="st">"height"</span>)</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>data_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+     id year        height
+  &lt;int&gt; &lt;chr&gt;        &lt;dbl&gt;
+1     1 height_2023    150
+2     1 height_2024    152
+3     2 height_2023    160
+4     2 height_2024    162
+5     3 height_2023    170
+6     3 height_2024    172</code></pre>
+</div>
+</div></div>
+<div id="cde82f88-5086-4f7b-9b88-42576ae48482" class="cell markdown">
+<p>. . .</p>
+<p><code>year</code> does not look good! We want numbers.</p>
+<p>. . .</p>
+<p>Let’s do a string mutate:</p>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [75]:</pre></div><div id="3b6f5f99-ddc8-48fd-a9fc-967afae25b1a" class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>data_longer <span class="op">&lt;-</span> data_longer <span class="op">|&gt;</span> </span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  mutate(year <span class="op">=</span> str_remove(year, <span class="st">"height_"</span>))</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>data_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+     id year  height
+  &lt;int&gt; &lt;chr&gt;  &lt;dbl&gt;
+1     1 2023     150
+2     1 2024     152
+3     2 2023     160
+4     2 2024     162
+5     3 2023     170
+6     3 2024     172</code></pre>
+</div>
+</div></div>
+<div id="3c090f8c-f922-4121-bf23-9b3cb13803ce" class="cell markdown">
+<p>. . .</p>
+<section id="but-year-still-a-character-variable" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="but-year-still-a-character-variable"><span class="header-section-number">2.7</span> But <code>year</code> still a character variable!</h2>
+<p>We mutate further:</p>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [77]:</pre></div><div id="b726e15d-ab45-49c1-869b-b3ad8742a3be" class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>data_longer <span class="op">&lt;-</span> data_longer <span class="op">|&gt;</span> </span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  mutate(year <span class="op">=</span> <span class="im">as</span>.numeric(year))</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>data_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+     id  year height
+  &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1     1  2023    150
+2     1  2024    152
+3     2  2023    160
+4     2  2024    162
+5     3  2023    170
+6     3  2024    172</code></pre>
+</div>
+</div></div>
+<div id="1824ff22-936f-471c-abbc-dc864e42f181" class="cell markdown">
+<p>That is fine.</p>
+<section id="back-to-wide-pivot_wider" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="back-to-wide-pivot_wider"><span class="header-section-number">2.8</span> Back to wide: <code>pivot_wider</code></h2>
+</section>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [79]:</pre></div><div id="78646ed6-4faa-4146-aa7c-22f8d2fa39a9" class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>data_longer <span class="op">|&gt;</span> </span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  pivot_wider(names_from <span class="op">=</span> year, </span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>              values_from <span class="op">=</span> height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+     id `2023` `2024`
+  &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1     1    150    152
+2     2    160    162
+3     3    170    172</code></pre>
+</div>
+</div></div>
+<div id="3c8579f0-0ec8-43ec-a411-8c3e84d856a4" class="cell markdown">
+<p>. . .</p>
+<p>OK, but now we have just numbers as variable names. Can we get <code>height_</code> prefix back?</p>
+<p>. . .</p>
+</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [81]:</pre></div><div id="c93aa3f1-7ecc-443b-a73c-37a5eec67fbc" class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>data_longer <span class="op">|&gt;</span> </span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  pivot_wider(names_from <span class="op">=</span> year, </span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>              values_from <span class="op">=</span> height,</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>              names_prefix <span class="op">=</span> <span class="st">"height_"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+     id height_2023 height_2024
+  &lt;int&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+1     1         150         152
+2     2         160         162
+3     3         170         172</code></pre>
+</div>
+</div></div>
+<div id="0a08c6e0-1d4e-4ee2-8259-be7502678ec6" class="cell markdown">
+<section id="summary-piping-and-tidying" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="summary-piping-and-tidying"><span class="header-section-number">2.9</span> Summary piping and tidying</h2>
+<p>A small data science task often boils down to one line of code using pipes like</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> <span class="fu">wrangling_functions</span>(<span class="sc">*</span>specifications<span class="sc">*</span>) <span class="sc">|&gt;</span> <span class="fu">tidying</span>(<span class="sc">*</span>to_bring_in_shape<span class="sc">*</span>) <span class="sc">|&gt;</span> <span class="fu">ggpplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(For R it is one line, but we may break it into several for a better overview.)</p>
+<ul>
+<li>Piping is a natural way of thinking in data science, so we also program that way.</li>
+<li>Tidying (for example <code>pivot_longer</code>) is often needed directly before a ggplot command.</li>
+<li>Tidying often require some string manipulations making new variables and variable names nice.</li>
+</ul>
+<p>. . .</p>
+<p>How can I learn all this? <span class="fragment"><span style="color:red;">Practice, practice, practice, …</span></span><br>
+Do I need to learn it again for python?? <span class="fragment"><span style="color:red;">Yes, but it is easier knowing the concept!</span></span></p>
+<p>. . .</p>
+<p><strong>When learning, learn the concept not just get the code done!</strong></p>
+</section>
+</div>
+
+
+     </main> <!-- /main -->  <script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>  </div> <!-- /content --> 
+  
+</body></html>
