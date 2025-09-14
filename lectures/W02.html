@@ -217,22 +217,10 @@ Jan Lorenz
 <p>We need the tidyverse packages</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.2     ✔ tibble    3.3.0
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.1.0     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
 </div>
 <p>We use the <code>mpg</code> dataset which is in the ggplot library. Let’s take a look:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">glimpse</span>(mpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">glimpse</span>(mpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 234
 Columns: 11
@@ -248,7 +236,7 @@ $ hwy          &lt;int&gt; 29, 29, 31, 30, 26, 26, 27, 26, 25, 28, 27, 25, 25, 2
 $ fl           &lt;chr&gt; "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p…
 $ class        &lt;chr&gt; "compact", "compact", "compact", "compact", "compact", "c…</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>?mpg <span class="co"># This shows the help https://ggplot2.tidyverse.org/reference/mpg.html</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>?mpg <span class="co"># This shows the help https://ggplot2.tidyverse.org/reference/mpg.html</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <aside><div>
@@ -258,17 +246,17 @@ $ class        &lt;chr&gt; "compact", "compact", "compact", "compact", "compact"
 <h2>First plot in a basic specification</h2>
 <p>We take <code>cty</code> = “city miles per gallon” as <code>x</code> and <code>hwy</code> = “highway miles per gallon” as <code>y</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-3-1.png" width="672" class="r-stretch"><p>Compare to “The complete template” from the <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf">cheat sheet</a></p>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"><p>Compare to “The complete template” from the <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf">cheat sheet</a></p>
 <p>It has all the required elements: We specify the data in the ggplot command, and the aesthetics (what variable is x and what variable is y) as mapping in the geom-function.</p>
 </section>
 <section id="data-and-mapping-where" class="slide level2">
 <h2><code>data</code> and <code>mapping</code> where?</h2>
 <p>Looking at <a href="https://ggplot2.tidyverse.org/reference/ggplot.html"><code>?ggplot</code></a> and <a href="https://ggplot2.tidyverse.org/reference/geom_point.html"><code>?geom_point</code></a> we find that both need to specify <code>data</code> and <code>mapping</code>.</p>
 <p>Why do we have it only once here?</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <ul>
 <li>The “+” in ggplot specifies that specifications will be taken from the object defined before the +.</li>
@@ -280,21 +268,21 @@ $ class        &lt;chr&gt; "compact", "compact", "compact", "compact", "compact"
 <section id="it-also-works-this-way" class="slide level2">
 <h2>It also works this way</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> mpg, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> mpg, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-4-1.png" width="672" class="r-stretch"><ul>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><ul>
 <li>In principle, we can specify new data and aesthetics in each geom-function in the same ggplot! Usually, we only have one dataset and one specification of aesthetics</li>
 </ul>
 </section>
 <section id="and-also-this-way" class="slide level2">
 <h2>And also this way</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> mpg, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="W02_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<p><img data-src="W02_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -307,27 +295,27 @@ $ class        &lt;chr&gt; "compact", "compact", "compact", "compact", "compact"
 <h2>Even shorter</h2>
 <p>As common practice we can shorten the code and remove the <code>data =</code> and the <code>mapping =</code> because the first argument will be taken as data (if not specified otherwise) and the second as mapping (if not specified otherwise). See function documentation <a href="https://ggplot2.tidyverse.org/reference/ggplot">?ggplot</a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-6-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
 <section id="the-shortest" class="slide level2">
 <h2>The shortest</h2>
 <p>We can even remove the “x =” and “y =” if we look at the specification of <code>aes()</code> in <a href="https://ggplot2.tidyverse.org/reference/aes"><code>?aes</code></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="co"># Same output as before ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-7-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
 <section id="testing-do-the-following-lines-work" class="slide level2">
 <h2>TESTING: Do the following lines work?</h2>
 <p>If not, why not? If yes, why?</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy), mpg) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
-<span id="cb12-2"><a></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy), <span class="at">data =</span> mpg) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
-<span id="cb12-3"><a></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>(mpg)</span>
-<span id="cb12-4"><a></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> mpg)</span>
-<span id="cb12-5"><a></a><span class="fu">ggplot</span>(mpg,<span class="fu">aes</span>(hwy, <span class="at">x =</span> cty)) <span class="sc">+</span> <span class="fu">geom_point</span>() </span>
-<span id="cb12-6"><a></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> hwy, <span class="at">x =</span> cty)) <span class="sc">+</span> <span class="fu">geom_point</span>(mpg) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy), mpg) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb11-2"><a></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy), <span class="at">data =</span> mpg) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb11-3"><a></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>(mpg)</span>
+<span id="cb11-4"><a></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cty, <span class="at">y =</span> hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> mpg)</span>
+<span id="cb11-5"><a></a><span class="fu">ggplot</span>(mpg,<span class="fu">aes</span>(hwy, <span class="at">x =</span> cty)) <span class="sc">+</span> <span class="fu">geom_point</span>() </span>
+<span id="cb11-6"><a></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> hwy, <span class="at">x =</span> cty)) <span class="sc">+</span> <span class="fu">geom_point</span>(mpg) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>Solutions:<br>
 1 No, data must be first<br>
@@ -344,10 +332,10 @@ $ class        &lt;chr&gt; "compact", "compact", "compact", "compact", "compact"
 <p>These need to be specified by name and cannot be left out.<br>
 Let us color the manufacturer, and make size by cylinders</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy, <span class="at">color =</span> manufacturer, <span class="at">size =</span> cyl)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy, <span class="at">color =</span> manufacturer, <span class="at">size =</span> cyl)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-8-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
 <section id="do-you-like-the-plot" class="slide level2">
 <h2>Do you like the plot?</h2>
 <p>Some critique:</p>
@@ -356,11 +344,8 @@ Let us color the manufacturer, and make size by cylinders</p>
 <li>Looks like several points are in the same place but we do not see it.</li>
 <li>Sizes look “unproportional” (4 is too small)</li>
 </ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy, <span class="at">color =</span> manufacturer, <span class="at">size =</span> cyl)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-</div>
-<img data-src="W02_files/figure-html/unnamed-chunk-9-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
 <section id="effective-visualization-is-your-task" class="slide level2">
 <h2>Effective visualization is your task!</h2>
 <ul>
@@ -376,18 +361,19 @@ Let us color the manufacturer, and make size by cylinders</p>
 <h2>Work with <code>scale_...</code> to modify aesthetic’s look</h2>
 <p>Example: Scale the size differently</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy, <span class="at">color =</span> manufacturer, <span class="at">size =</span> cyl)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb15-2"><a></a>  <span class="fu">scale_size_area</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy, <span class="at">color =</span> manufacturer, <span class="at">size =</span> cyl)) <span class="sc">+</span></span>
+<span id="cb13-2"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-3"><a></a>  <span class="fu">scale_size_area</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-10-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
 <section id="check-overplotting-with-a-jitter" class="slide level2">
 <h2>Check overplotting with a <em>jitter</em></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">color =</span> <span class="st">"green"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">color =</span> <span class="st">"green"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-11-1.png" width="672" class="r-stretch"><p>Here, we do two new things:</p>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"><p>Here, we do two new things:</p>
 <ol type="1">
 <li>We added another geom-function to an existing one. That is a core idea of the grammar of graphics. (However, for a final version, we would probably not do geom_point together with geom_jitter.)</li>
 <li>We specify the color by a word. Important: This is not within an <code>aes()</code> command!</li>
@@ -397,33 +383,30 @@ Let us color the manufacturer, and make size by cylinders</p>
 <h2>Another example for two geoms</h2>
 <p>Add a smooth line as summary statistic</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-12-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
 <section id="puzzle" class="slide level2">
 <h2>PUZZLE</h2>
 <p>What happens here? Why does green become red???</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy, <span class="at">color =</span> <span class="st">"green"</span>)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="co"># Shows dots supposed to be "green" in red?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy, <span class="at">color =</span> <span class="st">"green"</span>)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="co"># Shows dots supposed to be "green" in red?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-13-1.png" width="672" class="r-stretch"><div class="fragment">
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"><div class="fragment">
 <p>This is because “green” is taken here as a variable (with only one value for all data points).<br>
 So, “green” is not a color but a string and ggplot chooses color automatically.</p>
 </div>
 <div class="fragment">
 <p>This makes green points:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy), <span class="at">color =</span> <span class="st">"green"</span>) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy), <span class="at">color =</span> <span class="st">"green"</span>) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="ggplot-objects" class="slide level2">
 <h2>ggplot-Objects</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>our_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> manufacturer))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>our_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty, hwy)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> manufacturer))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This creates no output!<br>
 The graphic information is stored in the object <code>our_plot</code>.</p>
@@ -432,98 +415,96 @@ The graphic information is stored in the object <code>our_plot</code>.</p>
 <h2>Call the object</h2>
 <p>As with other objects, when we write it in the console as such it provides an answer. In the case of ggplot-objects the answer is not some printed text in the console but a graphic output.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>our_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>our_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-15-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"></section>
 <section id="ggplot-objects-altered-by-more" class="slide level2">
 <h2>ggplot-Objects altered by more “+…”</h2>
 <p>Example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-16-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section>
 <section id="coordinate-system-specification" class="slide level2">
 <h2>Coordinate system specification</h2>
 <p>Example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="co"># flip x and y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="co"># flip x and y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-17-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-17-1.png" width="960" class="r-stretch"></section>
 <section id="coordinate-system-specification-1" class="slide level2">
 <h2>Coordinate system specification</h2>
 <p>Example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">coord_polar</span>() <span class="co"># weird here but useful for some things</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">coord_polar</span>() <span class="co"># weird here but useful for some things</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-18-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch"></section>
 <section id="faceting-based-on-another-variable" class="slide level2">
 <h2>Faceting based on another variable</h2>
 <p>Example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="st">"manufacturer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="st">"manufacturer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-19-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch"></section>
 <section id="faceting-based-on-two-other-variables" class="slide level2">
 <h2>Faceting based on two other variables</h2>
 <p>Example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">facet_grid</span>(cyl <span class="sc">~</span> fl) <span class="co"># fl is the fuel type</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">facet_grid</span>(cyl <span class="sc">~</span> fl) <span class="co"># fl is the fuel type</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-20-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"></section>
 <section id="scaling" class="slide level2">
 <h2>Scaling</h2>
 <p>Example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>our_plot <span class="sc">+</span> </span>
-<span id="cb29-2"><a></a> <span class="fu">scale_x_log10</span>() <span class="sc">+</span> </span>
-<span id="cb29-3"><a></a> <span class="fu">scale_y_reverse</span>() <span class="sc">+</span> </span>
-<span id="cb29-4"><a></a> <span class="fu">scale_colour_hue</span>(<span class="at">l =</span> <span class="dv">70</span>, <span class="at">c =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>our_plot <span class="sc">+</span></span>
+<span id="cb25-2"><a></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb25-3"><a></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
+<span id="cb25-4"><a></a>  <span class="fu">scale_colour_hue</span>(<span class="at">l =</span> <span class="dv">70</span>, <span class="at">c =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-21-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-21-1.png" width="960" class="r-stretch"></section>
 <section id="axis-limits-and-labels" class="slide level2">
 <h2>Axis limits and labels</h2>
 <p>Example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>our_plot <span class="sc">+</span> </span>
-<span id="cb30-2"><a></a> <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">40</span>)) <span class="sc">+</span> </span>
-<span id="cb30-3"><a></a> <span class="fu">xlab</span>(<span class="st">"City miles per gallon"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Highway miles per gallon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>our_plot <span class="sc">+</span></span>
+<span id="cb26-2"><a></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>)) <span class="sc">+</span></span>
+<span id="cb26-3"><a></a>  <span class="fu">xlab</span>(<span class="st">"City miles per gallon"</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a></a>  <span class="fu">ylab</span>(<span class="st">"Highway miles per gallon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-22-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section>
 <section id="themes" class="slide level2">
 <h2>Themes</h2>
 <p>Example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-23-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"></section>
 <section id="themes-1" class="slide level2">
 <h2>Themes</h2>
 <p>Example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-24-1.png" width="672" class="r-stretch"></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch"></section>
 <section id="themes-2" class="slide level2">
 <h2>Themes</h2>
 <p>Example</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">theme_dark</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>our_plot <span class="sc">+</span> <span class="fu">theme_dark</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="W02_files/figure-html/unnamed-chunk-25-1.png" width="672" class="r-stretch"></section></section>
+<img data-src="W02_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section></section>
 <section>
 <section id="data-types-and-tidy-data" class="title-slide slide level1 center">
 <h1>Data Types and Tidy Data</h1>
@@ -532,30 +513,26 @@ The graphic information is stored in the object <code>our_plot</code>.</p>
 <section id="let-us-test-coercion" class="slide level2">
 <h2>Let us test coercion</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>x <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb34-2"><a></a>y <span class="ot">&lt;-</span> <span class="dv">2</span>L</span>
-<span id="cb34-3"><a></a>z <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb34-4"><a></a>a <span class="ot">&lt;-</span> <span class="st">"4"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>x <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb30-2"><a></a>y <span class="ot">&lt;-</span> <span class="dv">2</span>L</span>
+<span id="cb30-3"><a></a>z <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb30-4"><a></a>a <span class="ot">&lt;-</span> <span class="st">"4"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">c</span>(x,y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">c</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2</code></pre>
 </div>
 </div></div>
+<pre><code>{r}
+#| echo: true
+#| output-location: column-fragment
+c(y, z) |&gt; typeof()</code></pre>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">c</span>(y,z) <span class="sc">|&gt;</span> <span class="fu">typeof</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "double"</code></pre>
-</div>
-</div></div>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">c</span>(z,a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">c</span>(z, a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "3" "4"</code></pre>
@@ -563,7 +540,7 @@ The graphic information is stored in the object <code>our_plot</code>.</p>
 </div></div>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">c</span>(x,a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">c</span>(x, a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "TRUE" "4"   </code></pre>
@@ -571,7 +548,7 @@ The graphic information is stored in the object <code>our_plot</code>.</p>
 </div></div>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">c</span>(<span class="fu">c</span>(x,y),a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">c</span>(<span class="fu">c</span>(x, y), a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1" "2" "4"</code></pre>
@@ -579,7 +556,7 @@ The graphic information is stored in the object <code>our_plot</code>.</p>
 </div></div>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>x <span class="sc">+</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>x <span class="sc">+</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
@@ -587,7 +564,7 @@ The graphic information is stored in the object <code>our_plot</code>.</p>
 </div></div>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="fu">as.numeric</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">as.numeric</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4</code></pre>
@@ -595,7 +572,7 @@ The graphic information is stored in the object <code>our_plot</code>.</p>
 </div></div>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>x <span class="sc">==</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>x <span class="sc">==</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
@@ -603,14 +580,14 @@ The graphic information is stored in the object <code>our_plot</code>.</p>
 </div></div>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="fu">as.character</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">as.character</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column fragment">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2"</code></pre>
 </div>
 </div></div>
 <p>What about</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>z <span class="sc">+</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>z <span class="sc">+</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>Not possible, because stings cannot be added.</p>
 </div>
@@ -619,29 +596,29 @@ The graphic information is stored in the object <code>our_plot</code>.</p>
 <h2>Danger! Floating point numbers</h2>
 <p>We define <code>a</code> and <code>b</code> such that their are both 0.1 mathematically.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a>a <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="sc">+</span> <span class="fl">0.2</span> <span class="sc">-</span> <span class="fl">0.2</span></span>
-<span id="cb54-2"><a></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>a <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="sc">+</span> <span class="fl">0.2</span> <span class="sc">-</span> <span class="fl">0.2</span></span>
+<span id="cb49-2"><a></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a>b <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
-<span id="cb56-2"><a></a>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>b <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb51-2"><a></a>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1</code></pre>
 </div>
 </div>
 <p>But why is this false?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a>(a <span class="sc">-</span> b) <span class="sc">==</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>(a <span class="sc">-</span> b) <span class="sc">==</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a>a <span class="sc">-</span> b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a>a <span class="sc">-</span> b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.775558e-17</code></pre>
 </div>
@@ -659,12 +636,12 @@ The graphic information is stored in the object <code>our_plot</code>.</p>
 <section id="pivot_longer" class="slide level2">
 <h2><code>pivot_longer</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a>data_wide <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb62-2"><a></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb62-3"><a></a>  <span class="at">height_2023 =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">160</span>, <span class="dv">170</span>),</span>
-<span id="cb62-4"><a></a>  <span class="at">height_2024 =</span> <span class="fu">c</span>(<span class="dv">152</span>, <span class="dv">162</span>, <span class="dv">172</span>)</span>
-<span id="cb62-5"><a></a>)</span>
-<span id="cb62-6"><a></a>data_wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a>data_wide <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb57-2"><a></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb57-3"><a></a>  <span class="at">height_2023 =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">160</span>, <span class="dv">170</span>),</span>
+<span id="cb57-4"><a></a>  <span class="at">height_2024 =</span> <span class="fu">c</span>(<span class="dv">152</span>, <span class="dv">162</span>, <span class="dv">172</span>)</span>
+<span id="cb57-5"><a></a>)</span>
+<span id="cb57-6"><a></a>data_wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
      id height_2023 height_2024
@@ -675,10 +652,13 @@ The graphic information is stored in the object <code>our_plot</code>.</p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a>data_longer <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(<span class="at">data =</span> data_wide, </span>
-<span id="cb64-2"><a></a>                            <span class="at">cols =</span> <span class="fu">c</span>(height_2023, height_2024),</span>
-<span id="cb64-3"><a></a>                            <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"height"</span>)</span>
-<span id="cb64-4"><a></a>data_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>data_longer <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb59-2"><a></a>  <span class="at">data =</span> data_wide,</span>
+<span id="cb59-3"><a></a>  <span class="at">cols =</span> <span class="fu">c</span>(height_2023, height_2024),</span>
+<span id="cb59-4"><a></a>  <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb59-5"><a></a>  <span class="at">values_to =</span> <span class="st">"height"</span></span>
+<span id="cb59-6"><a></a>)</span>
+<span id="cb59-7"><a></a>data_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
      id year        height
@@ -699,26 +679,22 @@ A common tool is to use the pipe to give it an ordered structure in the writing.
 <p>The basic idea is:<br>
 <strong>Put what is before the pipe <code>|&gt;</code> as the first argument of the function coming after.</strong></p>
 <p>When <code>do_this</code> is a function and <code>to_this</code> is an object like a dataframe then</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a><span class="fu">do_this</span>(to_this)</span>
-<span id="cb66-2"><a></a><span class="st">```</span><span class="at">R</span></span>
-<span id="cb66-3"><a></a></span>
-<span id="cb66-4"><a></a><span class="at">is the same as </span></span>
-<span id="cb66-5"><a></a><span class="st">```</span>R</span>
-<span id="cb66-6"><a></a>to_this <span class="sc">|&gt;</span> <span class="fu">do_this</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="fu">do_this</span>(to_this)</span>
+<span id="cb61-2"><a></a><span class="st">```</span><span class="at">R</span></span>
+<span id="cb61-3"><a></a></span>
+<span id="cb61-4"><a></a><span class="at">is the same as </span></span>
+<span id="cb61-5"><a></a><span class="st">```</span>R</span>
+<span id="cb61-6"><a></a>to_this <span class="sc">|&gt;</span> <span class="fu">do_this</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>It also works for longer nested functions:</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a><span class="fu">function3</span>(<span class="fu">function2</span>(<span class="fu">function1</span>(data)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a><span class="fu">function3</span>(<span class="fu">function2</span>(<span class="fu">function1</span>(data)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>is the same as</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a>data <span class="sc">|&gt;</span> <span class="fu">function1</span>() <span class="sc">|&gt;</span> <span class="fu">function2</span>() <span class="sc">|&gt;</span> <span class="fu">function3</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>data <span class="sc">|&gt;</span> <span class="fu">function1</span>() <span class="sc">|&gt;</span> <span class="fu">function2</span>() <span class="sc">|&gt;</span> <span class="fu">function3</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="with-the-pipe" class="slide level2">
 <h2>With the pipe</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>data_longer <span class="ot">&lt;-</span> data_wide <span class="sc">|&gt;</span> </span>
-<span id="cb69-2"><a></a> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(height_2023, height_2024),</span>
-<span id="cb69-3"><a></a>              <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"height"</span>)</span>
-<span id="cb69-4"><a></a>data_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
      id year        height
@@ -737,9 +713,9 @@ A common tool is to use the pipe to give it an ordered structure in the writing.
 <div class="fragment">
 <p>Let’s do a string mutate:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a>data_longer <span class="ot">&lt;-</span> data_longer <span class="sc">|&gt;</span> </span>
-<span id="cb71-2"><a></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">str_remove</span>(year, <span class="st">"height_"</span>))</span>
-<span id="cb71-3"><a></a>data_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a>data_longer <span class="ot">&lt;-</span> data_longer <span class="sc">|&gt;</span></span>
+<span id="cb65-2"><a></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">str_remove</span>(year, <span class="st">"height_"</span>))</span>
+<span id="cb65-3"><a></a>data_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
      id year  height
@@ -758,9 +734,9 @@ A common tool is to use the pipe to give it an ordered structure in the writing.
 <h2>But <code>year</code> still a character variable!</h2>
 <p>We mutate further:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a></a>data_longer <span class="ot">&lt;-</span> data_longer <span class="sc">|&gt;</span> </span>
-<span id="cb73-2"><a></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.numeric</span>(year))</span>
-<span id="cb73-3"><a></a>data_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a>data_longer <span class="ot">&lt;-</span> data_longer <span class="sc">|&gt;</span></span>
+<span id="cb67-2"><a></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.numeric</span>(year))</span>
+<span id="cb67-3"><a></a>data_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
      id  year height
@@ -778,9 +754,8 @@ A common tool is to use the pipe to give it an ordered structure in the writing.
 <section id="back-to-wide-pivot_wider" class="slide level2">
 <h2>Back to wide: <code>pivot_wider</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a></a>data_longer <span class="sc">|&gt;</span> </span>
-<span id="cb75-2"><a></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, </span>
-<span id="cb75-3"><a></a>              <span class="at">values_from =</span> height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>data_longer <span class="sc">|&gt;</span></span>
+<span id="cb69-2"><a></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
      id `2023` `2024`
@@ -795,10 +770,8 @@ A common tool is to use the pipe to give it an ordered structure in the writing.
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a></a>data_longer <span class="sc">|&gt;</span> </span>
-<span id="cb77-2"><a></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, </span>
-<span id="cb77-3"><a></a>              <span class="at">values_from =</span> height,</span>
-<span id="cb77-4"><a></a>              <span class="at">names_prefix =</span> <span class="st">"height_"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a>data_longer <span class="sc">|&gt;</span></span>
+<span id="cb71-2"><a></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> height, <span class="at">names_prefix =</span> <span class="st">"height_"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
      id height_2023 height_2024
@@ -813,7 +786,7 @@ A common tool is to use the pipe to give it an ordered structure in the writing.
 <section id="summary-piping-and-tidying" class="slide level2">
 <h2>Summary piping and tidying</h2>
 <p>A small data science task often boils down to one line of code using pipes like</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a></a>data <span class="sc">|&gt;</span> <span class="fu">wrangling_functions</span>(<span class="sc">*</span>specifications<span class="sc">*</span>) <span class="sc">|&gt;</span> <span class="fu">tidying</span>(<span class="sc">*</span>to_bring_in_shape<span class="sc">*</span>) <span class="sc">|&gt;</span> <span class="fu">ggpplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a></a>data <span class="sc">|&gt;</span> <span class="fu">wrangling_functions</span>(<span class="sc">*</span>specifications<span class="sc">*</span>) <span class="sc">|&gt;</span> <span class="fu">tidying</span>(<span class="sc">*</span>to_bring_in_shape<span class="sc">*</span>) <span class="sc">|&gt;</span> <span class="fu">ggpplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>(For R it is one line, but we may break it into several for a better overview.)</p>
 <ul>
 <li>Piping is a natural way of thinking in data science, so we also program that way.</li>
@@ -1048,6 +1021,44 @@ Do I need to learn it again for python?? <span class="fragment"><span style="col
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
