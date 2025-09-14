@@ -841,73 +841,73 @@
   {
     "objectID": "material/M02.html",
     "href": "material/M02.html",
-    "title": "Week 02",
+    "title": "W#02",
     "section": "",
     "text": "Reconsider the Lecture Material, consider the Additional Readings and Material, and check the Achievements for yourself.",
     "crumbs": [
       "Syllabus",
       "Schedule",
-      "Week {{< meta week >}}"
+      "W#{{< meta week >}}"
     ]
   },
   {
     "objectID": "material/M02.html#data-visualization-data-formats",
     "href": "material/M02.html#data-visualization-data-formats",
-    "title": "Week 02",
+    "title": "W#02",
     "section": "",
     "text": "Reconsider the Lecture Material, consider the Additional Readings and Material, and check the Achievements for yourself.",
     "crumbs": [
       "Syllabus",
       "Schedule",
-      "Week {{< meta week >}}"
+      "W#{{< meta week >}}"
     ]
   },
   {
     "objectID": "material/M02.html#lecture-material",
     "href": "material/M02.html#lecture-material",
-    "title": "Week 02",
+    "title": "W#02",
     "section": "1 Lecture Material",
     "text": "1 Lecture Material\nSlides: Direct Link Part 1\n\nSlides: Direct Link Part 2\n\nFind the live recording in the Course’s Team’s Recording Folder.",
     "crumbs": [
       "Syllabus",
       "Schedule",
-      "Week {{< meta week >}}"
+      "W#{{< meta week >}}"
     ]
   },
   {
     "objectID": "material/M02.html#additional-readings-and-material",
     "href": "material/M02.html#additional-readings-and-material",
-    "title": "Week 02",
+    "title": "W#02",
     "section": "2 Additional Readings and Material",
     "text": "2 Additional Readings and Material\n\nggplot: The following sections in R for Data Science\n\nCh 1: Data Visualization\nIf you want to go deeper already now, chapter Ch 9: Layers",
     "crumbs": [
       "Syllabus",
       "Schedule",
-      "Week {{< meta week >}}"
+      "W#{{< meta week >}}"
     ]
   },
   {
     "objectID": "material/M02.html#achievements",
     "href": "material/M02.html#achievements",
-    "title": "Week 02",
+    "title": "W#02",
     "section": "3 Achievements",
     "text": "3 Achievements\nYou\n\nhave understood the data science process, in particular you can describe with examples what is understood as data wrangling and data exploration, and you can describe two different purposes of data visualization in the data science process\nhave identified and can explain when a pie chart is a bad visualization (when the pieces do not add up to 100%) and when a truncated y-axis is a bad visualization (when it is used to make a small difference look big).\nhave understood the basic idea of the grammar of graphics and can explain what the role of a mapping and and geom is\nhave made a bar chart, a scatter plot, and a line plot with ggplot\nknow how many rows and columns an \\(m\\times n\\) data frame has\ncan explain the basic data types, in particular character, logical, and double\nknow what coercion of data is (what happens when different data types are combined in a vector)\nhave understood the concept of the tidy data format and can argue why a certain form of data representation is more or less tidy\nmade a data frame longer and wider",
     "crumbs": [
       "Syllabus",
       "Schedule",
-      "Week {{< meta week >}}"
+      "W#{{< meta week >}}"
     ]
   },
   {
     "objectID": "material/M02.html#homework-projects-progress-guides",
     "href": "material/M02.html#homework-projects-progress-guides",
-    "title": "Week 02",
+    "title": "W#02",
     "section": "4 Homework Projects Progress Guides",
     "text": "4 Homework Projects Progress Guides\nFind the Repositories of your Homework Projects in the Course’s GitHub-Organization’s CU-F25-MDSSB-01-Concepts-Tools &gt; Repositories.\nProject’s INSTRUCTIONS you should have completed:\nProject_NYCFlights: 1., 2., 3.\n\n\n\n\n\n\nNote\n\n\n\nDon’t panic, if you fell behind, just do it later. Find your own learning path. Better step by step than randomly skipping things. It is about learning not just completing!",
     "crumbs": [
       "Syllabus",
       "Schedule",
-      "Week {{< meta week >}}"
+      "W#{{< meta week >}}"
     ]
   }
 ]
