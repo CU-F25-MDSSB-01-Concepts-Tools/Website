@@ -193,7 +193,7 @@
     "href": "lectures/W02.html#let-us-test-coercion",
     "title": "W#02 Data Visualization Data Formats",
     "section": "Let us test coercion",
-    "text": "Let us test coercion\n\nx &lt;- TRUE\ny &lt;- 2L\nz &lt;- 3\na &lt;- \"4\"\n\n\n\nc(x, y)\n\n\n[1] 1 2\n\n\n{r}\n#| echo: true\n#| output-location: column-fragment\nc(y, z) |&gt; typeof()\n\n\nc(z, a)\n\n\n[1] \"3\" \"4\"\n\n\n\n\nc(x, a)\n\n\n[1] \"TRUE\" \"4\"   \n\n\n\n\nc(c(x, y), a)\n\n\n[1] \"1\" \"2\" \"4\"\n\n\n\n\nx + y\n\n\n[1] 3\n\n\n\n\nas.numeric(a)\n\n\n[1] 4\n\n\n\n\nx == 1\n\n\n[1] TRUE\n\n\n\n\nas.character(y)\n\n\n[1] \"2\"\n\n\nWhat about\nz + a\n\nNot possible, because stings cannot be added."
+    "text": "Let us test coercion\n\nx &lt;- TRUE\ny &lt;- 2L\nz &lt;- 3\na &lt;- \"4\"\n\n\n\nc(x, y)\n\n\n[1] 1 2\n\n\n\n\nc(y, z) |&gt; typeof()\n\n\n[1] \"double\"\n\n\n\n\nc(z, a)\n\n\n[1] \"3\" \"4\"\n\n\n\n\nc(x, a)\n\n\n[1] \"TRUE\" \"4\"   \n\n\n\n\nc(c(x, y), a)\n\n\n[1] \"1\" \"2\" \"4\"\n\n\n\n\nx + y\n\n\n[1] 3\n\n\n\n\nas.numeric(a)\n\n\n[1] 4\n\n\n\n\nx == 1\n\n\n[1] TRUE\n\n\n\n\nas.character(y)\n\n\n[1] \"2\"\n\n\nWhat about\nz + a\n\nNot possible, because stings cannot be added."
   },
   {
     "objectID": "lectures/W02.html#danger-floating-point-numbers",
