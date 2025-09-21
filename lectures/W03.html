@@ -2451,7 +2451,7 @@ $ reservation_status_date        &lt;date&gt; 2015-07-01, 2015-07-01, 2015-07-02
 <div id="qwebr-insertion-location-1"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </section>
-<section id="reasons-for-using-pipes" class="slide level2">
+<section id="reasons-for-using-pipes" class="slide level2 smaller">
 <h2>Reasons for using pipes <code>|&gt;</code></h2>
 <ul>
 <li>structure the sequence of your data operations from left to right</li>
@@ -2513,7 +2513,7 @@ piped: <strong><code>hotels |&gt; select(hotel, adults) |&gt; filter(adults == 2
 <p>Note: <code>select(hotels, lead_time)</code> is identical (Reminder to understand the pipe <code>|&gt;</code>!).</p>
 </div><div class="column fragment" style="width:40%;">
 <p>Why does piping <code>|&gt;</code> work?</p>
-<h3 id="dplyr-philosophy">dplyr philosophy</h3>
+<h4 id="dplyr-philosophy">dplyr philosophy</h4>
 <p>Every <code>dplyr</code> function</p>
 <ul>
 <li>takes a dataframe (tibble) as first argument</li>
@@ -2547,7 +2547,7 @@ piped: <strong><code>hotels |&gt; select(hotel, adults) |&gt; filter(adults == 2
 # ℹ 119,380 more rows</code></pre>
 </div>
 </div>
-<p>Note that <code>hotel</code> is a variable, but <code>hotels</code> the dataframe object name</p>
+<p>Important: <code>hotel</code> is a column (variable) name, but <code>hotels</code> the object name of the dataframe</p>
 </section>
 <section id="select-helper-starts_with" class="slide level2 smaller">
 <h2>Select helper <code>starts_with</code></h2>
@@ -3642,7 +3642,7 @@ $class
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li>ISO 8601 standard for dates: <strong>YYYY-MM-DD</strong>. Today: 2025-09-21.</li>
+<li>ISO 8601 standard for dates: <strong>YYYY-MM-DD</strong>. Today: 2025-09-22.</li>
 <li>Dates in R are numeric vectors that represent the number of days since 1 January 1970.</li>
 </ul>
 <div class="cell">
@@ -3684,7 +3684,7 @@ $class
 <div class="cell">
 <div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a></a><span class="fu">Sys.Date</span>() <span class="sc">-</span> <span class="fu">as.Date</span>(<span class="st">"1976-01-16"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 18146 days</code></pre>
+<pre><code>Time difference of 18147 days</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a></a><span class="co"># Sys.Date() gives as the current day your computer is set to</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -3723,7 +3723,7 @@ POSIXct: Portable Operating System Interface, calendar time. Stores date and tim
 <div class="sourceCode cell-code" id="cb131"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a></a><span class="fu">as.double</span>(lubridate<span class="sc">::</span><span class="fu">now</span>()) <span class="sc">-</span></span>
 <span id="cb131-2"><a></a>  <span class="fu">as.double</span>(lubridate<span class="sc">::</span><span class="fu">ymd_hm</span>(<span class="st">"1976-01-16_12:04"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1567846202</code></pre>
+<pre><code>[1] 1567851140</code></pre>
 </div>
 </div>
 </section>

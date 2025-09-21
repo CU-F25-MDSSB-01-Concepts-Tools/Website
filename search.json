@@ -130,7 +130,7 @@
     "href": "lectures/W03.html#select-more-columns",
     "title": "W#03 Data Import, Data Wrangling",
     "section": "Select more columns",
-    "text": "Select more columns\n\nhotels |&gt; select(hotel, lead_time)\n\n\n\n# A tibble: 119,390 × 2\n   hotel        lead_time\n   &lt;chr&gt;            &lt;int&gt;\n 1 Resort Hotel       342\n 2 Resort Hotel       737\n 3 Resort Hotel         7\n 4 Resort Hotel        13\n 5 Resort Hotel        14\n 6 Resort Hotel        14\n 7 Resort Hotel         0\n 8 Resort Hotel         9\n 9 Resort Hotel        85\n10 Resort Hotel        75\n# ℹ 119,380 more rows\n\n\nNote that hotel is a variable, but hotels the dataframe object name"
+    "text": "Select more columns\n\nhotels |&gt; select(hotel, lead_time)\n\n\n\n# A tibble: 119,390 × 2\n   hotel        lead_time\n   &lt;chr&gt;            &lt;int&gt;\n 1 Resort Hotel       342\n 2 Resort Hotel       737\n 3 Resort Hotel         7\n 4 Resort Hotel        13\n 5 Resort Hotel        14\n 6 Resort Hotel        14\n 7 Resort Hotel         0\n 8 Resort Hotel         9\n 9 Resort Hotel        85\n10 Resort Hotel        75\n# ℹ 119,380 more rows\n\n\nImportant: hotel is a column (variable) name, but hotels the object name of the dataframe"
   },
   {
     "objectID": "lectures/W03.html#select-helper-starts_with",
@@ -340,14 +340,14 @@
     "href": "lectures/W03.html#dates",
     "title": "W#03 Data Import, Data Wrangling",
     "section": "Dates",
-    "text": "Dates\n\n\n\nISO 8601 standard for dates: YYYY-MM-DD. Today: 2025-09-21.\nDates in R are numeric vectors that represent the number of days since 1 January 1970.\n\n\ny &lt;- as.Date(\"2020-01-01\")\ny\n\n[1] \"2020-01-01\"\n\ntypeof(y)\n\n[1] \"double\"\n\nattributes(y)\n\n$class\n[1] \"Date\"\n\nas.double(y)\n\n[1] 18262\n\nas.double(as.Date(\"1970-01-01\"))\n\n[1] 0\n\nas.double(as.Date(\"1969-01-01\"))\n\n[1] -365\n\n\n\n\nhttps://social.coop/@mattl/110509557203534941"
+    "text": "Dates\n\n\n\nISO 8601 standard for dates: YYYY-MM-DD. Today: 2025-09-22.\nDates in R are numeric vectors that represent the number of days since 1 January 1970.\n\n\ny &lt;- as.Date(\"2020-01-01\")\ny\n\n[1] \"2020-01-01\"\n\ntypeof(y)\n\n[1] \"double\"\n\nattributes(y)\n\n$class\n[1] \"Date\"\n\nas.double(y)\n\n[1] 18262\n\nas.double(as.Date(\"1970-01-01\"))\n\n[1] 0\n\nas.double(as.Date(\"1969-01-01\"))\n\n[1] -365\n\n\n\n\nhttps://social.coop/@mattl/110509557203534941"
   },
   {
     "objectID": "lectures/W03.html#how-many-days-are-you-old",
     "href": "lectures/W03.html#how-many-days-are-you-old",
     "title": "W#03 Data Import, Data Wrangling",
     "section": "How many days are you old?",
-    "text": "How many days are you old?\n\n\nSys.Date() - as.Date(\"1976-01-16\")\n\nTime difference of 18146 days\n\n# Sys.Date() gives as the current day your computer is set to"
+    "text": "How many days are you old?\n\n\nSys.Date() - as.Date(\"1976-01-16\")\n\nTime difference of 18147 days\n\n# Sys.Date() gives as the current day your computer is set to"
   },
   {
     "objectID": "lectures/W03.html#date-times",
@@ -361,7 +361,7 @@
     "href": "lectures/W03.html#how-many-seconds-are-you-old",
     "title": "W#03 Data Import, Data Wrangling",
     "section": "How many seconds are you old?",
-    "text": "How many seconds are you old?\n\nas.double(lubridate::now()) -\n  as.double(lubridate::ymd_hm(\"1976-01-16_12:04\"))\n\n[1] 1567846202"
+    "text": "How many seconds are you old?\n\nas.double(lubridate::now()) -\n  as.double(lubridate::ymd_hm(\"1976-01-16_12:04\"))\n\n[1] 1567851140"
   },
   {
     "objectID": "lectures/W03.html#summary-on-factors-and-dates",
