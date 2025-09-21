@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -191,6 +226,12 @@ window.Quarto = {
  <span class="menu-text">W#02</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../material/M03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">W#03</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -238,6 +279,13 @@ window.Quarto = {
   <li><a href="#additional-readings-and-material" id="toc-additional-readings-and-material" class="nav-link" data-scroll-target="#additional-readings-and-material"><span class="header-section-number">2</span> Additional Readings and Material</a></li>
   <li><a href="#achievements" id="toc-achievements" class="nav-link" data-scroll-target="#achievements"><span class="header-section-number">3</span> Achievements</a></li>
   <li><a href="#homework-projects-progress-guides" id="toc-homework-projects-progress-guides" class="nav-link" data-scroll-target="#homework-projects-progress-guides"><span class="header-section-number">4</span> Homework Projects Progress Guides</a></li>
+  <li><a href="#questions-on-coercion" id="toc-questions-on-coercion" class="nav-link" data-scroll-target="#questions-on-coercion"><span class="header-section-number">5</span> Questions on Coercion</a>
+  <ul class="collapse">
+  <li><a href="#what-does-this-return" id="toc-what-does-this-return" class="nav-link" data-scroll-target="#what-does-this-return"><span class="header-section-number">5.1</span> What does this return?</a></li>
+  <li><a href="#what-does-this-return-1" id="toc-what-does-this-return-1" class="nav-link" data-scroll-target="#what-does-this-return-1"><span class="header-section-number">5.2</span> What does this return?</a></li>
+  <li><a href="#what-does-this-return-2" id="toc-what-does-this-return-2" class="nav-link" data-scroll-target="#what-does-this-return-2"><span class="header-section-number">5.3</span> What does this return?</a></li>
+  <li><a href="#what-does-this-return-3" id="toc-what-does-this-return-3" class="nav-link" data-scroll-target="#what-does-this-return-3"><span class="header-section-number">5.4</span> What does this return?</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -303,6 +351,7 @@ window.Quarto = {
 <section id="homework-projects-progress-guides" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="homework-projects-progress-guides"><span class="header-section-number">4</span> Homework Projects Progress Guides</h2>
 <p>Find the Repositories of your Homework Projects in the Course’s GitHub-Organization’s <a href="https://github.com/orgs/CU-F25-MDSSB-01-Concepts-Tools/repositories">CU-F25-MDSSB-01-Concepts-Tools &gt; Repositories</a>.</p>
+<p><strong>Project setup:</strong> Follow the HOW-TO in your project repositry. Also: <em>Watch the first part of the Recording of Data Science Concepts</em> to see how the process of cloning the repository, previewing the report, and committing and pushing work back to GitHub looks.</p>
 <p>Project’s INSTRUCTIONS you should have completed:</p>
 <p><strong>Project_NYCFlights</strong>: 1., 2., 3.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -318,8 +367,152 @@ Note
 <p>Don’t panic, if you fell behind, just do it later. Find your own learning path. Better step by step than randomly skipping things. It is about learning not just completing!</p>
 </div>
 </div>
+</section>
+<section id="questions-on-coercion" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="questions-on-coercion"><span class="header-section-number">5</span> Questions on Coercion</h2>
+<p>What happens when you combine different data types in a vector?</p>
+<section id="what-does-this-return" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="what-does-this-return"><span class="header-section-number">5.1</span> What does this return?</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li>Characters <code>"TRUE" "1"</code></li>
+<li>Numericals <code>1 1</code></li>
+<li>Logicals <code>TRUE, TRUE</code></li>
+<li>Numericals <code>0 1</code></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<form name="form_66302" onsubmit="return validate_form_66302()" method="post">
+<input type="radio" name="answer_66302" id="answer_66302_1" value="1">
+<label>1</label>
+<br>
+<input type="radio" name="answer_66302" id="answer_66302_2" value="2">
+<label>2</label>
+<br>
+<input type="radio" name="answer_66302" id="answer_66302_3" value="3">
+<label>3</label>
+<br>
+<input type="radio" name="answer_66302" id="answer_66302_4" value="4">
+<label>4</label>
+<br>
+<input type="submit" value="check">
+<div id="result_66302"></div>
+</form>
+<script>function validate_form_66302() {var x, text; var x = document.forms['form_66302']['answer_66302'].value;if (x == '2'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_66302').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_66302').innerText == 'Correct';text = res1;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+</section>
+<section id="what-does-this-return-1" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="what-does-this-return-1"><span class="header-section-number">5.2</span> What does this return?</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">"1"</span>, <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li>Characters <code>"1" "FALSE</code></li>
+<li>Numericals <code>1 0</code></li>
+<li>Logicals <code>TRUE, FALSE</code></li>
+<li>Numericals <code>"FALSE" "FALSE"</code></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<form name="form_16078" onsubmit="return validate_form_16078()" method="post">
+<input type="radio" name="answer_16078" id="answer_16078_1" value="1">
+<label>1</label>
+<br>
+<input type="radio" name="answer_16078" id="answer_16078_2" value="2">
+<label>2</label>
+<br>
+<input type="radio" name="answer_16078" id="answer_16078_3" value="3">
+<label>3</label>
+<br>
+<input type="radio" name="answer_16078" id="answer_16078_4" value="4">
+<label>4</label>
+<br>
+<input type="submit" value="check">
+<div id="result_16078"></div>
+</form>
+<script>function validate_form_16078() {var x, text; var x = document.forms['form_16078']['answer_16078'].value;if (x == '1'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_16078').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_66302').innerText == 'Correct'; res2 = document.getElementById('result_16078').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+</section>
+<section id="what-does-this-return-2" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="what-does-this-return-2"><span class="header-section-number">5.3</span> What does this return?</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="cn">TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li><strong><em>Error</em></strong></li>
+<li><code>1</code></li>
+<li><code>2</code></li>
+<li><code>TRUE</code></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<form name="form_29796" onsubmit="return validate_form_29796()" method="post">
+<input type="radio" name="answer_29796" id="answer_29796_1" value="1">
+<label>1</label>
+<br>
+<input type="radio" name="answer_29796" id="answer_29796_2" value="2">
+<label>2</label>
+<br>
+<input type="radio" name="answer_29796" id="answer_29796_3" value="3">
+<label>3</label>
+<br>
+<input type="radio" name="answer_29796" id="answer_29796_4" value="4">
+<label>4</label>
+<br>
+<input type="submit" value="check">
+<div id="result_29796"></div>
+</form>
+<script>function validate_form_29796() {var x, text; var x = document.forms['form_29796']['answer_29796'].value;if (x == '3'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_29796').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_66302').innerText == 'Correct'; res2 = document.getElementById('result_16078').innerText == 'Correct'; res3 = document.getElementById('result_29796').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+</section>
+<section id="what-does-this-return-3" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="what-does-this-return-3"><span class="header-section-number">5.4</span> What does this return?</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="st">"TRUE"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li><strong><em>Error</em></strong></li>
+<li><code>1</code></li>
+<li><code>2</code></li>
+<li><code>TRUE</code></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<form name="form_10825" onsubmit="return validate_form_10825()" method="post">
+<input type="radio" name="answer_10825" id="answer_10825_1" value="1">
+<label>1</label>
+<br>
+<input type="radio" name="answer_10825" id="answer_10825_2" value="2">
+<label>2</label>
+<br>
+<input type="radio" name="answer_10825" id="answer_10825_3" value="3">
+<label>3</label>
+<br>
+<input type="radio" name="answer_10825" id="answer_10825_4" value="4">
+<label>4</label>
+<br>
+<input type="submit" value="check">
+<div id="result_10825"></div>
+</form>
+<script>function validate_form_10825() {var x, text; var x = document.forms['form_10825']['answer_10825'].value;if (x == '1'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_10825').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_66302').innerText == 'Correct'; res2 = document.getElementById('result_16078').innerText == 'Correct'; res3 = document.getElementById('result_29796').innerText == 'Correct'; res4 = document.getElementById('result_10825').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
