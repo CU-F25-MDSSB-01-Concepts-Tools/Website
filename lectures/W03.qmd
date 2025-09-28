@@ -12,15 +12,18 @@ format:
     preview-links: true
     logo: img/ConstructorUniversity.png
     footer: "MDSSB-DSCO-02: Data Science Concepts"
-editor_options: 
-  chunk_output_type: console
+filters: 
+  - webr
+webr:
+  packages:
+    - tidyverse
+  autoload-packages: true
 ---
 
 ```{r}
 #| include: false
 library(tidyverse)
 ```
-
 
 
 # Data Import, First Look
@@ -118,11 +121,13 @@ This downloads data only if the file does not exist. Then it loads it.
 #| message: true
 
 library(tidyverse)
-if (!file.exists("data/hotels.csv")) {
-  download.file(url = "https://raw.githubusercontent.com/rstudio-education/datascience-box/main/course-materials/_slides/u2-d06-grammar-wrangle/data/hotels.csv", 
-                destfile = "data/hotels.csv")
+if (!file.exists("hotels.csv")) {
+  download.file(
+    url = "https://raw.githubusercontent.com/rstudio-education/datascience-box/main/course-materials/_slides/u2-d06-grammar-wrangle/data/hotels.csv",
+    destfile = "hotels.csv"
+  )
 }
-hotels <- read_csv("data/hotels.csv")
+hotels <- read_csv("hotels.csv")
 ```
 
 Output is a summary how `read_csv` guessed the data types of columns. 
@@ -149,7 +154,7 @@ Then use `show_col_types = FALSE` to quiet the reading message.
 
 ```{r}
 #| echo: true
-hotels <- read_csv("data/hotels.csv", show_col_types = FALSE)
+hotels <- read_csv("hotels.csv", show_col_types = FALSE)
 ```
 
 
@@ -160,40 +165,43 @@ hotels <- read_csv("data/hotels.csv", show_col_types = FALSE)
 
 ```{r}
 #| echo: true
-hotels <- read_csv("data/hotels.csv", col_types = cols(
-  hotel = col_character(),
-  is_canceled = col_logical(),
-  lead_time = col_integer(),
-  arrival_date_year = col_integer(),
-  arrival_date_month = col_character(),
-  arrival_date_week_number = col_integer(),
-  arrival_date_day_of_month = col_integer(),
-  stays_in_weekend_nights = col_integer(),
-  stays_in_week_nights = col_integer(),
-  adults = col_integer(),
-  children = col_integer(),
-  babies = col_integer(),
-  meal = col_character(),
-  country = col_character(),
-  market_segment = col_character(),
-  distribution_channel = col_character(),
-  is_repeated_guest = col_logical(),
-  previous_cancellations = col_integer(),
-  previous_bookings_not_canceled = col_integer(),
-  reserved_room_type = col_character(),
-  assigned_room_type = col_character(),
-  booking_changes = col_integer(),
-  deposit_type = col_character(),
-  agent = col_integer(),
-  company = col_integer(),
-  days_in_waiting_list = col_integer(),
-  customer_type = col_character(),
-  adr = col_double(),
-  required_car_parking_spaces = col_integer(),
-  total_of_special_requests = col_integer(),
-  reservation_status = col_character(),
-  reservation_status_date = col_date(format = "")
-))
+hotels <- read_csv(
+  "hotels.csv",
+  col_types = cols(
+    hotel = col_character(),
+    is_canceled = col_logical(),
+    lead_time = col_integer(),
+    arrival_date_year = col_integer(),
+    arrival_date_month = col_character(),
+    arrival_date_week_number = col_integer(),
+    arrival_date_day_of_month = col_integer(),
+    stays_in_weekend_nights = col_integer(),
+    stays_in_week_nights = col_integer(),
+    adults = col_integer(),
+    children = col_integer(),
+    babies = col_integer(),
+    meal = col_character(),
+    country = col_character(),
+    market_segment = col_character(),
+    distribution_channel = col_character(),
+    is_repeated_guest = col_logical(),
+    previous_cancellations = col_integer(),
+    previous_bookings_not_canceled = col_integer(),
+    reserved_room_type = col_character(),
+    assigned_room_type = col_character(),
+    booking_changes = col_integer(),
+    deposit_type = col_character(),
+    agent = col_integer(),
+    company = col_integer(),
+    days_in_waiting_list = col_integer(),
+    customer_type = col_character(),
+    adr = col_double(),
+    required_car_parking_spaces = col_integer(),
+    total_of_special_requests = col_integer(),
+    reservation_status = col_character(),
+    reservation_status_date = col_date(format = "")
+  )
+)
 ```
 
 
@@ -229,12 +237,15 @@ Type the name of the dataframe
 hotels
 ```
 
+
 ## Look on variable names
 
 ```{r} 
 #| echo: true
 names(hotels)
 ```
+
+
 
 
 ## Second look with `glimpse` {.smaller}
@@ -277,9 +288,9 @@ Similar in `python`:  Make a chain using `.` to apply `pandas` methods for dataf
 Similar in `ggplot2`: Creating a ggplot object, then add graphical layers (`geom_` functions) with `+` (instead of a pipe)
 
 ```R
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = trans)) + 
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = manufacturer)) + 
   geom_point() + 
-  geom_smooth()
+  geom_line()
 ``` 
 
 ## What is the pipe `|>`? {.smaller}
@@ -287,9 +298,15 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = trans)) +
 `x |> f(a,b)` is the same as `f(x,a,b)`
 
 **The outcome of a command is put into the first argument of the next function call.**
-Practice it it see that it is exactly identical!
+Practice it. See that it is exactly identical! (Example: try `c()` as `f` and just number like `1` or `2` as `a` and `b`; or `paste()` with `"a"` as `"b"`.)
 
-Reasons for using pipes:
+
+```{webr-r}
+
+
+```
+
+## Reasons for using pipes `|>` {.smaller}
 
 - structure the sequence of your data operations from left to right
 - avoid nested function calls:  
@@ -328,15 +345,17 @@ You still find it in a lot of code out in the wild. It is almost the same.
 ```{r} 
 #| echo: true
 #| output-location: fragment
-hotels |> select(lead_time)     
+hotels |> select(lead_time)
 ```
 
-Note: `select(hotels, lead_time)` is identical. 
+Note: `select(hotels, lead_time)` is identical (Reminder to understand the pipe `|>`!). 
 
 :::
 
 ::: {.column width='40%'  .fragment}
 Why does piping `|>` work? 
+
+#### dplyr philosophy
 
 Every `dplyr` function
 
@@ -356,15 +375,15 @@ In hotel business, lead time is the time betweeen booking and arrival.
 ```{r} 
 #| echo: true
 #| output-location: fragment
-hotels |> select(hotel, lead_time)     
+hotels |> select(hotel, lead_time)
 ```
   
-Note that `hotel` is a variable, but `hotels` the dataframe object name
+Important: `hotel` is a column (variable) name, but `hotels` the object name of the dataframe
 
 
 ## Select helper `starts_with`  {.smaller}
 
-```{r} 
+```{r}
 #| echo: true
 #| output-location: fragment
 hotels |> select(starts_with("arrival"))
@@ -410,10 +429,11 @@ hotels |> filter(hotel == "City Hotel")
 ```{r} 
 #| echo: true
 #| output-location: fragment
-hotels |> filter(
-  babies >= 1,
-  children >= 1
-  ) |> 
+hotels |>
+  filter(
+    babies >= 1,
+    children >= 1
+  ) |>
   select(hotel, adults, babies, children)
 ```
 
@@ -428,9 +448,10 @@ delivers the same. (Spot the tiny difference!)
 ```{r} 
 #| echo: true
 #| output-location: fragment
-hotels |> filter(
-  babies >= 1 | children >= 1
-  ) |> 
+hotels |>
+  filter(
+    babies >= 1 | children >= 1
+  ) |>
   select(hotel, adults, babies, children)
 ```
 
@@ -462,31 +483,31 @@ Test these (vectors of) logical statements
 ```{r}
 #| echo: true
 #| output-location: fragment
-c(2 == 2   ,   2 == 3) 
+c(2 == 2, 2 == 3)
 ```
 
 ```{r}
 #| echo: true
 #| output-location: fragment
-c(2 != 2   ,    2 != 3) 
+c(2 != 2, 2 != 3)
 ```
 
 ```{r}
 #| echo: true
 #| output-location: fragment
-c(2 != 2 & 2 != 3   ,   2 != 2 | 2 != 3)
+c(2 != 2 & 2 != 3, 2 != 2 | 2 != 3)
 ```
 
 ```{r}
 #| echo: true
 #| output-location: fragment
-c(2 == 2   ,   !(2 == 2))
+c(2 == 2, !(2 == 2))
 ```
 
 ```{r}
 #| echo: true
 #| output-location: fragment
-c(2 != 2   ,    !(2 != 2))
+c(2 != 2, !(2 != 2))
 ```
 
 :::
@@ -505,14 +526,14 @@ Select ranges of rows and columns
 ```{r} 
 #| echo: true
 #| output-location: fragment
-hotels[1:3,5:7]
+hotels[1:3, 5:7]
 ```
 
 You can use any vector (with non-overshooting indexes)
 ```{r} 
 #| echo: true
 #| output-location: fragment
-hotels[c(1:3,100232),c(5:7,1)]
+hotels[c(1:3, 100232), c(5:7, 1)]
 ```
 
 ## python is 0-indexed, R is 1-indexed! {.smaller}
@@ -550,7 +571,7 @@ Now, we select some rows and a column with logical index vectors
 ```{r} 
 #| echo: true
 #| output-location: column-fragment
-data[c(TRUE,FALSE,TRUE,FALSE,TRUE),c(TRUE,FALSE)]
+data[c(TRUE, FALSE, TRUE, FALSE, TRUE), c(TRUE, FALSE)]
 ```
 
 
@@ -561,37 +582,40 @@ data[c(TRUE,FALSE,TRUE,FALSE,TRUE),c(TRUE,FALSE)]
 #| output-location: column-fragment
 data$x
 ```
+
 . . .
 
 ```{r}
 #| echo: true
 #| output-location: column-fragment
-data$x %in% c("C","E")
+data$x %in% c("C", "E")
 ```
+
 . . .
 
-```{r} 
+```{r}
 #| echo: true
 #| output-location: column-fragment
-data[data$x %in% c("C","E"),]
+data[data$x %in% c("C", "E"), ]
 ```
+
 . . .
 
-```{r} 
+```{r}
 #| echo: true
 #| output-location: column-fragment
-data[data$x %in% c("C","E") | 
-       data$y %in% c("h","i"),]
+data[data$x %in% c("C", "E") | data$y %in% c("h", "i"), ]
 ```
+
 . . .
 
-```{r} 
+```{r}
 #| echo: true
 #| output-location: column-fragment
-data |> 
+data |>
   filter(
-    x %in% c("C","E") | y %in% c("h","i")
-    )
+    x %in% c("C", "E") | y %in% c("h", "i")
+  )
 ```
 
 # Counting and Sorting
@@ -603,21 +627,20 @@ data |>
 ```{r} 
 #| echo: true
 #| output-location: fragment
-hotels |> 
-  distinct(hotel, market_segment) |> 
+hotels |>
+  distinct(hotel, market_segment) |>
   arrange(hotel, market_segment)
 ```
-. . .
 
 ## Counting 
 
 `count`
 
-```{r} 
+```{r}
 #| echo: true
 #| output-location: fragment
-hotels |> 
-  count(hotel, market_segment) |>      # This produces a new variable n
+hotels |>
+  count(hotel, market_segment) |> # This produces a new variable n
   arrange(n)
 ```
 
@@ -628,8 +651,8 @@ hotels |>
 ```{r} 
 #| echo: true
 #| output-location: fragment
-hotels |> 
-  count(hotel, market_segment) |>      # This produces a new variable n
+hotels |>
+  count(hotel, market_segment) |> # This produces a new variable n
   arrange(desc(n))
 ```
 
@@ -705,7 +728,7 @@ hotels |>
 #| output-location: fragment
 hotels |>
   group_by(hotel, arrival_date_week_number) |>
-  summarise(mean_adr = mean(adr)) |> 
+  summarise(mean_adr = mean(adr)) |>
   ggplot(aes(x = arrival_date_week_number, y = mean_adr, color = hotel)) +
   geom_line()
 ```
@@ -718,7 +741,7 @@ Instead of a `group_by(...)` you can also use the `.by = ...` argument in `summa
 ```{r} 
 #| echo: true
 hotels |>
-  summarise(mean_adr = mean(adr), .by = c(hotel, arrival_date_week_number)) |> 
+  summarise(mean_adr = mean(adr), .by = c(hotel, arrival_date_week_number)) |>
   ggplot(aes(x = arrival_date_week_number, y = mean_adr, color = hotel)) +
   geom_line()
 ```
@@ -758,7 +781,7 @@ or names can be set afterward.
 #| echo: true
 #| output-location: fragment
 x <- 1:4
-y <- set_names(x, c("a","b","c","d"))
+y <- set_names(x, c("a", "b", "c", "d"))
 y
 ```
 
@@ -768,7 +791,7 @@ Named vectors can be used for subsetting.
 ```{r}
 #| echo: true
 #| output-location: fragment
-y[c("b","d")]
+y[c("b", "d")]
 ```
 
 ## Reminder: Indexing and vectorized thinking
@@ -776,7 +799,7 @@ y[c("b","d")]
 ```{r}
 #| echo: true
 #| output-location: fragment
-x <- set_names(1:10,LETTERS[1:10])
+x <- set_names(1:10, LETTERS[1:10])
 x
 ```
 
@@ -785,26 +808,31 @@ x
 ```{r}
 #| echo: true
 #| output-location: fragment
-x[c(4,2,1,1,1,1,4,1,5)]
+x[c(4, 2, 1, 1, 1, 1, 4, 1, 5)]
 ```
+
 . . . 
 
 Removing with negative index numbers.
 ```{r}
 #| echo: true
 #| output-location: fragment
-x[c(-3,-5,-2)]
+x[c(-3, -5, -2)]
 ```
+
 . . . 
 
-Mixing  does not work.
-```R
-x[c(-3,1)]  # Will throw an error
+Mixing negative and positive numbers does not work!
+
+```
+R
+x[c(-3, 1)] # Will throw an error
 ```
 
 ## R objects can have attributes {.smaller}
 
 In a named vector, the names are an attribute.
+
 ```{r}
 #| echo: true
 x
@@ -814,6 +842,7 @@ attributes(x)
 . . . 
 
 Attributes can be assigned freely.
+
 ```{r}
 #| echo: true
 #| output-location: fragment
@@ -908,7 +937,11 @@ mpg |> ggplot(aes(y = fct_rev(fct_infreq(manufacturer)))) + geom_bar()
 #| echo: true
 #| fig-height: 4
 #| fig-width: 7
-mpg |> ggplot(aes(y = fct_other(manufacturer, keep = c("dodge", "toyota", "volkswagen")))) + geom_bar()
+mpg |>
+  ggplot(aes(
+    y = fct_other(manufacturer, keep = c("dodge", "toyota", "volkswagen"))
+  )) +
+  geom_bar()
 ```
 
 :::
@@ -922,7 +955,8 @@ mpg |> ggplot(aes(y = fct_other(manufacturer, keep = c("dodge", "toyota", "volks
 
 ```{r}
 #| echo: true
-y <- as.Date("2020-01-01"); y
+y <- as.Date("2020-01-01")
+y
 typeof(y)
 attributes(y)
 as.double(y)
@@ -946,7 +980,7 @@ as.double(as.Date("1969-01-01"))
 
 ```{r}
 #| echo: true
-Sys.Date() - as.Date("1976-01-16") 
+Sys.Date() - as.Date("1976-01-16")
 # Sys.Date() gives as the current day your computer is set to
 ```
 
@@ -972,8 +1006,8 @@ POSIXct: Portable Operating System Interface, calendar time. Stores date and tim
 
 ```{r}
 #| echo: true
-as.double(lubridate::now()) - 
- as.double(lubridate::ymd_hm("1976-01-16_12:04"))
+as.double(lubridate::now()) -
+  as.double(lubridate::ymd_hm("1976-01-16_12:04"))
 ```
 
 
@@ -992,4 +1026,3 @@ as.double(lubridate::now()) -
     - Use the `lubridate` package. Usually you just need one command to convert a character vector to a date or date-time vector, but you have to customize correctly. 
 
 Read the chapter of factors and dates in [R for Data Science](https://r4ds.hadley.nz)
-

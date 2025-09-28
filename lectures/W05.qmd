@@ -25,13 +25,17 @@ In this lectures we will use these packages and datasets. You need to do this co
 library(tidyverse)
 library(palmerpenguins)
 if (!file.exists("data/galton.csv")) {
-  download.file(url = "https://raw.githubusercontent.com/CU-F24-MDSSB-01-Concepts-Tools/Website/refs/heads/main/data/galton.csv", 
-                destfile = "data/galton.csv")
-} 
+  download.file(
+    url = "https://raw.githubusercontent.com/CU-F24-MDSSB-01-Concepts-Tools/Website/refs/heads/main/data/galton.csv",
+    destfile = "data/galton.csv"
+  )
+}
 if (!file.exists("data/Viertelfest.csv")) {
-  download.file(url = "https://raw.githubusercontent.com/CU-F24-MDSSB-01-Concepts-Tools/Website/refs/heads/main/data/Viertelfest.csv", 
-                destfile = "data/Viertelfest.csv")
-} 
+  download.file(
+    url = "https://raw.githubusercontent.com/CU-F24-MDSSB-01-Concepts-Tools/Website/refs/heads/main/data/Viertelfest.csv",
+    destfile = "data/Viertelfest.csv"
+  )
+}
 galton <- read_csv("data/galton.csv")
 viertel <- read_csv("data/Viertelfest.csv")
 ```
@@ -94,7 +98,7 @@ Three different ways:
 #| echo: true
 #| output-location: fragment
 x <- c(1, 2, 4, 10, 300)
-mean(x) 
+mean(x)
 ```
 
 ```{r}
@@ -230,25 +234,28 @@ with $x = [x_1, \dots, x_n]$. $f^{-1}$ is the **inverse** of $f$.
 ```{r}
 #| fig-width: 4
 #| echo: true
-pfun <- function(x, p) (x^p-1)/p
-ipfun <- function(x, p) (p*x + 1)^(1/p)
-ggplot() + 
-	geom_function(fun = pfun, args = list(p = 1), color="red", size = 1.5) +
-	geom_function(fun = pfun, args = list(p = 2), color = "red", alpha=0.6) + 
-	geom_function(fun = pfun, args = list(p = 3), color = "red", alpha=0.3) +  
-	geom_function(fun = pfun, args = list(p = 1/2), color = "red3") + 
-	geom_function(fun = pfun, args = list(p = 1/3), color = "red4") + 
-	geom_function(fun = pfun, args = list(p = -1), color = "blue", size = 1.5) +  
-	geom_function(fun = pfun, args = list(p = -1/2), color = "blue3") + 
-	geom_function(fun = pfun, args = list(p = -1/3), color = "blue4") + 
-	geom_function(fun = pfun, args = list(p = -2), color = "blue", alpha=0.6) + 
-	geom_function(fun = pfun, args = list(p = -3), color = "blue", alpha=0.3) + 
-	geom_function(fun = log, color = "black", size = 1.5) + coord_fixed() +
-	xlim(c(0.01,4)) + ylim(c(-2,2)) + 
-	labs(x="x", y = "f(x)", title = "p = -1 (blue), 0 (black), +1 (red)") + 
-	theme(title = element_text(size = 2)) +
-	theme_minimal() 
-```
+pfun <- function(x, p) (x^p - 1) / p
+ipfun <- function(x, p) (p * x + 1)^(1 / p)
+ggplot() +
+  geom_function(fun = pfun, args = list(p = 1), color = "red", size = 1.5) +
+  geom_function(fun = pfun, args = list(p = 2), color = "red", alpha = 0.6) +
+  geom_function(fun = pfun, args = list(p = 3), color = "red", alpha = 0.3) +
+  geom_function(fun = pfun, args = list(p = 1 / 2), color = "red3") +
+  geom_function(fun = pfun, args = list(p = 1 / 3), color = "red4") +
+  geom_function(fun = pfun, args = list(p = -1), color = "blue", size = 1.5) +
+  geom_function(fun = pfun, args = list(p = -1 / 2), color = "blue3") +
+  geom_function(fun = pfun, args = list(p = -1 / 3), color = "blue4") +
+  geom_function(fun = pfun, args = list(p = -2), color = "blue", alpha = 0.6) +
+  geom_function(fun = pfun, args = list(p = -3), color = "blue", alpha = 0.3) +
+  geom_function(fun = log, color = "black", size = 1.5) +
+  coord_fixed() +
+  xlim(c(0.01, 4)) +
+  ylim(c(-2, 2)) +
+  labs(x = "x", y = "f(x)", title = "p = -1 (blue), 0 (black), +1 (red)") +
+  theme(title = element_text(size = 2)) +
+  theme_minimal()
+``
+`
 :::
 
 :::
@@ -301,7 +308,9 @@ galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5) +
 ```{r}
 #| echo: true
 #| fig-height: 2.5
-viertel |> ggplot(aes(`Schätzung`)) + geom_histogram() +
+viertel |> ggplot(aes(`
+Schätzung
+`)) + geom_histogram() +
  geom_vline(xintercept = 10788, color = "green") + 
  geom_vline(xintercept = mean(viertel$Schätzung), color = "red") + 
  geom_vline(xintercept = median(viertel$Schätzung), color = "blue") + 
@@ -319,7 +328,9 @@ viertel |> ggplot(aes(`Schätzung`)) + geom_histogram() +
 #| echo: true
 #| fig-height: 2.5
 viertel <- read_csv("data/Viertelfest.csv")
-viertel |> filter(Schätzung<100000) |> ggplot(aes(`Schätzung`)) + geom_histogram(binwidth = 500) +  
+viertel |> filter(Schätzung<100000) |> ggplot(aes(`
+Schätzung
+`)) + geom_histogram(binwidth = 500) +  
  geom_vline(xintercept = 10788, color = "green") +
  geom_vline(xintercept = mean(viertel$Schätzung), color = "red") + 
  geom_vline(xintercept = median(viertel$Schätzung), color = "blue") + 
@@ -404,7 +415,8 @@ sd(galton$Estimate)
 mad(galton$Estimate) # Warning: median absolute deviation is default
 range(galton$Estimate) # Oh, range gives us a vector of min and max. So, we diff
 diff(range(galton$Estimate))
-```
+`
+``
 :::
 
 ::: {.column width='50%'}
@@ -412,10 +424,11 @@ diff(range(galton$Estimate))
 #| echo: true
 var(viertel$Schätzung)
 sd(viertel$Schätzung)
-mad(viertel$Schätzung)  # Warning: median absolute deviation is default
+mad(viertel$Schätzung) # Warning: median absolute deviation is default
 range(viertel$Schätzung) # Oh, range gives us a vector of min and max. So, we diff
 diff(range(viertel$Schätzung))
-```
+``
+`
 :::
 
 ::::
@@ -484,7 +497,9 @@ galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5)
 ```{r}
 #| echo: true
 #| fig-height: 1.5
-viertel |> filter(Schätzung<100000) |> ggplot(aes(`Schätzung`)) + geom_histogram(binwidth = 500)
+viertel |> filter(Schätzung<100000) |> ggplot(aes(`
+Schätzung
+`)) + geom_histogram(binwidth = 500)
 ```
 
 ## Data Set 2: Palmer Penguins {.scrollable .smaller}
@@ -512,7 +527,8 @@ Shows summary statistics for the values in a vector
 ```{r}
 #| echo: true
 summary(galton$Estimate)
-```
+`
+``
 ```{r}
 #| echo: true
 summary(viertel$Schätzung)
@@ -523,7 +539,8 @@ Or for all columns in a data frame
 ```{r}
 #| echo: true
 summary(penguins)
-```
+``
+`
 :::
 
 ::: {.column width='35%'}
@@ -590,12 +607,18 @@ galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5) +
 #| echo: true
 # Min, 3 Quartiles, Max
 quantile(galton$Estimate, prob = seq(0, 1, by = 0.05))
-```
+`
+``
 ```{r}
 #| echo: true
 #| fig-height: 1.5
-galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5) + 
- geom_vline(xintercept = quantile(galton$Estimate, prob = seq(0, 1, by = 0.05)), color = "red")
+galton |>
+  ggplot(aes(Estimate)) +
+  geom_histogram(binwidth = 5) +
+  geom_vline(
+    xintercept = quantile(galton$Estimate, prob = seq(0, 1, by = 0.05)),
+    color = "red"
+  )
 ```
 
 
@@ -605,12 +628,17 @@ galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5) +
 ```{r}
 #| echo: true
 quantile(viertel$Schätzung, prob = seq(0, 1, by = 0.25))
-```
+``
+`
 ```{r}
 #| echo: true
 #| fig-height: 1.5
-viertel |> filter(Schätzung<100000) |> ggplot(aes(`Schätzung`)) + geom_histogram(binwidth = 500) + 
- geom_vline(xintercept = quantile(viertel$`Schätzung`, prob = seq(0, 1, by = 0.25))[1:4], color = "red")
+viertel |> filter(Schätzung<100000) |> ggplot(aes(`
+Schätzung
+`)) + geom_histogram(binwidth = 500) + 
+ geom_vline(xintercept = quantile(viertel$`
+Schätzung
+`, prob = seq(0, 1, by = 0.25))[1:4], color = "red")
 ```
 
 ## 1b Viertelfest: 20-quantiles {.smaller}
@@ -618,12 +646,21 @@ viertel |> filter(Schätzung<100000) |> ggplot(aes(`Schätzung`)) + geom_histogr
 ```{r}
 #| echo: true
 quantile(viertel$Schätzung, prob = seq(0, 1, by = 0.05))
-```
+`
+``
 ```{r}
 #| echo: true
 #| fig-height: 1.5
-viertel |> filter(Schätzung<100000) |> ggplot(aes(`Schätzung`)) + geom_histogram(binwidth = 500) + 
- geom_vline(xintercept = quantile(viertel$`Schätzung`, prob = seq(0, 1, by = 0.05))[1:19], color = "red")
+viertel |>
+  filter(Schätzung < 100000) |>
+  ggplot(aes(`Schätzung`)) +
+  geom_histogram(binwidth = 500) +
+  geom_vline(
+    xintercept = quantile(viertel$`Schätzung`, prob = seq(0, 1, by = 0.05))[
+      1:19
+    ],
+    color = "red"
+  )
 ```
 
 ## 2 Palmer Penguins Flipper Length: Quartiles {.smaller}
@@ -631,7 +668,8 @@ viertel |> filter(Schätzung<100000) |> ggplot(aes(`Schätzung`)) + geom_histogr
 ```{r}
 #| echo: true
 quantile(penguins$flipper_length_mm, prob = seq(0, 1, by = 0.25), na.rm = TRUE)
-```
+``
+`
 ```{r}
 #| echo: true
 #| fig-height: 1.5
@@ -645,12 +683,22 @@ penguins |> ggplot(aes(flipper_length_mm)) + geom_histogram(binwidth = 1) +
 ```{r}
 #| echo: true
 quantile(penguins$flipper_length_mm, prob = seq(0, 1, by = 0.05), na.rm = TRUE)
-```
+`
+``
 ```{r}
 #| echo: true
 #| fig-height: 1.5
-penguins |> ggplot(aes(flipper_length_mm)) + geom_histogram(binwidth = 1) + 
- geom_vline(xintercept = quantile(penguins$flipper_length_mm, prob = seq(0, 1, by = 0.05), na.rm = TRUE), color = "red")
+penguins |>
+  ggplot(aes(flipper_length_mm)) +
+  geom_histogram(binwidth = 1) +
+  geom_vline(
+    xintercept = quantile(
+      penguins$flipper_length_mm,
+      prob = seq(0, 1, by = 0.05),
+      na.rm = TRUE
+    ),
+    color = "red"
+  )
 ```
 
 
@@ -675,7 +723,8 @@ IQR(viertel$Schätzung)
 sd(viertel$Schätzung) # for comparison
 IQR(penguins$flipper_length_mm, na.rm = TRUE)
 sd(penguins$flipper_length_mm, na.rm = TRUE) # for comparison
-```
+``
+`
 :::
 
 ::: {.column width='60%'}
@@ -690,8 +739,12 @@ galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5) +
 
 ```{r}
 #| fig-height: 1.8
-q <- quantile(viertel$`Schätzung`, prob = seq(0, 1, by = 0.25))
-viertel |> filter(Schätzung<100000) |> ggplot(aes(`Schätzung`)) + geom_histogram(binwidth = 500) + 
+q <- quantile(viertel$`
+Schätzung
+`, prob = seq(0, 1, by = 0.25))
+viertel |> filter(Schätzung<100000) |> ggplot(aes(`
+Schätzung
+`)) + geom_histogram(binwidth = 500) + 
  geom_vline(xintercept = q[1:4], color = "red") +
  annotate("segment", x = q[2], xend = q[4], y = 0, yend = 0, color = "blue", size = 4) + 
  theme_grey(base_size = 20)
@@ -704,7 +757,8 @@ penguins |> ggplot(aes(flipper_length_mm)) + geom_histogram(binwidth = 1) +
  geom_vline(xintercept = q, color = "red") +
  annotate("segment", x = q[2], xend = q[4], y = 0, yend = 0, color = "blue", size = 4) + 
  theme_grey(base_size = 20)
-```
+`
+``
 :::
 
 ::::
@@ -757,7 +811,9 @@ palmerpenguins::penguins |> ggplot(aes(x = flipper_length_mm)) + geom_boxplot()
 ```{r}
 #| echo: true
 #| fig-height: 2
-palmerpenguins::penguins |> ggplot(aes(x = flipper_length_mm)) + geom_histogram(binwidth = 1)
+palmerpenguins::penguins |>
+  ggplot(aes(x = flipper_length_mm)) +
+  geom_histogram(binwidth = 1)
 ```
 
 # More Summary Statistics
@@ -884,8 +940,7 @@ Using `corrr` from the packages `tidymodels`
 ```{r}
 #| echo: true
 library(corrr)
-penguins |> select(-species, -island, -sex) |> 
- correlate()
+penguins |> select(-species, -island, -sex) |> correlate()
 ```
 
 
@@ -896,9 +951,9 @@ Using `correlation` from the packages `correlation`
 ```{r}
 #| echo: true
 library(correlation)
-results <- palmerpenguins::penguins |> 
- select(-species, -island, -sex) |> 
- correlation()
+results <- palmerpenguins::penguins |>
+  select(-species, -island, -sex) |>
+  correlation()
 results
 ```
 

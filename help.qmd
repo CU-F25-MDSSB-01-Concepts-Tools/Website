@@ -4,7 +4,7 @@ title: "Need help for Homework?"
 
 ## Setting up the basic toolkit
 
-- For [R](https://cloud.r-project.org/), [positron](https://positron.posit.co/), and [git](https://git-scm.com/downloads) you find instructions on the websites and help in "Data Science Tools"
+- Go through the [Checklist Technical Setup](setup.qmd) and make sure everything works.
 
 ## Good practices
 

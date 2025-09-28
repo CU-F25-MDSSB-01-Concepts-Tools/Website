@@ -23,23 +23,9 @@ In this lectures we will use these packages and datasets. You need to do this co
 #| output: false
 library(nycflights13)
 library(tidyverse)
-if (!file.exists("data/hotels.csv")) {
-  download.file(url = "https://raw.githubusercontent.com/rstudio-education/datascience-box/main/course-materials/_slides/u2-d06-grammar-wrangle/data/hotels.csv", 
-                destfile = "data/hotels.csv")
-}
-if (!file.exists("data/professions.csv")) {
-  download.file(url = "https://raw.githubusercontent.com/rstudio-education/datascience-box/main/course-materials/_slides/u2-d08-multi-df/data/professions.csv", 
-                destfile = "data/professions.csv")
-}
-if (!file.exists("data/dates.csv")) {
-  download.file(url = "https://raw.githubusercontent.com/rstudio-education/datascience-box/main/course-materials/_slides/u2-d08-multi-df/data/dates.csv", 
-                destfile = "data/dates.csv")
-}
-if (!file.exists("data/works.csv")) {
-  download.file(url = "https://raw.githubusercontent.com/rstudio-education/datascience-box/main/course-materials/_slides/u2-d08-multi-df/data/works.csv", 
-                destfile = "data/qorks.csv")
-}
+
 ```
+
 ::: aside
 Tip: Run the script in an R-project and have a folder `data/` in it such that the local path works!
 :::
@@ -56,24 +42,24 @@ Very few examples:
 
 ```{r}
 #| echo: true
-c("x","y")
-str_c("x","y")
+c("x", "y")
+str_c("x", "y")
 ```
 
 . . . 
 
 ```{r}
 #| echo: true
-str_c("x","y","z", sep=",")
+str_c("x", "y", "z", sep = ",")
 ```
 
 . . .
 
 ```{r}
 #| echo: true
-length(c("x","y","z"))
-str_length(c("x","y","z"))
-str_length(c("This is a string.","z"))
+length(c("x", "y", "z"))
+str_length(c("x", "y", "z"))
+str_length(c("This is a string.", "z"))
 ```
 
 
@@ -81,7 +67,12 @@ str_length(c("This is a string.","z"))
 
 ```{r}
 #| echo: true
-data <- tibble(Name = c("A","B","C"), Age_2020 = c(20,30,40), Age_2021 = c(21,31,41), Age_2022 = c(22,32,42))
+data <- tibble(
+  Name = c("A", "B", "C"),
+  Age_2020 = c(20, 30, 40),
+  Age_2021 = c(21, 31, 41),
+  Age_2022 = c(22, 32, 42)
+)
 data
 ```
 
@@ -92,7 +83,12 @@ We tidy that data set by creating a year variable.
 ```{r}
 #| echo: true
 #| output-location: fragment
-data |> pivot_longer(c("Age_2020", "Age_2021", "Age_2022"), names_to = "Year", values_to="Age")
+data |>
+  pivot_longer(
+    c("Age_2020", "Age_2021", "Age_2022"),
+    names_to = "Year",
+    values_to = "Age"
+  )
 ```
 
 . . . 
@@ -105,9 +101,9 @@ OK, but the year variable is a string but we want numbers.
 
 ```{r}
 #| echo: true
-word("This is a string.", start=2, end=-2) 
+word("This is a string.", start = 2, end = -2)
 #Selects from the second to the second last word.
-word("Age_2022", start=2, sep = "_")
+word("Age_2022", start = 2, sep = "_")
 ```
 
 . . .
@@ -117,7 +113,12 @@ It also works vectorized.
 ```{r}
 #| echo: true
 #| output-location: fragment
-data |> pivot_longer(c("Age_2020", "Age_2021", "Age_2022"), names_to = "Year", values_to="Age") |> 
+data |>
+  pivot_longer(
+    c("Age_2020", "Age_2021", "Age_2022"),
+    names_to = "Year",
+    values_to = "Age"
+  ) |>
   mutate(Year = word(Year, start = 2, sep = "_") |> as.numeric())
 ```
 
@@ -132,12 +133,12 @@ A few examples show its power:
 ```{r}
 #| echo: true
 fruits <- c("apple", "pineapple", "Pear", "orange", "peach", "banana")
-str_detect(fruits,"apple")
-str_extract(fruits,"apple")
-str_extract(fruits,"[Pp][a-z]")
-str_extract(fruits,"^[Pp][a-z]")
-str_extract(fruits,"^[Pp][a-z]{3}")
-str_extract(fruits,"^[Pp][a-z]+")
+str_detect(fruits, "apple")
+str_extract(fruits, "apple")
+str_extract(fruits, "[Pp][a-z]")
+str_extract(fruits, "^[Pp][a-z]")
+str_extract(fruits, "^[Pp][a-z]{3}")
+str_extract(fruits, "^[Pp][a-z]+")
 ```
 
 ## Regular Expressions {.smaller}
@@ -178,31 +179,31 @@ Check some math:
 ```{r}
 #| echo: true
 #| output-location: column-fragment
-1/0
+1 / 0
 ```
 
 ```{r}
 #| echo: true
 #| output-location: column-fragment
--1/0
+-1 / 0
 ```
 
 ```{r}
 #| echo: true
 #| output-location: column-fragment
-0/0
+0 / 0
 ```
 
 ```{r}
 #| echo: true
 #| output-location: column-fragment
-1/0 + 1/0
+1 / 0 + 1 / 0
 ```
 
 ```{r}
 #| echo: true
 #| output-location: column-fragment
-1/0 - 1/0
+1 / 0 - 1 / 0
 ```
 
 ## `NA`s  {.smaller}
@@ -299,7 +300,8 @@ Often variables in different dataframe have the same name, but that need not be 
 ## Data: Women in science {.smaller}
 
 10 women in science who changed the world: 
-`r read_csv("data/professions.csv") |> pull(name) |> paste(collapse=", ")`
+
+`r read_csv("professions.csv") |> pull(name) |> paste(collapse=", ")`
 
 
 ::: {.panel-tabset}
@@ -308,7 +310,7 @@ Often variables in different dataframe have the same name, but that need not be 
 
 ```{r}
 #| echo: true
-professions <- read_csv("data/professions.csv")
+professions <- read_csv("professions.csv")
 professions
 ```
 
@@ -316,7 +318,7 @@ professions
 
 ```{r}
 #| echo: true
-dates <- read_csv("data/dates.csv")
+dates <- read_csv("dates.csv")
 dates
 ```
 
@@ -324,9 +326,10 @@ dates
 
 ```{r}
 #| echo: true
-works <- read_csv("data/works.csv")
+works <- read_csv("works.csv")
 works
 ```
+
 :::
 
 
@@ -340,7 +343,7 @@ The data can be downloaded: [professions.csv](https://raw.githubusercontent.com/
 ## We want this dataframe {.smaller}
 
 ```{r}
-professions  |> left_join(dates) |> left_join(works)
+professions |> left_join(dates) |> left_join(works)
 ```
 
 ## Joining dataframes {.smaller}
@@ -360,11 +363,11 @@ professions  |> left_join(dates) |> left_join(works)
 x <- tibble(
   id = c(1, 2, 3),
   value_x = c("x1", "x2", "x3")
-  )
+)
 y <- tibble(
   id = c(1, 2, 4),
   value_y = c("y1", "y2", "y4")
-  )
+)
 x
 y
 ```
@@ -372,66 +375,92 @@ y
 ## `left_join()`
 
 :::{.columns}
+
 :::{.column width=50%}
+
 ![](img/left-join.gif)
+
 :::
+
 :::{.column}
 ```{r}
 #| echo: true
 left_join(x, y)
 ```
+
 :::
+
 :::
 
 ## `right_join()`
 
 :::{.columns}
+
 :::{.column width=50%}
+
 ![](img/right-join.gif)
+
 :::
+
 :::{.column}
+
 ```{r}
 #| echo: true
 right_join(x, y)
 ```
+
 :::
+
 :::
 
 
 ## `full_join()`
 
 :::{.columns}
+
 :::{.column width=50%}
+
 ![](img/full-join.gif)
+
 :::
+
 :::{.column}
 ```{r}
 #| echo: true
 full_join(x, y)
 ```
+
 :::
+
 :::
 
 
 ## `inner_join()`
 
 :::{.columns}
+
 :::{.column width=50%}
+
 ![](img/inner-join.gif)
+
 :::
+
 :::{.column}
+
 ```{r}
 #| echo: true
 inner_join(x, y)
 ```
+
 :::
+
 :::
 
 ## Women in science {.smaller}
 
 :::{.panel-tabset}
 
-#### `left_join`
+#### `left_join()`
 
 ```{r}
 #| echo: true
@@ -489,7 +518,7 @@ Counting observation and filter those more than one
 #| echo: true
 library(nycflights13)
 planes |> count(tailnum) |> filter(n > 1)
-weather |> count(year, month, day, hour, origin) |> filter(n > 1) 
+weather |> count(year, month, day, hour, origin) |> filter(n > 1)
 ```
 
 OK, here 3 observations are twice, one for each airport. Probably this is related to [Daylight saving time](https://en.wikipedia.org/wiki/Daylight_saving_time) in the US. In Fall clocks are turned back 1 hour. So this hour appears twice. 
@@ -499,8 +528,6 @@ Example: Without hour it is not a key
 ```{r}
 #| echo: true
 weather |> count(year, month, day, origin) |> filter(n > 1)
-
-
 ```
 
 Why do we have only 22 and 23 on day 1 of month 1? No idea. Dig deeper yourself!
@@ -546,8 +573,9 @@ flights |> left_join(airports, join_by("dest" == "faa"))
 
 ```{r}
 #| echo: true
-airports_right_flights <- airports |> right_join(flights, by = c("faa" = "dest"))
-airports_right_flights 
+airports_right_flights <- airports |>
+  right_join(flights, by = c("faa" = "dest"))
+airports_right_flights
 ```
 
 Differences 
@@ -560,8 +588,8 @@ Using the fact that flights seem to be ordered by `year`, `month`, `day`, `dep_t
 
 ```{r}
 #| echo: true
-airports_right_flights |> 
-  rename(dest = faa) |> 
+airports_right_flights |>
+  rename(dest = faa) |>
   select(names(flights)) |> # Use order of flights
   arrange(year, month, day, dep_time)
 ```
@@ -575,7 +603,7 @@ Note of caution: A deeper analysis shows that the order is still not exactly the
 #| echo: true
 dim(airports)
 dim(flights)
-airports |> 
+airports |>
   left_join(flights, by = c("faa" = "dest"))
 ```
 
@@ -601,9 +629,9 @@ Let us dig deeper.
 
 ```{r}
 #| echo: true
-setdiff( unique(airports$faa), unique(flights$dest)) |> length()
+setdiff(unique(airports$faa), unique(flights$dest)) |> length()
 
-setdiff( unique(flights$dest), unique(airports$faa)) |> length()
+setdiff(unique(flights$dest), unique(airports$faa)) |> length()
 ```
 
 1,357 airports have no flights!   
@@ -613,8 +641,8 @@ How many flights are to these?
 
 ```{r}
 #| echo: true
-flights |> 
-  filter(dest %in% setdiff( unique(flights$dest), unique(airports$faa))) |> 
+flights |>
+  filter(dest %in% setdiff(unique(flights$dest), unique(airports$faa))) |>
   nrow()
 ```
 
@@ -622,7 +650,8 @@ flights |>
 
 ```{r}
 #| echo: true
-nrow(airports |> left_join(flights, by = c("faa" = "dest"))) == nrow(flights) + 1357 - 7602
+nrow(airports |> left_join(flights, by = c("faa" = "dest"))) ==
+  nrow(flights) + 1357 - 7602
 ```
 
 OK, now we have a clear picture: 
@@ -703,7 +732,7 @@ unique(flights$origin)
 
 ```{r}
 #| echo: true
-setequal(c("EWR","LGA","JFK"), c("EWR","EWR","LGA","JFK"))
+setequal(c("EWR", "LGA", "JFK"), c("EWR", "EWR", "LGA", "JFK"))
 ```
 
 . . . 
@@ -712,9 +741,9 @@ setequal(c("EWR","LGA","JFK"), c("EWR","EWR","LGA","JFK"))
 
 ```{r}
 #| echo: true
-union(1:5,3:7)
-intersect(1:5,3:7)
-setdiff(1:5,3:7)
+union(1:5, 3:7)
+intersect(1:5, 3:7)
+setdiff(1:5, 3:7)
 ```
 
 ## Sets: Take-away
@@ -822,7 +851,11 @@ No, it is not a function. It has nine outcomes and these change when run again.
 
 ```{r}
 library(tidyverse)
-ggplot() + geom_function(fun = function(x) x^3 - x^2) + xlim(c(-0.5,1.5)) + xlab("x") + theme_minimal(base_size = 20)
+ggplot() +
+  geom_function(fun = function(x) x^3 - x^2) +
+  xlim(c(-0.5, 1.5)) +
+  xlab("x") +
+  theme_minimal(base_size = 20)
 ```
 
 <!-- ## Higher dimensional input and output -->
@@ -849,15 +882,19 @@ $\sqrt[2]{x}^2 = \sqrt[2]{x^2} = x$, $\log(e^x) = e^{\log(x)} = x$
 :::{.column width="50%"}
 ```{r}
 #| fig-width: 5
-ggplot() + 
-  geom_function(fun = function(x) x) + 
-  geom_function(fun = function(x) exp(x), color = "red") + 
-  geom_function(fun = function(x) log(x), color = "green") + 
-  geom_function(fun = function(x) x^2, color = "orange") + 
-  geom_function(fun = function(x) sqrt(x), color = "blue") + 
+ggplot() +
+  geom_function(fun = function(x) x) +
+  geom_function(fun = function(x) exp(x), color = "red") +
+  geom_function(fun = function(x) log(x), color = "green") +
+  geom_function(fun = function(x) x^2, color = "orange") +
+  geom_function(fun = function(x) sqrt(x), color = "blue") +
   coord_fixed() +
-  xlim(c(-3,3))+ ylim(c(-3,3)) + xlab("x") + theme_minimal(base_size = 20)
+  xlim(c(-3, 3)) +
+  ylim(c(-3, 3)) +
+  xlab("x") +
+  theme_minimal(base_size = 20)
 ```
+
 :::
 :::
 
@@ -886,17 +923,24 @@ $\quad f(x) = x^3 - x^2 + a$
 For $a =$ [-2]{style="color:red;"}, [-0.5]{style="color:darkred;"}, [0.5]{style="color:darkblue;"}, [2]{style="color:blue;"}
 ::: 
 :::{.column}
+
 ```{r}
 #| echo: true
 #| fig-height: 8.5
 a = c(1, 0.5, 2, -0.5, -2)
-ggplot() + geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
-  geom_function(fun = function(x) x^3 - x^2 +a[2], color = "blue4", size = 2) +
-  geom_function(fun = function(x) x^3 - x^2 +a[3], color = "blue", size = 2) +
-  geom_function(fun = function(x) x^3 - x^2 +a[4], color = "red4") +
-  geom_function(fun = function(x) x^3 - x^2 +a[5], color = "red") +
-  coord_fixed() + xlim(c(-3,3)) + ylim(c(-3,3)) + xlab("x") + theme_minimal(base_size = 24)
+ggplot() +
+  geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
+  geom_function(fun = function(x) x^3 - x^2 + a[2], color = "blue4", size = 2) +
+  geom_function(fun = function(x) x^3 - x^2 + a[3], color = "blue", size = 2) +
+  geom_function(fun = function(x) x^3 - x^2 + a[4], color = "red4") +
+  geom_function(fun = function(x) x^3 - x^2 + a[5], color = "red") +
+  coord_fixed() +
+  xlim(c(-3, 3)) +
+  ylim(c(-3, 3)) +
+  xlab("x") +
+  theme_minimal(base_size = 24)
 ```
+
 :::
 :::
 
@@ -916,17 +960,32 @@ Shifting $a$ units to the right needs subtracting $a$!
 You can think of the *coordinate system being shifted* in direction $a$ while the graph stays.
 ::: 
 :::{.column}
+
 ```{r}
 #| fig-height: 8.5
 #| echo: true
 a = c(1, 0.5, 2, -0.5, -2)
-ggplot() + geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
-  geom_function(fun = function(x) (x-a[2])^3 - (x-a[2])^2, color = "blue4", size = 2) +
-  geom_function(fun = function(x) (x-a[3])^3 - (x-a[3])^2, color = "blue", size = 2) +
-  geom_function(fun = function(x) (x-a[4])^3 - (x-a[4])^2, color = "red4") +
-  geom_function(fun = function(x) (x-a[5])^3 - (x-a[5])^2, color = "red") +
-  coord_fixed() + xlim(c(-3,3)) + ylim(c(-3,3)) + xlab("x") + theme_minimal(base_size = 24)
+ggplot() +
+  geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
+  geom_function(
+    fun = function(x) (x - a[2])^3 - (x - a[2])^2,
+    color = "blue4",
+    size = 2
+  ) +
+  geom_function(
+    fun = function(x) (x - a[3])^3 - (x - a[3])^2,
+    color = "blue",
+    size = 2
+  ) +
+  geom_function(fun = function(x) (x - a[4])^3 - (x - a[4])^2, color = "red4") +
+  geom_function(fun = function(x) (x - a[5])^3 - (x - a[5])^2, color = "red") +
+  coord_fixed() +
+  xlim(c(-3, 3)) +
+  ylim(c(-3, 3)) +
+  xlab("x") +
+  theme_minimal(base_size = 24)
 ```
+
 :::
 :::
 
@@ -944,17 +1003,32 @@ For $a =$ [-2]{style="color:red;"}, [-0.5]{style="color:darkred;"}, [0.5]{style=
 Negative numbers flip the graph around the $x$-axis. 
 ::: 
 :::{.column}
+
 ```{r}
 #| fig-height: 8.5
 #| echo: true
 a = c(1, 0.5, 2, -0.5, -2)
-ggplot() + geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
-  geom_function(fun = function(x) a[2]*((x)^3 - (x)^2), color = "blue4", size = 2) +
-  geom_function(fun = function(x) a[3]*((x)^3 - (x)^2), color = "blue", size = 2) +
-  geom_function(fun = function(x) a[4]*((x)^3 - (x)^2), color = "red4") +
-  geom_function(fun = function(x) a[5]*((x)^3 - (x)^2), color = "red") +
-  coord_fixed() + xlim(c(-3,3)) + ylim(c(-3,3)) + xlab("x") + theme_minimal(base_size = 24)
+ggplot() +
+  geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
+  geom_function(
+    fun = function(x) a[2] * ((x)^3 - (x)^2),
+    color = "blue4",
+    size = 2
+  ) +
+  geom_function(
+    fun = function(x) a[3] * ((x)^3 - (x)^2),
+    color = "blue",
+    size = 2
+  ) +
+  geom_function(fun = function(x) a[4] * ((x)^3 - (x)^2), color = "red4") +
+  geom_function(fun = function(x) a[5] * ((x)^3 - (x)^2), color = "red") +
+  coord_fixed() +
+  xlim(c(-3, 3)) +
+  ylim(c(-3, 3)) +
+  xlab("x") +
+  theme_minimal(base_size = 24)
 ```
+
 :::
 :::
 
@@ -974,19 +1048,35 @@ Negative numbers flip the graph around the $y$-axis.
 **Attention:**
 Stretching needs a division by $a$!   
 You can think of the *coordinate system being stretched* multiplicatively by $a$ while the graph stays.
+
 ::: 
 :::{.column}
+
 ```{r}
 #| fig-height: 8.5
 #| echo: true
 a = c(1, 0.5, 2, -0.5, -2)
-ggplot() + geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
-  geom_function(fun = function(x) (x/a[2])^3 - (x/a[2])^2, color = "blue4", size = 2) +
-  geom_function(fun = function(x) (x/a[3])^3 - (x/a[3])^2, color = "blue", size = 2) +
-  geom_function(fun = function(x) (x/a[4])^3 - (x/a[4])^2, color = "red4") +
-  geom_function(fun = function(x) (x/a[5])^3 - (x/a[5])^2, color = "red") +
-  coord_fixed() + xlim(c(-3,3)) + ylim(c(-3,3)) + xlab("x") + theme_minimal(base_size = 24)
+ggplot() +
+  geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
+  geom_function(
+    fun = function(x) (x / a[2])^3 - (x / a[2])^2,
+    color = "blue4",
+    size = 2
+  ) +
+  geom_function(
+    fun = function(x) (x / a[3])^3 - (x / a[3])^2,
+    color = "blue",
+    size = 2
+  ) +
+  geom_function(fun = function(x) (x / a[4])^3 - (x / a[4])^2, color = "red4") +
+  geom_function(fun = function(x) (x / a[5])^3 - (x / a[5])^2, color = "red") +
+  coord_fixed() +
+  xlim(c(-3, 3)) +
+  ylim(c(-3, 3)) +
+  xlab("x") +
+  theme_minimal(base_size = 24)
 ```
+
 :::
 :::
 
@@ -1002,16 +1092,17 @@ $f(x) = x^3$ vs. [$f(x) = e^x$]{style="color:red;"}
 
 ```{r}
 library(patchwork)
-g1 = ggplot() + 
+g1 = ggplot() +
   geom_function(fun = function(x) x^3) +
-  geom_function(fun = function(x) exp(x)-1, color = "red") +
-  xlim(c(0,2)) + xlab("x") + theme_minimal(base_size = 18)
-g2 = g1 + xlim(c(0,5))
+  geom_function(fun = function(x) exp(x) - 1, color = "red") +
+  xlim(c(0, 2)) +
+  xlab("x") +
+  theme_minimal(base_size = 18)
+g2 = g1 + xlim(c(0, 5))
 g1 + g2 + plot_annotation(title = "Same function but different of axis limits!")
 ```
 
 **For $x\to\infty$, any exponential will finally "overtake" any polynomial.**
-
 
 
 # Functions in Programming $\to$ Programming Function
@@ -1057,7 +1148,7 @@ ggplot2::ggplot # This function is not written solely in R
 ```{r}
 #| echo: true
 add_one <- function(x) {
-  x + 1 
+  x + 1
 }
 # Test it
 add_one(10)
@@ -1088,7 +1179,7 @@ function_name <- function(input){
 #| echo: true
 #| output-location: column-fragment
 mymult <- function(x = 2, y = 3) x * (y - 1)
-mymult(3,4)
+mymult(3, 4)
 ```
 
 
@@ -1109,6 +1200,7 @@ mymult(y = 3, x = 6)
 #| output-location: column-fragment
 mymult(5)
 ```
+ 
 ```{r}
 #| echo: true
 #| output-location: column-fragment
@@ -1122,8 +1214,9 @@ For complex output use a list
 ```{r}
 #| echo: true
 #| output-location: column-fragment
-mymult <- function(x = 2, y = 3) 
+mymult <- function(x = 2, y = 3) {
   list(out1 = x * (y - 1), out2 = x * (y - 2))
+}
 mymult()
 ```
 
@@ -1139,13 +1232,13 @@ Mathematical functions in programming are often "vectorized":
 ```{r}
 #| echo: true
 #| output-location: fragment
-log10(c(1,10,100,1000,10000))
+log10(c(1, 10, 100, 1000, 10000))
 ```
 
 ```{r}
 #| echo: true
 #| output-location: fragment
-c(1,1,2) + c(3,1,0)
+c(1, 1, 2) + c(3, 1, 0)
 ```
 
 ```{r}
@@ -1165,25 +1258,25 @@ c(1,1,2) + c(3,1,0)
 ```{r}
 #| echo: true
 #| output-location: fragment
-seq(from=-0.5, to=1.5, by=0.1)
+seq(from = -0.5, to = 1.5, by = 0.1)
 ```
 
 ```{r}
 #| echo: true
 #| output-location: fragment
-seq(from=0, to=1, length.out=10)
+seq(from = 0, to = 1, length.out = 10)
 ```
 
 ```{r}
 #| echo: true
 #| output-location: fragment
-rep(1:3, times=3)
+rep(1:3, times = 3)
 ```
 
 ```{r}
 #| echo: true
 #| output-location: fragment
-rep(1:3, each=3)
+rep(1:3, each = 3)
 ```
 
 ## Plotting and transformation {.smaller}
@@ -1192,10 +1285,10 @@ rep(1:3, each=3)
 
 ```{r}
 #| echo: true
-func <- function(x) x^3 - x^2    # Create a vectorized function
-data <- tibble(x = seq(-0.5,1.5,by =0.01)) |>    # Vector creation
-	mutate(y = func(x))        # Vectorized transformation using the function
-data |> ggplot(aes(x,y)) + geom_line() + theme_minimal(base_size = 20)
+func <- function(x) x^3 - x^2 # Create a vectorized function
+data <- tibble(x = seq(-0.5, 1.5, by = 0.01)) |> # Vector creation
+  mutate(y = func(x)) # Vectorized transformation using the function
+data |> ggplot(aes(x, y)) + geom_line() + theme_minimal(base_size = 20)
 ```
 
 ## Conveniently `ggplot`ing functions
@@ -1205,9 +1298,9 @@ data |> ggplot(aes(x,y)) + geom_line() + theme_minimal(base_size = 20)
 #| fig.width: 5
 #| fig.height: 3
 ggplot() +
- geom_function(fun = log) +
- geom_function(fun = function(x) 3*x - 4, color = "red") +
- theme_minimal(base_size = 20)
+  geom_function(fun = log) +
+  geom_function(fun = function(x) 3 * x - 4, color = "red") +
+  theme_minimal(base_size = 20)
 ```
 
 
@@ -1236,6 +1329,7 @@ Example: A piece-wise defined function
 :::: {.columns}
 
 ::: {.column width='50%'}
+
 ```{r}
 #| echo: true
 
@@ -1247,15 +1341,18 @@ piecewise <- function(x) {
   }
 }
 ```
+
 :::
 
 ::: {.column width='50%'}
+
 ```{r}
 #| echo: true
 piecewise(1)
 piecewise(2)
 piecewise(3)
 ```
+
 :::
 
 ::::
@@ -1276,21 +1373,25 @@ Problem: `piecewise` is not vectorized. `piecewise(c(1,2,3))` does not work!
 ```{r}
 #| echo: true
 
-map(c(1,2,3), piecewise) 
-map_dbl(c(1,2,3), piecewise) 
+map(c(1, 2, 3), piecewise)
+map_dbl(c(1, 2, 3), piecewise)
 
-piecewise_vectorized <- 
- function(x) map_dbl(x, piecewise) 
+piecewise_vectorized <-
+  function(x) map_dbl(x, piecewise)
 ```
+
 :::
 
 ::: {.column width='50%'}
+
 ```{r}
 #| echo: true
-piecewise_vectorized(seq(0,3,by = 0.5))
-tibble(x = seq(0,3,by = 0.5)) |> 
-  mutate(y = piecewise_vectorized(x)) |> 
-  ggplot(aes(x,y)) + geom_line() + theme_minimal(base_size = 20)
+piecewise_vectorized(seq(0, 3, by = 0.5))
+tibble(x = seq(0, 3, by = 0.5)) |>
+  mutate(y = piecewise_vectorized(x)) |>
+  ggplot(aes(x, y)) +
+  geom_line() +
+  theme_minimal(base_size = 20)
 ```
 
 :::
@@ -1304,8 +1405,9 @@ To that end it needs a function with two arguments. It applies it to the first t
 
 ```{r}
 #| echo: true
-1:10 |> reduce(\(x,y) x + y)
+1:10 |> reduce(\(x, y) x + y)
 ```
+
 Note: `\(x)` is a short way to write an **anonymous function** as `function(x)`. 
 
 . . . 
@@ -1328,15 +1430,18 @@ g <-read_csv("g.csv")
 
 bind_rows(a,b,c,d,e,f,g)
 ```
+
 :::
 
 ::: {.column width='50%'}
 Write
+
 ```R
 letter[1:7] |> 
  map(\(x) read_csv(paste0(x,".csv"))) |> 
  reduce(bind_rows)
 ```
+
 :::
 
 ::::

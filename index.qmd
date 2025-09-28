@@ -2,6 +2,10 @@
 title: "Data Science Concepts / Data Science Tools"
 ---
 
+::: {.callout-important}
+[**Room Change!** Come to SH-229 Video Conference in South Hall from Sep 29 on!]{.red}
+:::
+
 :::{.callout-warning collapse=true appearance='default' icon=true}
 ## Note for students of **Master program: Data Science for Society and Business (online)**
 

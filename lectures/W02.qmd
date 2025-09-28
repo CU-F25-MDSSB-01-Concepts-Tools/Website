@@ -11,8 +11,6 @@ format:
     logo: img/ConstructorUniversity.png
     footer: "MDSSB-DSCO-02: Data Science Concepts"
     smaller: true
-editor_options: 
-  chunk_output_type: console
 ---
 
 # Grammar of Graphics with `ggplot`
@@ -23,6 +21,7 @@ We need the tidyverse packages
 
 ```{r}
 #| echo: true
+#| message: false
 library(tidyverse)
 ```
 
@@ -65,7 +64,7 @@ ggplot(data = mpg) + geom_point(mapping = aes(x = cty, y = hwy))
 
 - The "+" in ggplot specifies that specifications will be taken from the object defined before the +.
 - Technically `ggplot()` creates an ggplot object (the graphic) and `+geom_point()` adds more information to it.
-- So, `data` was be taken from the `ggplot` call, and `mapping` from `geom_point`
+- So, `data` was taken from the `ggplot` call, and `mapping` from `geom_point`
 
 
 ## It also works this way
@@ -172,7 +171,8 @@ Example: Scale the size differently
 
 ```{r}
 #| echo: true
-ggplot(mpg, aes(cty, hwy, color = manufacturer, size = cyl)) + geom_point() +
+ggplot(mpg, aes(cty, hwy, color = manufacturer, size = cyl)) +
+  geom_point() +
   scale_size_area()
 ```
 
@@ -295,10 +295,10 @@ Example
 
 ```{r}
 #| echo: true
-our_plot + 
- scale_x_log10() + 
- scale_y_reverse() + 
- scale_colour_hue(l = 70, c = 30)
+our_plot +
+  scale_x_log10() +
+  scale_y_reverse() +
+  scale_colour_hue(l = 70, c = 30)
 ```
 
 
@@ -308,9 +308,10 @@ Example
 
 ```{r}
 #| echo: true
-our_plot + 
- xlim(c(0,40)) + 
- xlab("City miles per gallon") + ylab("Highway miles per gallon")
+our_plot +
+  xlim(c(0, 40)) +
+  xlab("City miles per gallon") +
+  ylab("Highway miles per gallon")
 ```
 
 
@@ -357,27 +358,30 @@ a <- "4"
 ```{r}
 #| echo: true
 #| output-location: column-fragment
-c(x,y)
+c(x, y)
+```
+
+```{r}
+#| echo: true
+#| output-location: column-fragment
+c(y, z) |> typeof()
+```
+
+```{r}
+#| echo: true
+#| output-location: column-fragment
+c(z, a)
+```
+
+```{r}
+#| echo: true
+#| output-location: column-fragment
+c(x, a)
 ```
 ```{r}
 #| echo: true
 #| output-location: column-fragment
-c(y,z) |> typeof()
-```
-```{r}
-#| echo: true
-#| output-location: column-fragment
-c(z,a)
-```
-```{r}
-#| echo: true
-#| output-location: column-fragment
-c(x,a)
-```
-```{r}
-#| echo: true
-#| output-location: column-fragment
-c(c(x,y),a)
+c(c(x, y), a)
 ```
 ```{r}
 #| echo: true
@@ -458,7 +462,7 @@ Let us practice the two important commands
 ## `pivot_longer`
 
 ```{r}
-#| echo: true 
+#| echo: true
 data_wide <- tibble(
   id = 1:3,
   height_2023 = c(150, 160, 170),
@@ -468,10 +472,13 @@ data_wide
 ```
 
 ```{r}
-#| echo: true 
-data_longer <- pivot_longer(data = data_wide, 
-                            cols = c(height_2023, height_2024),
-                            names_to = "year", values_to = "height")
+#| echo: true
+data_longer <- pivot_longer(
+  data = data_wide,
+  cols = c(height_2023, height_2024),
+  names_to = "year",
+  values_to = "height"
+)
 data_longer
 ```
 
@@ -515,9 +522,12 @@ data |> function1() |> function2() |> function3()
 ## With the pipe
 
 ```{r}
-data_longer <- data_wide |> 
- pivot_longer(cols = c(height_2023, height_2024),
-              names_to = "year", values_to = "height")
+data_longer <- data_wide |>
+  pivot_longer(
+    cols = c(height_2023, height_2024),
+    names_to = "year",
+    values_to = "height"
+  )
 data_longer
 ```
 
@@ -531,7 +541,7 @@ Let's do a string mutate:
 
 ```{r}
 #| echo: true
-data_longer <- data_longer |> 
+data_longer <- data_longer |>
   mutate(year = str_remove(year, "height_"))
 data_longer
 ```
@@ -545,7 +555,7 @@ We mutate further:
 
 ```{r}
 #| echo: true
-data_longer <- data_longer |> 
+data_longer <- data_longer |>
   mutate(year = as.numeric(year))
 data_longer
 ```
@@ -556,9 +566,8 @@ That is fine.
 
 ```{r}
 #| echo: true
-data_longer |> 
-  pivot_wider(names_from = year, 
-              values_from = height)
+data_longer |>
+  pivot_wider(names_from = year, values_from = height)
 ```
 
 . . .
@@ -569,10 +578,8 @@ OK, but now we have just numbers as variable names. Can we get `height_` prefix 
 
 ```{r}
 #| echo: true
-data_longer |> 
-  pivot_wider(names_from = year, 
-              values_from = height,
-              names_prefix = "height_") 
+data_longer |>
+  pivot_wider(names_from = year, values_from = height, names_prefix = "height_")
 ```
 
 ## Summary piping and tidying

@@ -3,10 +3,18 @@ project:
   render:
     - index.qmd
     - schedule.qmd
+    - setup.qmd
     - final.qmd
     - homework.qmd
     - literature.qmd
     - help.qmd
+    - material/M01.qmd
+    - material/M02.qmd
+    - material/M03.qmd
+    - material/M04.qmd
+    - lectures/W02.qmd
+    - lectures/W03.qmd
+    - lectures/W04.qmd
     
 execute:
   freeze: auto  # re-render only when source changes
@@ -17,28 +25,34 @@ website:
     left:
       - href: index.qmd
         text: Syllabus
+      - href: schedule.qmd
+        text: Schedule
     right:
-      - href: "{{< var org.link >}}"
+      - icon: github
+        href: "{{< var org.link >}}"
         text: "{{< var org.name >}}" 
         
   sidebar:
     style: "docked"
     search: true
+    collapse-level: 1
     contents:
       - text: "Syllabus"
         file: index.qmd
-      - text: "**Schedule**"
-        file: schedule.qmd
-      - text: "Literature"
-        file: literature.qmd
+      - section: Schedule 
+        href: schedule.qmd
+        contents:
+          - material/M01.qmd
+          - material/M02.qmd
+          - material/M03.qmd
+          - material/M04.qmd
+      - setup.qmd
+      - literature.qmd
       # - text: "Onboarding Late-arriving"
       #   file: late.qmd
-      - text: "Homework Projects"
-        file: homework.qmd
-      - text: "Final Project"
-        file: final.qmd
-      - text: "Help Project Work"
-        file: help.qmd
+      - homework.qmd
+      - final.qmd
+      - help.qmd
       
 format:
   html:
