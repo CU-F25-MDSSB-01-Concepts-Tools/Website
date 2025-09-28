@@ -16,15 +16,18 @@ bibliography: "/home/janlo/Documents/literature/litlorenz_zot.bib"
 
 ## Preliminaries {.smaller}
 
-In this lectures we will use these packages and datasets. You need to do this code in the Console to download data and play with some of the code in this lecture. 
+In this lectures we will use these packages. 
 
 ```{r}
 #| echo: true
 #| output: false
 library(nycflights13)
 library(tidyverse)
-
 ```
+
+The datasets used are accessible in <https://github.com/CU-F25-MDSSB-01-Concepts-Tools/Website/tree/main/lectures> 
+
+
 
 ::: aside
 Tip: Run the script in an R-project and have a folder `data/` in it such that the local path works!
