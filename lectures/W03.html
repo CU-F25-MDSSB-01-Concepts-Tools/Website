@@ -489,7 +489,7 @@
   };
 
   // Store cell data
-  globalThis.qwebrCellDetails = [{"code":"","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
+  globalThis.qwebrCellDetails = [{"code":"","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-1","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"Sys.Date() - as.Date(\"1997-01-01\")","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-2","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
 
   </script>
   <script type="module">
@@ -2323,9 +2323,11 @@ date  (1): reservation_status_date
 <li>Observations: Each row represents a hotel booking</li>
 </ul>
 </section>
-<section id="first-look-on-data" class="slide level2">
+<section id="first-look-on-data" class="slide level2 smaller">
 <h2>First look on data</h2>
 <p>Type the name of the dataframe</p>
+<div class="columns">
+<div class="column" style="width:70%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>hotels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2351,8 +2353,15 @@ date  (1): reservation_status_date
 #   previous_cancellations &lt;int&gt;, previous_bookings_not_canceled &lt;int&gt;, …</code></pre>
 </div>
 </div>
+</div><div class="column fragment" style="width:30%;">
+<ul>
+<li>Look are the number of rows and columns</li>
+<li>Look at the column names, types, and first entries for the first columns</li>
+<li>Notice how many more columns are there and decide what to look for next</li>
+</ul>
+</div></div>
 </section>
-<section id="look-on-variable-names" class="slide level2">
+<section id="look-on-variable-names" class="slide level2 smaller">
 <h2>Look on variable names</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">names</span>(hotels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2375,6 +2384,7 @@ date  (1): reservation_status_date
 [31] "reservation_status"             "reservation_status_date"       </code></pre>
 </div>
 </div>
+<p>This gives you a vector of column names.</p>
 </section>
 <section id="second-look-with-glimpse" class="slide level2 smaller">
 <h2>Second look with <code>glimpse</code></h2>
@@ -2417,13 +2427,15 @@ $ reservation_status             &lt;chr&gt; "Check-Out", "Check-Out", "Check-Ou
 $ reservation_status_date        &lt;date&gt; 2015-07-01, 2015-07-01, 2015-07-02, 20…</code></pre>
 </div>
 </div>
-<p>Now, comes the data wrangling, transformation, …</p>
+<ul>
+<li>Showing you all variables listed including data type and the first entries.</li>
+</ul>
 </section></section>
 <section>
 <section id="data-wrangling" class="title-slide slide level1 center">
 <h1>Data Wrangling</h1>
 <p>Wrangling = Import + Tidy + Transform (first iteration)</p>
-<p><img data-src="img/data-science-explore.png" height="250"></p>
+<p><img data-src="img/data-science-wrangle.png" height="250"></p>
 </section>
 <section id="grammar-of-data-wrangling" class="slide level2 smaller">
 <h2>Grammar of Data Wrangling</h2>
@@ -3307,7 +3319,7 @@ delivers the same. (Spot the tiny difference!)</p>
 </div>
 </div>
 </section>
-<section id="reminder-indexing-and-vectorized-thinking" class="slide level2">
+<section id="reminder-indexing-and-vectorized-thinking" class="slide level2 smaller">
 <h2>Reminder: Indexing and vectorized thinking</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a></a>x <span class="ot">&lt;-</span> <span class="fu">set_names</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>])</span>
@@ -3344,8 +3356,7 @@ delivers the same. (Spot the tiny difference!)</p>
 </div>
 <div class="fragment">
 <p>Mixing negative and positive numbers does not work!</p>
-<pre><code>R
-x[c(-3, 1)] # Will throw an error</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a></a>x[<span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">1</span>)] <span class="co"># Will throw an error</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="r-objects-can-have-attributes" class="slide level2 smaller">
@@ -3540,7 +3551,7 @@ $names
 </section>
 <section id="factors" class="slide level2 smaller">
 <h2>Factors</h2>
-<p>R uses factors to handle categorical variables, variables that have a fixed and known set of possible values</p>
+<p>R uses factors to handle <strong>categorical</strong> variables</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a></a>x <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"BS"</span>, <span class="st">"MS"</span>, <span class="st">"PhD"</span>, <span class="st">"MS"</span>, <span class="st">"BS"</span>, <span class="st">"BS"</span>))</span>
 <span id="cb98-2"><a></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3573,7 +3584,7 @@ $class
 </div>
 </div>
 <div class="fragment">
-<p>The class factor makes R print the level of each element of the vector instead of the underlying integer.</p>
+<p>The <code>$class</code> <code>"factor"</code> makes R print the level of each element of the vector instead of the underlying integer!</p>
 </div>
 </section>
 <section id="factors-for-data-visualization" class="slide level2 smaller">
@@ -3642,14 +3653,14 @@ $class
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li>ISO 8601 standard for dates: <strong>YYYY-MM-DD</strong>. Today: 2025-09-22.</li>
+<li>ISO 8601 standard for dates: <strong>YYYY-MM-DD</strong>.</li>
 <li>Dates in R are numeric vectors that represent the number of days since 1 January 1970.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a></a>y <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>)</span>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a></a>y <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2025-01-01"</span>)</span>
 <span id="cb110-2"><a></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2020-01-01"</code></pre>
+<pre><code>[1] "2025-01-01"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a></a><span class="fu">typeof</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3662,7 +3673,7 @@ $class
 </div>
 <div class="sourceCode cell-code" id="cb116"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a></a><span class="fu">as.double</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 18262</code></pre>
+<pre><code>[1] 20089</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a></a><span class="fu">as.double</span>(<span class="fu">as.Date</span>(<span class="st">"1970-01-01"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3674,9 +3685,10 @@ $class
 </div>
 </div>
 </div><div class="column" style="width:40%;">
-<p><img data-src="https://social-coop-media.ams3.cdn.digitaloceanspaces.com/media_attachments/files/110/509/555/396/284/468/original/760b0480d20ee7d9.jpeg"></p>
-<p><a href="https://social.coop/@mattl/110509557203534941" class="uri">https://social.coop/@mattl/110509557203534941</a></p>
+<p><img data-src="img/perfect_date.jpg"></p>
+<p>Sources Cartoons: <a href="https://www.reddit.com/r/puns/comments/83e7xi/whats_your_idea_of_a_perfect_date/">Reddit</a> <a href="https://xkcd.com/1179/">xkcd</a></p>
 </div></div>
+<p><img data-src="https://imgs.xkcd.com/comics/iso_8601_2x.png" class="absolute fragment" style="bottom: 110px; right: 130px; width: 500px; "></p>
 </section>
 <section id="how-many-days-are-you-old" class="slide level2">
 <h2>How many days are you old?</h2>
@@ -3684,24 +3696,27 @@ $class
 <div class="cell">
 <div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a></a><span class="fu">Sys.Date</span>() <span class="sc">-</span> <span class="fu">as.Date</span>(<span class="st">"1976-01-16"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 18147 days</code></pre>
+<pre><code>Time difference of 18154 days</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a></a><span class="co"># Sys.Date() gives as the current day your computer is set to</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><code>Sys.Date()</code> gives the current day your computer is set to</p>
+<p>Test yours and don’t miss your 10.000th day on earth (if you are under 27 years old now)!</p>
+<div id="qwebr-insertion-location-2"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </section>
 <section id="date-times" class="slide level2 smaller">
 <h2>Date-times</h2>
 <p>For date-time manipulation use <a href="https://lubridate.tidyverse.org/"><code>lubridate</code></a> form the tidyverse.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a></a>x <span class="ot">&lt;-</span> lubridate<span class="sc">::</span><span class="fu">ymd_hm</span>(<span class="st">"1970-01-01 01:00"</span>)</span>
-<span id="cb125-2"><a></a><span class="co"># Note: Instead of loading package `pack` to use its function `func` you can also write `pack::func`</span></span>
-<span id="cb125-3"><a></a><span class="co"># This works when the package is installed even when not loaded.</span></span>
-<span id="cb125-4"><a></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a></a>x <span class="ot">&lt;-</span> lubridate<span class="sc">::</span><span class="fu">ymd_hm</span>(<span class="st">"1970-01-01 01:00"</span>)</span>
+<span id="cb124-2"><a></a><span class="co"># Note: Instead of loading package `pack` to use its function `func` you can also write `pack::func`</span></span>
+<span id="cb124-3"><a></a><span class="co"># This works when the package is installed even when not loaded.</span></span>
+<span id="cb124-4"><a></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1970-01-01 01:00:00 UTC"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a></a><span class="fu">attributes</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a></a><span class="fu">attributes</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$class
 [1] "POSIXct" "POSIXt" 
@@ -3709,7 +3724,7 @@ $class
 $tzone
 [1] "UTC"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a></a><span class="fu">as.double</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a></a><span class="fu">as.double</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3600</code></pre>
 </div>
@@ -3720,10 +3735,10 @@ POSIXct: Portable Operating System Interface, calendar time. Stores date and tim
 <section id="how-many-seconds-are-you-old" class="slide level2">
 <h2>How many seconds are you old?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a></a><span class="fu">as.double</span>(lubridate<span class="sc">::</span><span class="fu">now</span>()) <span class="sc">-</span></span>
-<span id="cb131-2"><a></a>  <span class="fu">as.double</span>(lubridate<span class="sc">::</span><span class="fu">ymd_hm</span>(<span class="st">"1976-01-16_12:04"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a></a><span class="fu">as.double</span>(lubridate<span class="sc">::</span><span class="fu">now</span>()) <span class="sc">-</span></span>
+<span id="cb130-2"><a></a>  <span class="fu">as.double</span>(lubridate<span class="sc">::</span><span class="fu">ymd_hm</span>(<span class="st">"1976-01-16_12:04"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1567851140</code></pre>
+<pre><code>[1] 1568513187</code></pre>
 </div>
 </div>
 </section>

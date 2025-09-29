@@ -2571,11 +2571,11 @@ NULL
 <h2>Joining dataframes</h2>
 <p><code>something_join(x, y)</code><sup>1</sup> for dataframes <code>x</code> and <code>y</code> which have a <em>relation</em></p>
 <ul>
-<li><code>left_join()</code>: all rows from x</li>
-<li><code>right_join()</code>: all rows from y</li>
-<li><code>full_join()</code>: all rows from both x and y</li>
-<li><code>inner_join()</code>: all rows from x where there are matching values in y, return all combination of multiple matches in the case of multiple matches</li>
-<li>…</li>
+<li><code>left_join()</code>: all rows from x must remain</li>
+<li><code>right_join()</code>: all rows from y must remain</li>
+<li><code>full_join()</code>: all rows from both x and y must remain</li>
+<li><code>inner_join()</code>: all rows from x where there are matching values in y remain</li>
+<li>… (more exist see <a href="https://rstudio.github.io/cheatsheets/data-transformation.pdf"><code>dplyr</code> cheatsheet</a>)</li>
 </ul>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>The notion <em>join</em> comes from SQL database. In other data manipulation frameworks joining is called <em>merging</em>.</p></li></ol></aside></section>
 <section id="simple-setup-for-x-and-y" class="slide level2 smaller">
@@ -2796,8 +2796,8 @@ NULL
 <li>What was the key in the dataframe of women in science? <span class="fragment"><code>name</code></span></li>
 </ul>
 <div class="fragment">
+<p>Switching back to <code>nycflights13</code> as example</p>
 <ul>
-<li>Switching back to <code>nycflights13</code> as example</li>
 <li>In simple cases, a single variable is sufficient to identify an observation, e.g.&nbsp;each plane in <code>planes</code> is identified by <code>tailnum</code>.</li>
 <li>Sometimes, multiple variables are needed; e.g.&nbsp;to identify an observation in <code>weather</code> you need five variables: <code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code>, and <code>origin</code></li>
 </ul>
@@ -2848,13 +2848,18 @@ NULL
 <p>Why do we have only 22 and 23 on day 1 of month 1? No idea. Dig deeper yourself!</p>
 </div>
 </section>
-<section id="terminology-primary-and-foreign-keys" class="slide level2 smaller">
-<h2>Terminology: Primary and foreign keys</h2>
+<section id="primary-and-foreign-keys" class="slide level2 smaller">
+<h2>Primary and foreign keys</h2>
 <ul>
 <li><p>A <strong>primary key</strong> uniquely identifies an observation in its own table. E.g, <code>planes$tailnum</code> in <code>planes</code>.</p></li>
 <li><p>A <strong>foreign key</strong> uniquely identifies an observation in another dataframe E.g. <code>flights$tailnum</code> is a foreign key in <code>flights</code> because it matches each flight to a unique plane in <code>planes</code>.</p></li>
-<li><p>A primary key and a foreign key form a relation.</p></li>
-<li><p>Relations are typically 1-to-many. Each plane has many flights</p></li>
+<li><p>A primary key and a foreign key form a relation.</p>
+<ul>
+<li>Often a <em>1-to-many</em> relation. Each plane has many flights.
+<ul>
+<li>Implication: Joining <code>flights</code> with <code>planes</code> duplicates the rows of <code>planes</code> for each flight of that plane.</li>
+</ul></li>
+</ul></li>
 <li><p>Relations can also be many-to-many. Airlines can fly to many airports; airport can host many airplanes.</p></li>
 </ul>
 </section>
@@ -3154,6 +3159,7 @@ these are <code>origin</code> airports in <code>flights</code></li>
 <pre><code>[1] 1 2</code></pre>
 </div>
 </div>
+<p>Relations to <code>joins</code>: <code>full_join()</code> is like the <em>union</em>, <code>inner_join()</code> is like the <em>intersection</em>.</p>
 </div>
 </section>
 <section id="sets-take-away" class="slide level2">
@@ -3466,16 +3472,16 @@ You can think of the <em>coordinate system being stretched</em> multiplicatively
 <section id="math-polynomials-and-exponentials" class="slide level2 smaller" data-background-color="aquamarine">
 <h2>Math: Polynomials and exponentials</h2>
 <p>A <em>polynomial</em> is a function which is composed of (many) addends of the form <span class="math inline">\(ax^n\)</span> for different values of <span class="math inline">\(a\)</span> and <span class="math inline">\(n\)</span>.</p>
-<p>In an <em>exponential</em> the <span class="math inline">\(x\)</span> appears in the exponent. <span class="math inline">\(f(x) = x^3\)</span> vs.&nbsp;<span style="color:red;"><span class="math inline">\(f(x) = e^x\)</span></span></p>
+<p>In an <em>exponential</em> the <span class="math inline">\(x\)</span> appears in the exponent. <span class="math inline">\(f(x) = x^2\)</span> vs.&nbsp;<span style="color:red;"><span class="math inline">\(f(x) = 2^x\)</span></span></p>
 <div class="columns">
 <div class="column">
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb146"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb146-2"><a></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) x<span class="sc">^</span><span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb146-3"><a></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">exp</span>(x) <span class="sc">-</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb146-4"><a></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb146-2"><a></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) x<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb146-3"><a></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="sc">^</span>x <span class="sc">-</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb146-4"><a></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.5</span>)) <span class="sc">+</span></span>
 <span id="cb146-5"><a></a>  <span class="fu">xlab</span>(<span class="st">"x"</span>) <span class="sc">+</span></span>
 <span id="cb146-6"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">24</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -3487,14 +3493,15 @@ You can think of the <em>coordinate system being stretched</em> multiplicatively
 </div>
 </div>
 </div>
+<p><span style="font-size: 65%;">Note: We use <span style="color:red;"><span class="math inline">\(f(x) = 2^x - 1\)</span></span> to have both functions start at (0,0).</span></p>
 </div><div class="column fragment">
 <p>Same graph but for a larger range of <span class="math inline">\(x\)</span>:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb147"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb147-2"><a></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) x<span class="sc">^</span><span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb147-3"><a></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">exp</span>(x) <span class="sc">-</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb147-2"><a></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) x<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb147-3"><a></a>  <span class="fu">geom_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="sc">^</span>x <span class="sc">-</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
 <span id="cb147-4"><a></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
 <span id="cb147-5"><a></a>  <span class="fu">xlab</span>(<span class="st">"x"</span>) <span class="sc">+</span></span>
 <span id="cb147-6"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">24</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3552,7 +3559,7 @@ You can think of the <em>coordinate system being stretched</em> multiplicatively
 <pre><code>function (x, na.rm = FALSE) 
 sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
     na.rm = na.rm))
-&lt;bytecode: 0x62012f24c958&gt;
+&lt;bytecode: 0x5b1458f76288&gt;
 &lt;environment: namespace:stats&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb154"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a></a>c <span class="co"># This function is not written in R but is a R primitive</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3565,7 +3572,7 @@ sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x),
 {
     UseMethod("ggplot")
 }
-&lt;bytecode: 0x62012fd0c330&gt;
+&lt;bytecode: 0x5b1459a25790&gt;
 &lt;environment: namespace:ggplot2&gt;</code></pre>
 </div>
 </div>
