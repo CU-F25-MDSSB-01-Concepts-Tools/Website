@@ -223,28 +223,41 @@ hotels <- read_csv(
 
 
 
-## Hotels data
+## Hotels data 
 
 -   Data from two hotels: one resort and one city hotel
 -   Observations: Each row represents a hotel booking
 
-## First look on data
+## First look on data {.smaller}
 
 Type the name of the dataframe
+
+::: {.columns}
+::: {.column width="70%"}
 
 ```{r}
 #| echo: true
 hotels
 ```
 
+:::
+::: {.column width="30%" .fragment}
+- Look are the number of rows and columns
+- Look at the column names, types, and first entries for the first columns
+- Notice how many more columns are there and decide what to look for next
+:::
+::: 
 
-## Look on variable names
+
+
+## Look on variable names {.smaller}
 
 ```{r} 
 #| echo: true
 names(hotels)
 ```
 
+This gives you a vector of column names.
 
 
 
@@ -255,13 +268,14 @@ names(hotels)
 glimpse(hotels)
 ```
 
-Now, comes the data wrangling, transformation, ...
+- Showing you all variables listed including data type and the first entries.  
+
 
 # Data Wrangling
 
 Wrangling = Import + Tidy + Transform (first iteration) 
 
-![](img/data-science-explore.png){height=250}
+![](img/data-science-wrangle.png){height=250}
 
 
 ## Grammar of Data Wrangling {.smaller}
@@ -794,7 +808,7 @@ Named vectors can be used for subsetting.
 y[c("b", "d")]
 ```
 
-## Reminder: Indexing and vectorized thinking
+## Reminder: Indexing and vectorized thinking {.smaller}
 
 ```{r}
 #| echo: true
@@ -824,8 +838,7 @@ x[c(-3, -5, -2)]
 
 Mixing negative and positive numbers does not work!
 
-```
-R
+```R
 x[c(-3, 1)] # Will throw an error
 ```
 
@@ -874,7 +887,7 @@ $\begin{bmatrix} 1 & 3 & 5 \\ 2 & 4 & 6 \end{bmatrix}$
 
 ## Factors {.smaller}
 
-R uses factors to handle categorical variables, variables that have a fixed and known set of possible values
+R uses factors to handle **categorical** variables
 
 ```{r}
 #| echo: true
@@ -896,7 +909,7 @@ attributes(x)
 
 . . .
 
-The class factor makes R print the level of each element of the vector instead of the underlying integer. 
+The `$class` `"factor"` makes R print the level of each element of the vector instead of the underlying integer! 
 
 ## Factors for data visualization {.smaller}
 
@@ -950,12 +963,12 @@ mpg |>
 :::: {.columns}
 
 ::: {.column width='60%'}
-- ISO 8601 standard for dates: **YYYY-MM-DD**. Today: `r Sys.Date()`.
+- ISO 8601 standard for dates: **YYYY-MM-DD**. 
 - Dates in R are numeric vectors that represent the number of days since 1 January 1970.
 
 ```{r}
 #| echo: true
-y <- as.Date("2020-01-01")
+y <- as.Date("2025-01-01")
 y
 typeof(y)
 attributes(y)
@@ -967,12 +980,15 @@ as.double(as.Date("1969-01-01"))
 :::
 
 ::: {.column width='40%'}
-![](https://social-coop-media.ams3.cdn.digitaloceanspaces.com/media_attachments/files/110/509/555/396/284/468/original/760b0480d20ee7d9.jpeg)
+![](img/perfect_date.jpg)
 
-<https://social.coop/@mattl/110509557203534941>
+Sources Cartoons: [Reddit](https://www.reddit.com/r/puns/comments/83e7xi/whats_your_idea_of_a_perfect_date/) [xkcd](https://xkcd.com/1179/)
 :::
 
 ::::
+
+![](https://imgs.xkcd.com/comics/iso_8601_2x.png){.absolute .fragment bottom="110" right="130" width="500"}
+
 
 ## How many days are you old?
 
@@ -981,8 +997,16 @@ as.double(as.Date("1969-01-01"))
 ```{r}
 #| echo: true
 Sys.Date() - as.Date("1976-01-16")
-# Sys.Date() gives as the current day your computer is set to
 ```
+
+`Sys.Date()` gives the current day your computer is set to
+
+Test yours and don't miss your 10.000th day on earth (if you are under 27 years old now)!
+
+```{webr-r}
+Sys.Date() - as.Date("1997-01-01")
+```
+
 
 ## Date-times  {.smaller}
 

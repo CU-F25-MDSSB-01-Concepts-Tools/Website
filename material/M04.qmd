@@ -22,6 +22,7 @@ Find the live recording in the [Course's Team's Recording Folder]({{< var teams.
 
 Sections in [R for Data Science](http://r4ds.hadley.nz) 
 
+ - [Ch 14: Strings](https://r4ds.hadley.nz/strings)
  - [Ch 19: Joins](https://r4ds.hadley.nz/joins)
  - [Ch 25: Functions](https://r4ds.hadley.nz/functions)
  - [Ch 26: Iteration](https://r4ds.hadley.nz/iteration)

@@ -10,7 +10,12 @@ format:
       buttons: true
     logo: img/ConstructorUniversity.png    
     footer: "MDSSB-DSCO-02: Data Science Concepts"
-bibliography: "/home/janlo/Documents/literature/litlorenz_zot.bib"
+filters: 
+  - webr
+webr:
+  packages:
+    - tidyverse
+  autoload-packages: true
 ---
 
 
@@ -25,13 +30,8 @@ library(nycflights13)
 library(tidyverse)
 ```
 
-The datasets used are accessible in <https://github.com/CU-F25-MDSSB-01-Concepts-Tools/Website/tree/main/lectures> 
-
-
-
-::: aside
-Tip: Run the script in an R-project and have a folder `data/` in it such that the local path works!
-:::
+The datasets used can be downloaded from:   
+<https://github.com/CU-F25-MDSSB-01-Concepts-Tools/Website/tree/main/lectures>
 
 
 # Strings and Special Values
@@ -68,8 +68,11 @@ str_length(c("This is a string.", "z"))
 
 ## String wrangling with variable names {.smaller}
 
+This is a typical use case. We have data like this:
+
 ```{r}
 #| echo: true
+#| output-location: column-fragment
 data <- tibble(
   Name = c("A", "B", "C"),
   Age_2020 = c(20, 30, 40),
@@ -85,7 +88,7 @@ We tidy that data set by creating a year variable.
 
 ```{r}
 #| echo: true
-#| output-location: fragment
+#| output-location: column-fragment
 data |>
   pivot_longer(
     c("Age_2020", "Age_2021", "Age_2022"),
@@ -100,12 +103,20 @@ OK, but the year variable is a string but we want numbers.
 
 ## Use `word` {.smaller}
 
-`word` extracts words from a sentence. However, the separator need not be `" "` but can be any character.
+`word` extracts words from a sentence. 
+
+- You can specify the words from  `start` to `end`. Use numbers or negative numbers to count from the last word. 
+- The word separator need not be `" "` but can be any character.
 
 ```{r}
 #| echo: true
+#| output-location: column-fragment
 word("This is a string.", start = 2, end = -2)
-#Selects from the second to the second last word.
+```
+
+```{r}
+#| echo: true
+#| output-location: column-fragment
 word("Age_2022", start = 2, sep = "_")
 ```
 
@@ -115,38 +126,72 @@ It also works vectorized.
 
 ```{r}
 #| echo: true
-#| output-location: fragment
+#| output-location: column-fragment
 data |>
   pivot_longer(
     c("Age_2020", "Age_2021", "Age_2022"),
     names_to = "Year",
     values_to = "Age"
   ) |>
-  mutate(Year = word(Year, start = 2, sep = "_") |> as.numeric())
+  mutate(
+    Year = word(Year, start = 2, sep = "_") |> 
+      as.numeric()
+      )
 ```
 
 
 ## String Detection / Regular Expressions {.smaller}
 
 Many `stringr` function follow the structure `(string, pattern)`.  
-`string` is  in our data, `pattern` is a string interpreted as a [**Regular Expressions**](https://en.wikipedia.org/wiki/Regular_expression)
+`string` is  in our data, `pattern` is a string interpreted as a [**Regular Expression**](https://en.wikipedia.org/wiki/Regular_expression)
 
 A few examples show its power:
 
 ```{r}
 #| echo: true
 fruits <- c("apple", "pineapple", "Pear", "orange", "peach", "banana")
+```
+```{r}
+#| echo: true
+#| output-location: column-fragment
 str_detect(fruits, "apple")
+```
+```{r}
+#| echo: true
+#| output-location: column-fragment
 str_extract(fruits, "apple")
+```
+```{r}
+#| echo: true
+#| output-location: column-fragment
 str_extract(fruits, "[Pp][a-z]")
+```
+```{r}
+#| echo: true
+#| output-location: column-fragment
 str_extract(fruits, "^[Pp][a-z]")
+```
+```{r}
+#| echo: true
+#| output-location: column-fragment
 str_extract(fruits, "^[Pp][a-z]{3}")
+```
+```{r}
+#| echo: true
+#| output-location: column-fragment
 str_extract(fruits, "^[Pp][a-z]+")
+```
+
+Test other words, like `str_extract("Pizza Napoli","^[Pp][a-z]+")`: 
+
+```{webr-r}
+
+
 ```
 
 ## Regular Expressions {.smaller}
 
-**Regular expressions** (short *regexp* or *regex*): Character-Sequences specifying *match patterns*. 
+**Regular expressions** (*regexp* or *regex*): Character-Sequences specifying *match patterns*. 
 
 - Useful when strings contain unstructured or semi-structured data. 
 
@@ -154,18 +199,20 @@ str_extract(fruits, "^[Pp][a-z]+")
 
 **Guess what this regexp's are to match?**
 
-``"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"``
+``"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$"``  
+``"^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"``  
+``"^[[:alnum:].-_]+@[[:alnum:].-]+$"``
 
-``"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"``
+```{webr-r}
 
-``""^[[:alnum:].-_]+@[[:alnum:].-]+$""``
+```
 
 . . . 
 
-Email addresses! However, this is not the perfect solution...
+Email addresses! However, this is not the perfect solution. Dig deeper: Read the discussion and see the example in [How can I validate an email address using a regular expression?](https://stackoverflow.com/questions/201323/how-can-i-validate-an-email-address-using-a-regular-expression) at stackoverflow. 
 
-Dig deeper: Read the discussion and see the example in [How can I validate an email address using a regular expression?](https://stackoverflow.com/questions/201323/how-can-i-validate-an-email-address-using-a-regular-expression) at stackoverflow. 
-# Special Values for "no" data
+
+# Special Values for "no data"
 
 ## Special values  {.smaller}
 
@@ -211,7 +258,7 @@ Check some math:
 
 ## `NA`s  {.smaller}
 
-Instead of `NaN`, `NA` stands for genuinely unknown values.   
+`NaN` is *not* a number, but `NA` stands for genuinely unknown values.   
 It can also be in a character of logical vector.
 
 ```{r}
@@ -337,9 +384,7 @@ works
 
 
 :::{.aside}
-Source: [Discover Magazine](https://www.discovermagazine.com/the-sciences/meet-10-women-in-science-who-changed-the-world)
-
-The data can be downloaded: [professions.csv](https://raw.githubusercontent.com/rstudio-education/datascience-box/main/course-materials/_slides/u2-d08-multi-df/data/scientists/professions.csv), [dates.csv](https://raw.githubusercontent.com/rstudio-education/datascience-box/main/course-materials/_slides/u2-d08-multi-df/data/scientists/dates.csv), 
+Source: [Discover Magazine](https://www.discovermagazine.com/the-sciences/meet-10-women-in-science-who-changed-the-world). The data can be downloaded: [professions.csv](https://raw.githubusercontent.com/rstudio-education/datascience-box/main/course-materials/_slides/u2-d08-multi-df/data/scientists/professions.csv), [dates.csv](https://raw.githubusercontent.com/rstudio-education/datascience-box/main/course-materials/_slides/u2-d08-multi-df/data/scientists/dates.csv), 
 [works.csv](https://raw.githubusercontent.com/rstudio-education/datascience-box/main/course-materials/_slides/u2-d08-multi-df/data/scientists/works.csv)
 :::
 
@@ -353,11 +398,12 @@ professions |> left_join(dates) |> left_join(works)
 
 `something_join(x, y)`^[The notion *join* comes from SQL database. In other data manipulation frameworks joining is called *merging*.] for dataframes `x` and `y` which have a *relation*
 
-- `left_join()`: all rows from x
-- `right_join()`: all rows from y
-- `full_join()`: all rows from both x and y
-- `inner_join()`: all rows from x where there are matching values in y, return all combination of multiple matches in the case of multiple matches
-- ...
+- `left_join()`: all rows from x must remain
+- `right_join()`: all rows from y must remain
+- `full_join()`: all rows from both x and y must remain
+- `inner_join()`: all rows from x where there are matching values in y remain
+- ... (more exist see [`dplyr` cheatsheet](https://rstudio.github.io/cheatsheets/data-transformation.pdf))
+
 
 ## Simple setup for `x` and `y` {.smaller}
 
@@ -508,12 +554,13 @@ professions |> left_join(dates) |> left_join(works)
 
 . . . 
 
-- Switching back to `nycflights13` as example
+Switching back to `nycflights13` as example
+
 - In simple cases, a single variable is sufficient to identify an observation, e.g. each plane in `planes` is identified by `tailnum`.
 - Sometimes, multiple variables are needed; e.g. to identify an observation in
 `weather` you need five variables: `year`, `month`, `day`, `hour`, and `origin`
 
-## How can we check? {.smaller .scrollable}
+## How to check if a variable is a key? {.smaller .scrollable}
 
 Counting observation and filter those more than one
 
@@ -526,6 +573,8 @@ weather |> count(year, month, day, hour, origin) |> filter(n > 1)
 
 OK, here 3 observations are twice, one for each airport. Probably this is related to [Daylight saving time](https://en.wikipedia.org/wiki/Daylight_saving_time) in the US. In Fall clocks are turned back 1 hour. So this hour appears twice. 
 
+. . . 
+
 Example: Without hour it is not a key
 
 ```{r}
@@ -535,7 +584,7 @@ weather |> count(year, month, day, origin) |> filter(n > 1)
 
 Why do we have only 22 and 23 on day 1 of month 1? No idea. Dig deeper yourself!
 
-## Terminology: Primary and foreign keys  {.smaller}
+## Primary and foreign keys  {.smaller}
 
 - A **primary key** uniquely identifies an observation in its own table. E.g,
 `planes$tailnum` in `planes`. 
@@ -543,7 +592,8 @@ Why do we have only 22 and 23 on day 1 of month 1? No idea. Dig deeper yourself!
 `flights$tailnum` is a foreign key in `flights` because it matches each flight to a unique plane in `planes`.
 
 - A primary key and a foreign key form a relation. 
-- Relations are typically 1-to-many. Each plane has many flights
+    - Often a *1-to-many* relation. Each plane has many flights. 
+        - Implication: Joining `flights` with `planes` duplicates the rows of `planes` for each flight of that plane.
 - Relations can also be many-to-many. Airlines can fly to many airports; airport can host many airplanes.
 
 
@@ -583,7 +633,7 @@ airports_right_flights
 
 Differences 
 
-- In a join where keys have different column names the name of the first dataframe survives (unless you use `keep = TRUE`). Here, `faa` instead of `dest`
+- In a join where keys have different column names the name of the first dataframe survives (unless you use `keep = TRUE`). Here, `faa` survived instead of `dest`
 - The columns from the first dataframe come first
 - The order of rows is taken from the first dataframe, while duplication and dropping of variables is determined by the second dataframe (because it is a `right_join`)
 
@@ -601,6 +651,7 @@ Note of caution: A deeper analysis shows that the order is still not exactly the
 
 ## `left_join` with reversed dataframes {.smaller .scrollable}
 
+Let us do this test to understand joins better
 
 ```{r}
 #| echo: true
@@ -610,11 +661,18 @@ airports |>
   left_join(flights, by = c("faa" = "dest"))
 ```
 
+We have much more rows in than in airports. However, we have less rows than when we `flight |> left_join(airports)`. Why? 
+
 **Why does the number of rows changes after joining?**
+
+. . . 
 
 `dest` is not a primary key in `flights`. There are more flights with the same destination so rows of `airports` get duplicated.  
 
-**Why is the number of rows then less than the number of rows in flights?**  
+**Why is the number of rows then less than the number of rows in flights?**
+
+. . .
+
 `r nrow(flights)` flights and `r airports |> left_join(flights, by = c("faa" = "dest")) |> nrow()` airports left joined by flights. 
 
 Let us do some checks:
@@ -626,8 +684,11 @@ length(unique(flights$dest))
 ```
 
 There are much more airports then destinations in flights!  
-... but the rows of airports prevail when it is the first in a left_join.  
+... but the rows of airports prevail when it is the first in a `left_join`.  
 So, the dataframe should even *increase* because we get several rows of airports without flights.  
+
+. . .
+
 Let us dig deeper.
 
 ```{r}
@@ -697,6 +758,8 @@ A **vector** is an ordered collection of things (**components**) of the same typ
 
 In a set, each thing can only be once and the order does not matter!
 
+. . .
+
 $\{1,3,5\} = \{3,5,1\} = \{1,1,1,3,5,5\}$
 
 For vectors:
@@ -749,13 +812,15 @@ intersect(1:5, 3:7)
 setdiff(1:5, 3:7)
 ```
 
+Relations to `joins`: `full_join()` is like the *union*, `inner_join()` is like the *intersection*.
+
 ## Sets: Take-away
 
 - Set operations are not a daily business in data science
 - However, they are useful for data exploration!
 - Knowing set operations is key to understand **probability**:
     - A *sample space* is the *set of all atomic events*. 
-    - An *event* is a *subset of the sample* 
+    - An *event* is a *subset of the sample space* 
     - A *probability function* assigns probabilities to all events. 
 
 
@@ -842,7 +907,7 @@ Other examples:
 
 . . .
 
-No, it is not a function. It has nine outcomes and these change when run again. 
+No, it is not a function. It has nine outcomes and these change when run again. Same for answers of LLMs to the same prompt. 
 
 # Functions: Graphs, Shift and Scale, Polynomial vs. Exponential
 
@@ -885,6 +950,7 @@ $\sqrt[2]{x}^2 = \sqrt[2]{x^2} = x$, $\log(e^x) = e^{\log(x)} = x$
 :::{.column width="50%"}
 ```{r}
 #| fig-width: 5
+#| code-fold: true
 ggplot() +
   geom_function(fun = function(x) x) +
   geom_function(fun = function(x) exp(x), color = "red") +
@@ -930,6 +996,7 @@ For $a =$ [-2]{style="color:red;"}, [-0.5]{style="color:darkred;"}, [0.5]{style=
 ```{r}
 #| echo: true
 #| fig-height: 8.5
+#| code-fold: true
 a = c(1, 0.5, 2, -0.5, -2)
 ggplot() +
   geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
@@ -967,6 +1034,7 @@ You can think of the *coordinate system being shifted* in direction $a$ while th
 ```{r}
 #| fig-height: 8.5
 #| echo: true
+#| code-fold: true
 a = c(1, 0.5, 2, -0.5, -2)
 ggplot() +
   geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
@@ -1010,6 +1078,7 @@ Negative numbers flip the graph around the $x$-axis.
 ```{r}
 #| fig-height: 8.5
 #| echo: true
+#| code-fold: true
 a = c(1, 0.5, 2, -0.5, -2)
 ggplot() +
   geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
@@ -1058,6 +1127,7 @@ You can think of the *coordinate system being stretched* multiplicatively by $a$
 ```{r}
 #| fig-height: 8.5
 #| echo: true
+#| code-fold: true
 a = c(1, 0.5, 2, -0.5, -2)
 ggplot() +
   geom_function(fun = function(x) x^3 - x^2, size = 2, alpha = 0.5) +
@@ -1089,26 +1159,50 @@ ggplot() +
 
 A *polynomial* is a function which is composed of (many) addends of the form $ax^n$ for different values of $a$ and $n$. 
 
-In an *exponential* the $x$ appears in the exponent. 
+In an *exponential* the $x$ appears in the exponent. $f(x) = x^2$ vs. [$f(x) = 2^x$]{style="color:red;"}
 
-$f(x) = x^3$ vs. [$f(x) = e^x$]{style="color:red;"}
+::: {.columns}
+::: {.column}
 
 ```{r}
-library(patchwork)
-g1 = ggplot() +
-  geom_function(fun = function(x) x^3) +
-  geom_function(fun = function(x) exp(x) - 1, color = "red") +
-  xlim(c(0, 2)) +
+#| echo: true
+#| code-fold: true
+
+ggplot() +
+  geom_function(fun = function(x) x^2) +
+  geom_function(fun = function(x) 2^x - 1, color = "red") +
+  xlim(c(0, 1.5)) +
   xlab("x") +
-  theme_minimal(base_size = 18)
-g2 = g1 + xlim(c(0, 5))
-g1 + g2 + plot_annotation(title = "Same function but different of axis limits!")
+  theme_minimal(base_size = 24)
 ```
+
+[Note: We use [$f(x) = 2^x - 1$]{style="color:red;"} to have both functions start at (0,0).]{style="font-size: 65%;"}
+
+:::
+::: {.column .fragment}
+Same graph but for a larger range of $x$:
+
+```{r}
+#| echo: true
+#| code-fold: true
+ggplot() +
+  geom_function(fun = function(x) x^2) +
+  geom_function(fun = function(x) 2^x - 1, color = "red") +
+  xlim(c(0, 5)) +
+  xlab("x") +
+  theme_minimal(base_size = 24)
+```
+
+:::
+:::
+
+. . .
 
 **For $x\to\infty$, any exponential will finally "overtake" any polynomial.**
 
 
-# Functions in Programming $\to$ Programming Function
+
+# Functions in Programming and Programming Functions
 
 ## Input $\to$ output {.smaller} 
 

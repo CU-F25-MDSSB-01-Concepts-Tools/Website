@@ -49,4 +49,8 @@ po/*~
 rsconnect/
 
 /.quarto/
+/.vscode/
 /_site/
+/_freeze/
+
+air.toml
