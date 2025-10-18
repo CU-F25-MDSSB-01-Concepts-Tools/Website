@@ -13,10 +13,14 @@ Read the following to understand its purpose, format, workflow, and its role in 
 
 ## Homework Projects List
 
-As a registered student, you will find personalized repositories for your Homework Projects in the GitHub-Organization. 
+As a registered student, you will find personalized repositories for your Homework Projects in the [GitHub-Organization]({{< var org.link >}}). 
 These projects will appear here once they are deployed:
 
-1. 
+1. Project_NYCFlights
+2. Project_COVID19
+3. Project_DataScienceProfiles (to come)
+4. Project_FuelWatch (to come)
+5. Project_Stock (to come)
 
 Please read the next sections. 
 

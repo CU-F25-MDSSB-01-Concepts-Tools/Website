@@ -32,7 +32,7 @@ You
 - [ ] have done the *git-GitHub dance* and know what the tools are in principle
 - [ ] have rendered quarto documents and understood its idea
 - [ ] have made your first steps with R
-- [ ] have filled out the [Data Science Profile Survey](https://www.google.com/url?q=https://forms.office.com/e/dHvdFusjqV&sa=D&source=editors&ust=1757755614857276&usg=AOvVaw33D-6CLhmImfhw9gVUHyJ1)
+- [ ] have filled out the [Data Science Profile Survey](https://forms.office.com/e/dHvdFusjqV)
 
 ## Homework Projects Progress Guides
 

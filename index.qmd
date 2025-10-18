@@ -21,6 +21,8 @@ You are free to also use the material provided here, but look in the handbook an
 ## Developing Syllabus
 This syllabus may change during the course of the semester with some additions and clarifications.   
 All substantial changes will marked here with date. 
+
+2025-10-18: List all [Homework](homework.qmd) Projects to come. Specify requirement information about passing and bonus for *Tools* module. 
 :::
 
 ## Module Names
@@ -139,7 +141,7 @@ Weight: 100%
 Scope: All intended learning outcomes of the module.  
 Completion: to pass this module, the examination has to be passed with at least 45%  
 
-An exam will take place after all lectures in December. The date will be published by the university adminstration later. 
+An exam will take place after all lectures in December. The date will be published by the university adminstration later. The date range is in the [Academic Calendar]({{< var link.academic_calendar >}}).
 
 There are no additional achievements necessary and there are no bonus options. 
 
@@ -161,7 +163,7 @@ Scope: All intended learning outcomes of the module.
 All assignments and the final project must be delivered in personalized repositories in the [GitHub organization]({{< var org.link >}}).
 
 
-<!-- :::{.callout-important collapse=false appearance='default' icon=true}
+:::{.callout-important collapse=false appearance='default' icon=true}
 ## Homework Specification for Passing and Bonus
 
 By the end of the semester, all Homework repositories will be assessed as 
@@ -174,7 +176,7 @@ By the end of the semester, all Homework repositories will be assessed as
 To **pass the module** (50% Module Achievement such that the student can be assessed on the final project) a student needs to have all Homework Projects at least as "Just Passed" (no "Fail"). However, a "Fail" in one Homework can be compensated by a another Homework being "Passed" or "Bonus". 
 
 To receive the **bonus** for the module assessments a student needs to have more than half of the Homework Projects at "Bonus" and all others at "Passed" (no "Fail" or "Just Passed").  
-::: -->
+:::
 
 
 

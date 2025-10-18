@@ -1,5 +1,5 @@
 ---
-title: "W#08: Predicting Categorical Variables, Logistic Regression, Classification Problems"
+title: "W#08: Interaction Effects, Predicting Categorical Variables, Logistic Regression, Classification Problems"
 author: Jan Lorenz
 format: 
   revealjs: 
@@ -26,6 +26,115 @@ library(palmerpenguins)
 library(tidymodels)
 library(openintro)
 ```
+
+# Interaction Effects
+
+Adding products of variables as new variable.
+
+## Adding a categorical variable as main effect {.smaller}
+
+```{r}
+#| echo: true
+linear_reg() |> set_engine("lm") |> 
+ fit(flipper_length_mm ~ body_mass_g + species, data = penguins) |> 
+ tidy()
+```
+
+A **main effect** by categorical dummy variables allows for different intercepts per species. (However, the slopes are the same.)
+
+
+```{r}
+#| echo: true
+linear_reg() |> set_engine("lm") |> 
+ fit(flipper_length_mm ~ body_mass_g + species, data = penguins) |> 
+ glance()
+```
+
+Adding species increases R-squared better than adding bill length and bill depth together!
+
+
+## Adding as interaction effect {.smaller}
+
+```{r}
+#| echo: true
+linear_reg() |> set_engine("lm") |> 
+ fit(flipper_length_mm ~ body_mass_g * species, data = penguins) |> 
+ tidy()
+```
+
+- Note the `*` for interaction effect!
+- Also main effects for both variables are in as coefficients.
+- Adelie is the baseline species (because it is first in the alphabet).
+- An **interaction effect** allows for different slopes for each species!
+
+
+## Regression lines by species {.smaller}
+
+```{r}
+penguins |> 
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm, color = species)) +
+  geom_point() + geom_smooth(method = "lm") +
+  theme_minimal()
+```
+
+Compare the slopes to the regression output on the slides before!
+
+
+## Different equations for each species! {.smaller}
+
+```{r}
+#| echo: true
+linear_reg() |> set_engine("lm") |> 
+ fit(flipper_length_mm ~ body_mass_g * species, data = penguins) |> 
+ tidy()
+```
+
+Adelie:   
+average `flipper_length_mm` $= 165 + 0.00668\cdot$ `body_mass_g`    
+
+Chinstrap:   
+average `flipper_length_mm` $= 165 - 13.6 + (0.00668 + 0.00523)\cdot$ `body_mass_g`    
+
+Gentoo:   
+average `flipper_length_mm` $= 165 + 6.06 + (0.00668 + 0.00236)\cdot$ `body_mass_g`    
+
+
+## Improvement of interaction effects is small here {.smaller}
+
+```{r}
+#| echo: true
+linear_reg() |> set_engine("lm") |> 
+ fit(flipper_length_mm ~ body_mass_g + species, data = penguins) |> 
+ glance()
+```
+
+```{r}
+#| echo: true
+linear_reg() |> set_engine("lm") |> 
+ fit(flipper_length_mm ~ body_mass_g * species, data = penguins) |> 
+ glance()
+```
+
+
+## Interaction effects of two categoricals {.smaller}
+
+Assume $x_1$ and $x_2$ are categorical variables. We add their product in the linear model as a *new variable*: 
+$y_i = \beta_0 + \beta_1x_1  + \beta_2x_2 + \beta_{3}x_1x_2 + \dots$. 
+
+**Example:** $x_1$ is *gender female* and $x_2$ *having kids* 
+
+```{r}
+#| echo: true
+#| code-fold: true
+tibble(gender_female = c(0,1,1,0), has_kids = c(1,0,1,0)) |> 
+ mutate(gender_female_x_has_kids = gender_female * has_kids) |> 
+ knitr::kable()
+```
+
+- What is the baseline? [*Being male without kids.*]{.fragment}
+- Thought experiment: When we estimate a model explaining life satisfaction with these. How would we see if being a mother increases life satisfaction more than being a father? [*positive coefficient for `gender_female_x_has_kids`*]{.fragment}
+
+
 
 # Predicting Categorical Data
 

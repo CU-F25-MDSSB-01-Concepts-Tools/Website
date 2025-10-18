@@ -46,10 +46,16 @@ Principle component analysis
 
 ```{r}
 #| echo: true
-peng <- 
- penguins |> 
- select(species, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g) |> 
- na.omit()
+peng <-
+  penguins |>
+  select(
+    species,
+    bill_length_mm,
+    bill_depth_mm,
+    flipper_length_mm,
+    body_mass_g
+  ) |>
+  na.omit()
 peng |> count(species)
 ```
 
@@ -65,19 +71,23 @@ Example for the new axes.
 #| fig-height: 4
 #| echo: true
 #| code-fold: true
-pca1 <- peng |> select(flipper_length_mm, bill_length_mm) |> 
- prcomp(~., data = _, scale = FALSE)
+pca1 <- peng |>
+  select(flipper_length_mm, bill_length_mm) |>
+  prcomp(~., data = _, scale = FALSE)
 pca_vec <- t(pca1$rotation) |> as_tibble() # Vectors with x = flipper_length, y = bill_length
 ggplot(peng) +
- geom_point(aes(x = flipper_length_mm, y = bill_length_mm, color = species)) +
- geom_segment(
-  data = pca_vec, 
-  aes(x = mean(peng$flipper_length_mm), 
-      y = mean(peng$bill_length_mm), 
-      xend = c(pca1$sdev)*flipper_length_mm + mean(peng$flipper_length_mm), 
-      yend = c(pca1$sdev)*bill_length_mm + mean(peng$bill_length_mm)), 
-  arrow = arrow(length = unit(0.3, "cm"))) +
- coord_fixed()
+  geom_point(aes(x = flipper_length_mm, y = bill_length_mm, color = species)) +
+  geom_segment(
+    data = pca_vec,
+    aes(
+      x = mean(peng$flipper_length_mm),
+      y = mean(peng$bill_length_mm),
+      xend = c(pca1$sdev) * flipper_length_mm + mean(peng$flipper_length_mm),
+      yend = c(pca1$sdev) * bill_length_mm + mean(peng$bill_length_mm)
+    ),
+    arrow = arrow(length = unit(0.3, "cm"))
+  ) +
+  coord_fixed()
 ```
 
 ::: aside
@@ -92,9 +102,9 @@ The basic function is base-R's `prcomp` (there is an older `princomp` which is n
 ```{r}
 #| echo: true
 # prcomp can take a data frame with all numerical vectors as 1st argument
-P <- peng |> 
- select(flipper_length_mm, bill_length_mm) |> 
- prcomp()
+P <- peng |>
+  select(flipper_length_mm, bill_length_mm) |>
+  prcomp()
 ```
 
 :::: {.columns}
@@ -106,6 +116,7 @@ The base output
 #| echo: true
 P
 ```
+
 :::
 
 ::: {.column width='50%'}
@@ -114,6 +125,7 @@ The summary output
 #| echo: true
 summary(P)
 ```
+
 :::
 
 ::::
@@ -138,6 +150,7 @@ The matrix of variable **loadings**. (It is also the matrix which rotates the or
 #| echo: true
 P$rotation
 ```
+
 :::
 
 ::: {.column width='50%'}
@@ -153,17 +166,18 @@ The centered (scaled, if set) and rotated data.
 #| echo: true
 P$x
 ```
+
 :::
 
 ::::
 
 ## PCA as Exploratory Data Analysis {.smaller}
 
-Suppose we do a PCA with all `r nrow(peng)` penguins (rows) and all `r ncol(peng)-1` numeric variables.
+Suppose we do a PCA with all `r nrow(peng)` penguins (rows) and all `r ncol(peng) - 1` numeric variables.
 
-- *How long will the vector of standard deviations be?* [`r ncol(peng)-1`]{.fragment}  
-- *What dimensions will the rotation matrix have?* [`r ncol(peng)-1` x `r ncol(peng)-1`]{.fragment}  
-- *What dimensions will the rotated data frame have?* [`r nrow(peng)` x `r ncol(peng)-1`]{.fragment}
+- *How long will the vector of standard deviations be?* [`r ncol(peng) - 1`]{.fragment}  
+- *What dimensions will the rotation matrix have?* [`r ncol(peng) - 1` x `r ncol(peng) - 1`]{.fragment}  
+- *What dimensions will the rotated data frame have?* [`r nrow(peng)` x `r ncol(peng) - 1`]{.fragment}
 
 . . . 
 
@@ -179,8 +193,7 @@ Now, with `scale = TRUE` (recommended). Data will be centered and scaled (a.k.a.
 
 ```{r}
 #| echo: true
-peng_PCA <- peng |> select(-species) |> 
- prcomp(scale = TRUE)
+peng_PCA <- peng |> select(-species) |> prcomp(scale = TRUE)
 peng_PCA
 ```
 
@@ -199,13 +212,16 @@ peng_PCA
 ```{r}
 #| echo: true
 #| fig-height: 5
-plotdata <- peng_PCA$x |> 
- as_tibble() |> 
- bind_cols(peng)
-plotdata |> ggplot(aes(PC1, PC2, color = species)) +
- geom_point() +
- coord_fixed() + theme_minimal(base_size = 20)
+plotdata <- peng_PCA$x |>
+  as_tibble() |>
+  bind_cols(peng)
+plotdata |>
+  ggplot(aes(PC1, PC2, color = species)) +
+  geom_point() +
+  coord_fixed() +
+  theme_minimal(base_size = 20)
 ```
+
 :::
 
 ::::
@@ -220,13 +236,14 @@ plotdata |> ggplot(aes(PC1, PC2, color = species)) +
 ```{r}
 #| echo: true
 #| fig-height: 3
-peng_PCA$rotation |> as_tibble(rownames = "variable") |> 
- pivot_longer(starts_with("PC"), names_to = "PC", values_to = "value") |> 
- ggplot(aes(value, variable)) + 
- geom_col() + 
- geom_vline(xintercept = 0, color = "blue") +
- facet_wrap(~PC, nrow = 1) +
- theme_minimal(base_size = 20)
+peng_PCA$rotation |>
+  as_tibble(rownames = "variable") |>
+  pivot_longer(starts_with("PC"), names_to = "PC", values_to = "value") |>
+  ggplot(aes(value, variable)) +
+  geom_col() +
+  geom_vline(xintercept = 0, color = "blue") +
+  facet_wrap(~PC, nrow = 1) +
+  theme_minimal(base_size = 20)
 ```
 
 ## Variance explained {.smaller}
@@ -240,10 +257,10 @@ peng_PCA$rotation |> as_tibble(rownames = "variable") |>
 #| echo: true
 #| output-location: column
 tibble(PC = 1:4, sdev = peng_PCA$sdev) |>
- mutate(percent = sdev^2/sum(sdev^2) * 100) |>
- ggplot(aes(PC, percent)) +
- geom_col() +
- theme_grey(base_size = 20)
+  mutate(percent = sdev^2 / sum(sdev^2) * 100) |>
+  ggplot(aes(PC, percent)) +
+  geom_col() +
+  theme_grey(base_size = 20)
 ```
 
 
@@ -252,13 +269,13 @@ tibble(PC = 1:4, sdev = peng_PCA$sdev) |>
 ```{r}
 #| fig-height: 3
 #| fig-width: 5
-tibble(PC = 1:4, sdev = peng_PCA$sdev) |> 
- mutate(percent = sdev^2/sum(sdev^2) * 100,
-        cum_percent = cumsum(percent)) |>
- ggplot(aes(PC, percent)) + geom_col() + 
- geom_line(aes(y = cum_percent), color = "blue") +
- geom_point(aes(y = cum_percent), color = "blue") + 
- scale_y_continuous(breaks = seq(0,100,20))
+tibble(PC = 1:4, sdev = peng_PCA$sdev) |>
+  mutate(percent = sdev^2 / sum(sdev^2) * 100, cum_percent = cumsum(percent)) |>
+  ggplot(aes(PC, percent)) +
+  geom_col() +
+  geom_line(aes(y = cum_percent), color = "blue") +
+  geom_point(aes(y = cum_percent), color = "blue") +
+  scale_y_continuous(breaks = seq(0, 100, 20))
 ```
 
 - The first component explains almost 70% of the variance.  
@@ -269,10 +286,13 @@ tibble(PC = 1:4, sdev = peng_PCA$sdev) |>
 
 ```{r}
 #| fig-height: 3
-peng_PCA$rotation |> as_tibble(rownames = "variable") |> 
- pivot_longer(starts_with("PC"), names_to = "PC", values_to = "value") |> 
- ggplot(aes(value, variable)) + geom_col() + geom_vline(xintercept = 0, color = "blue") +
- facet_wrap(~PC, nrow = 1) 
+peng_PCA$rotation |>
+  as_tibble(rownames = "variable") |>
+  pivot_longer(starts_with("PC"), names_to = "PC", values_to = "value") |>
+  ggplot(aes(value, variable)) +
+  geom_col() +
+  geom_vline(xintercept = 0, color = "blue") +
+  facet_wrap(~PC, nrow = 1)
 ```
 
 1. To score high on PC1 a penguin needs to be generally large but with low bill depth.
@@ -283,13 +303,17 @@ peng_PCA$rotation |> as_tibble(rownames = "variable") |>
 ```{r}
 #| fig-height: 4
 
-g1 <- plotdata |> ggplot(aes(PC1, PC2, color = species)) +
- geom_point() + coord_fixed()
-g2 <- peng_PCA$rotation |> as_tibble(rownames = "variable") |> 
- pivot_longer(starts_with("PC"), names_to = "PC", values_to = "value") |> 
- filter(PC=="PC2" | PC == "PC1") |> 
- ggplot(aes(value, variable)) + geom_col() +
- facet_wrap(~PC, nrow = 1)
+g1 <- plotdata |>
+  ggplot(aes(PC1, PC2, color = species)) +
+  geom_point() +
+  coord_fixed()
+g2 <- peng_PCA$rotation |>
+  as_tibble(rownames = "variable") |>
+  pivot_longer(starts_with("PC"), names_to = "PC", values_to = "value") |>
+  filter(PC == "PC2" | PC == "PC1") |>
+  ggplot(aes(value, variable)) +
+  geom_col() +
+  facet_wrap(~PC, nrow = 1)
 library(patchwork)
 g1 + g2
 ```

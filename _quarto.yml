@@ -12,15 +12,27 @@ project:
     - material/M02.qmd
     - material/M03.qmd
     - material/M04.qmd
+    - material/M05.qmd
+    - material/M06.qmd
+    - material/M07.qmd
     - lectures/W02.qmd
     - lectures/W03.qmd
     - lectures/W04.qmd
+    - lectures/W05.qmd
+    - lectures/W06.qmd
+    - lectures/W07.qmd
     
 execute:
   freeze: auto  # re-render only when source changes
 
 website:
   title: "Data Science Concepts / Data Science Tools"
+  announcement: 
+    icon: info-circle
+    dismissable: true
+    content: "*All [Homework Projects](https://{{< var org.name >}}.github.io/Website/homework.html) listed. Tools module passing requirements specified in [Syllabus](https://{{< var org.name >}}.github.io/Website#tools-module).*"
+    type: primary
+    position: below-navbar
   navbar:
     left:
       - href: index.qmd
@@ -35,7 +47,7 @@ website:
   sidebar:
     style: "docked"
     search: true
-    collapse-level: 1
+    collapse-level: 2
     contents:
       - text: "Syllabus"
         file: index.qmd
@@ -46,6 +58,9 @@ website:
           - material/M02.qmd
           - material/M03.qmd
           - material/M04.qmd
+          - material/M05.qmd
+          - material/M06.qmd
+          - material/M07.qmd
       - setup.qmd
       - literature.qmd
       # - text: "Onboarding Late-arriving"

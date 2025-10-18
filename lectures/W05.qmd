@@ -24,25 +24,12 @@ In this lectures we will use these packages and datasets. You need to do this co
 #| echo: true
 library(tidyverse)
 library(palmerpenguins)
-if (!file.exists("data/galton.csv")) {
-  download.file(
-    url = "https://raw.githubusercontent.com/CU-F24-MDSSB-01-Concepts-Tools/Website/refs/heads/main/data/galton.csv",
-    destfile = "data/galton.csv"
-  )
-}
-if (!file.exists("data/Viertelfest.csv")) {
-  download.file(
-    url = "https://raw.githubusercontent.com/CU-F24-MDSSB-01-Concepts-Tools/Website/refs/heads/main/data/Viertelfest.csv",
-    destfile = "data/Viertelfest.csv"
-  )
-}
-galton <- read_csv("data/galton.csv")
-viertel <- read_csv("data/Viertelfest.csv")
+galton <- read_csv("galton.csv")
+viertel <- read_csv("Viertelfest.csv")
 ```
 
-::: aside
-Tip: Run the script in an R-project and have a folder `data/` in it such that the local path works!
-:::
+The datasets used can be downloaded from:   
+<https://github.com/CU-F25-MDSSB-01-Concepts-Tools/Website/tree/main/lectures>
 
 
 # Descriptive Statistics 
@@ -187,7 +174,7 @@ Mode: For any categorical variable.
 
 . . .
 
-**Is the measure always also in the data sequence?**
+**Is the measured value also always in the data?**
 
 . . . 
 
@@ -212,7 +199,7 @@ Note: Generalized means are often only reasonable when all values are positive $
 $M_0$ can also be expressed as the exponential ($\exp(x) = e^x$) of the mean of the the $\log$'s of the $x_i$'s: $\exp(\log((\prod_{i=1}^n x_i)^\frac{1}{n})) = \exp(\frac{1}{n}\sum_{i=1}^n\log(x_i))$. 
 :::
 
-## Box-Cox transformation function  {.smaller background-color="aquamarine" .scrollable}
+## Box-Cox transformation function  {.smaller background-color="aquamarine"}
 
 For $p \in \mathbb{R}$: $f(x) = \begin{cases}\frac{x^p - 1}{p} & \text{for $p\neq 0$} \\ \log(x) & \text{for $p= 0$}\end{cases}$
 
@@ -234,6 +221,7 @@ with $x = [x_1, \dots, x_n]$. $f^{-1}$ is the **inverse** of $f$.
 ```{r}
 #| fig-width: 4
 #| echo: true
+#| code-fold: true
 pfun <- function(x, p) (x^p - 1) / p
 ipfun <- function(x, p) (p * x + 1)^(1 / p)
 ggplot() +
@@ -254,8 +242,7 @@ ggplot() +
   labs(x = "x", y = "f(x)", title = "p = -1 (blue), 0 (black), +1 (red)") +
   theme(title = element_text(size = 2)) +
   theme_minimal()
-``
-`
+```
 :::
 
 :::
@@ -291,11 +278,13 @@ ggplot() +
 ```{r}
 #| echo: true
 #| fig-height: 2.5
-galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5) + 
- geom_vline(xintercept = 1198, color = "green") + 
- geom_vline(xintercept = mean(galton$Estimate), color = "red") + 
- geom_vline(xintercept = median(galton$Estimate), color = "blue") + 
- geom_vline(xintercept = Mode(galton$Estimate), color = "purple")
+galton |>
+  ggplot(aes(Estimate)) +
+  geom_histogram(binwidth = 5) +
+  geom_vline(xintercept = 1198, color = "green") +
+  geom_vline(xintercept = mean(galton$Estimate), color = "red") +
+  geom_vline(xintercept = median(galton$Estimate), color = "blue") +
+  geom_vline(xintercept = Mode(galton$Estimate), color = "purple")
 ```
 
 `r nrow(galton)` estimates, [true value]{style="color:green;"} 1198, [mean]{style="color:red;"} `r round(mean((galton$Estimate)), digits=1)`, [median]{style="color:blue;"} `r median((galton$Estimate))`, [mode]{style="color:purple;"} `r Mode((galton$Estimate))`
@@ -308,13 +297,15 @@ galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5) +
 ```{r}
 #| echo: true
 #| fig-height: 2.5
-viertel |> ggplot(aes(`
-Schätzung
-`)) + geom_histogram() +
- geom_vline(xintercept = 10788, color = "green") + 
- geom_vline(xintercept = mean(viertel$Schätzung), color = "red") + 
- geom_vline(xintercept = median(viertel$Schätzung), color = "blue") + 
- geom_vline(xintercept = Mode(viertel$Schätzung), color = "purple")
+viertel |>
+  ggplot(aes(
+    `Schätzung`
+  )) +
+  geom_histogram() +
+  geom_vline(xintercept = 10788, color = "green") +
+  geom_vline(xintercept = mean(viertel$Schätzung), color = "red") +
+  geom_vline(xintercept = median(viertel$Schätzung), color = "blue") +
+  geom_vline(xintercept = Mode(viertel$Schätzung), color = "purple")
 ```
 
 `r nrow(viertel)` estimates, the maximal value is `r format(max(viertel$Schätzung))`!  We should filter ... 
@@ -327,15 +318,15 @@ Schätzung
 ```{r}
 #| echo: true
 #| fig-height: 2.5
-viertel <- read_csv("data/Viertelfest.csv")
-viertel |> filter(Schätzung<100000) |> ggplot(aes(`
-Schätzung
-`)) + geom_histogram(binwidth = 500) +  
- geom_vline(xintercept = 10788, color = "green") +
- geom_vline(xintercept = mean(viertel$Schätzung), color = "red") + 
- geom_vline(xintercept = median(viertel$Schätzung), color = "blue") + 
- geom_vline(xintercept = Mode(viertel$Schätzung), color = "purple") + 
- geom_vline(xintercept = exp(mean(log(viertel$Schätzung))), color = "orange")
+viertel |>
+  filter(Schätzung < 100000) |>
+  ggplot(aes(`Schätzung`)) +
+  geom_histogram(binwidth = 500) +
+  geom_vline(xintercept = 10788, color = "green") +
+  geom_vline(xintercept = mean(viertel$Schätzung), color = "red") +
+  geom_vline(xintercept = median(viertel$Schätzung), color = "blue") +
+  geom_vline(xintercept = Mode(viertel$Schätzung), color = "purple") +
+  geom_vline(xintercept = exp(mean(log(viertel$Schätzung))), color = "orange")
 ```
 
 `r nrow(viertel)` estimates, [true value]{style="color:green;"} 10788, [mean]{style="color:red;"} `r format(round(mean(viertel$Schätzung), digits=1))`, [median]{style="color:blue;"} `r median(viertel$Schätzung)`, [mode]{style="color:purple;"} `r format(Mode(viertel$Schätzung))`,   
@@ -347,12 +338,15 @@ Schätzung
 ```{r}
 #| echo: true
 #| fig-height: 2.5
-viertel |> mutate(log10Est = log10(Schätzung)) |> ggplot(aes(log10Est)) + geom_histogram(binwidth = 0.05) +
- geom_vline(xintercept = log10(10788), color = "green") + 
- geom_vline(xintercept = log10(mean(viertel$Schätzung)), color = "red") + 
- geom_vline(xintercept = log10(median(viertel$Schätzung)), color = "blue") + 
- geom_vline(xintercept = log10(Mode(viertel$Schätzung)), color = "purple") + 
- geom_vline(xintercept = mean(log10(viertel$Schätzung)), color = "orange")
+viertel |>
+  mutate(log10Est = log10(Schätzung)) |>
+  ggplot(aes(log10Est)) +
+  geom_histogram(binwidth = 0.05) +
+  geom_vline(xintercept = log10(10788), color = "green") +
+  geom_vline(xintercept = log10(mean(viertel$Schätzung)), color = "red") +
+  geom_vline(xintercept = log10(median(viertel$Schätzung)), color = "blue") +
+  geom_vline(xintercept = log10(Mode(viertel$Schätzung)), color = "purple") +
+  geom_vline(xintercept = mean(log10(viertel$Schätzung)), color = "orange")
 ```
 
 `r nrow(viertel)` estimates, [true value]{style="color:green;"} 10788, [mean]{style="color:red;"} `r format(round(mean(viertel$Schätzung), digits=1))`, [median]{style="color:blue;"} `r median(viertel$Schätzung)`, [mode]{style="color:purple;"} `r format(Mode(viertel$Schätzung))`,   
@@ -415,11 +409,10 @@ sd(galton$Estimate)
 mad(galton$Estimate) # Warning: median absolute deviation is default
 range(galton$Estimate) # Oh, range gives us a vector of min and max. So, we diff
 diff(range(galton$Estimate))
-`
-``
+```
 :::
 
-::: {.column width='50%'}
+::: {.column width='50%' .fragment}
 ```{r}
 #| echo: true
 var(viertel$Schätzung)
@@ -427,8 +420,8 @@ sd(viertel$Schätzung)
 mad(viertel$Schätzung) # Warning: median absolute deviation is default
 range(viertel$Schätzung) # Oh, range gives us a vector of min and max. So, we diff
 diff(range(viertel$Schätzung))
-``
-`
+```
+
 :::
 
 ::::
@@ -480,7 +473,9 @@ We shift by the minimum $\min(x)$ and scale by the range $\max(x) - \min(x)$.
 - Caution: The new values are heavily dependent of the actual values of $\min$ and $\max$! 
 
 
-# Data Overview with `summary`
+# Data Overview with `
+summary
+`
 
 ## Data Sets 1a and 1b: Widsom of Crowd {.smaller}
 
@@ -497,9 +492,10 @@ galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5)
 ```{r}
 #| echo: true
 #| fig-height: 1.5
-viertel |> filter(Schätzung<100000) |> ggplot(aes(`
-Schätzung
-`)) + geom_histogram(binwidth = 500)
+viertel |>
+  filter(Schätzung < 100000) |>
+  ggplot(aes(`Schätzung`)) +
+  geom_histogram(binwidth = 500)
 ```
 
 ## Data Set 2: Palmer Penguins {.scrollable .smaller}
@@ -511,7 +507,7 @@ Chinstrap, Gentoo, and Adélie Penguins
 ![](https://upload.wikimedia.org/wikipedia/commons/0/08/South_Shetland-2016-Deception_Island%E2%80%93Chinstrap_penguin_%28Pygoscelis_antarctica%29_04.jpg){height=200}
 ![](https://upload.wikimedia.org/wikipedia/commons/0/00/Brown_Bluff-2016-Tabarin_Peninsula%E2%80%93Gentoo_penguin_%28Pygoscelis_papua%29_03.jpg){height=200}
 ![](https://upload.wikimedia.org/wikipedia/commons/e/e3/Hope_Bay-2016-Trinity_Peninsula%E2%80%93Ad%C3%A9lie_penguin_%28Pygoscelis_adeliae%29_04.jpg){height=200}
-![](http://r.qcbs.ca/workshop03/book-en/images/culmen_depth.png){height=200}  
+![](https://allisonhorst.github.io/palmerpenguins/reference/figures/culmen_depth.png){height=200}  
 
 ```{r}
 penguins
@@ -527,8 +523,7 @@ Shows summary statistics for the values in a vector
 ```{r}
 #| echo: true
 summary(galton$Estimate)
-`
-``
+```
 ```{r}
 #| echo: true
 summary(viertel$Schätzung)
@@ -539,8 +534,8 @@ Or for all columns in a data frame
 ```{r}
 #| echo: true
 summary(penguins)
-``
-`
+```
+
 :::
 
 ::: {.column width='35%'}
@@ -548,8 +543,8 @@ summary(penguins)
 [Question]{style='color:red;'}
 
 What does   
-`1st Qu.` and   
-`3rd Qu.` mean?
+`1 st Qu.` and   
+`3 rd Qu.` mean?
 
 :::
 
@@ -596,8 +591,13 @@ The 25% of all values are lower than the value. 75% are larger.
 ```{r}
 #| echo: true
 #| fig-height: 1.5
-galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5) + 
- geom_vline(xintercept = quantile(galton$Estimate, prob = seq(0, 1, by = 0.25)), color = "red")
+galton |>
+  ggplot(aes(Estimate)) +
+  geom_histogram(binwidth = 5) +
+  geom_vline(
+    xintercept = quantile(galton$Estimate, prob = seq(0, 1, by = 0.25)),
+    color = "red"
+  )
 ```
 
 
@@ -607,8 +607,7 @@ galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5) +
 #| echo: true
 # Min, 3 Quartiles, Max
 quantile(galton$Estimate, prob = seq(0, 1, by = 0.05))
-`
-``
+```
 ```{r}
 #| echo: true
 #| fig-height: 1.5
@@ -628,17 +627,24 @@ galton |>
 ```{r}
 #| echo: true
 quantile(viertel$Schätzung, prob = seq(0, 1, by = 0.25))
-``
-`
+```
+
 ```{r}
 #| echo: true
 #| fig-height: 1.5
-viertel |> filter(Schätzung<100000) |> ggplot(aes(`
-Schätzung
-`)) + geom_histogram(binwidth = 500) + 
- geom_vline(xintercept = quantile(viertel$`
-Schätzung
-`, prob = seq(0, 1, by = 0.25))[1:4], color = "red")
+viertel |>
+  filter(Schätzung < 100000) |>
+  ggplot(aes(
+    `Schätzung`
+  )) +
+  geom_histogram(binwidth = 500) +
+  geom_vline(
+    xintercept = quantile(
+      viertel$`Schätzung`,
+      prob = seq(0, 1, by = 0.25)
+    )[1:4],
+    color = "red"
+  )
 ```
 
 ## 1b Viertelfest: 20-quantiles {.smaller}
@@ -646,8 +652,7 @@ Schätzung
 ```{r}
 #| echo: true
 quantile(viertel$Schätzung, prob = seq(0, 1, by = 0.05))
-`
-``
+```
 ```{r}
 #| echo: true
 #| fig-height: 1.5
@@ -668,13 +673,22 @@ viertel |>
 ```{r}
 #| echo: true
 quantile(penguins$flipper_length_mm, prob = seq(0, 1, by = 0.25), na.rm = TRUE)
-``
-`
+```
+
 ```{r}
 #| echo: true
 #| fig-height: 1.5
-penguins |> ggplot(aes(flipper_length_mm)) + geom_histogram(binwidth = 1) + 
- geom_vline(xintercept = quantile(penguins$flipper_length_mm, prob = seq(0, 1, by = 0.25), na.rm = TRUE), color = "red")
+penguins |>
+  ggplot(aes(flipper_length_mm)) +
+  geom_histogram(binwidth = 1) +
+  geom_vline(
+    xintercept = quantile(
+      penguins$flipper_length_mm,
+      prob = seq(0, 1, by = 0.25),
+      na.rm = TRUE
+    ),
+    color = "red"
+  )
 ```
 
 
@@ -683,8 +697,8 @@ penguins |> ggplot(aes(flipper_length_mm)) + geom_histogram(binwidth = 1) +
 ```{r}
 #| echo: true
 quantile(penguins$flipper_length_mm, prob = seq(0, 1, by = 0.05), na.rm = TRUE)
-`
-``
+```
+
 ```{r}
 #| echo: true
 #| fig-height: 1.5
@@ -714,6 +728,7 @@ Examples:
 :::: {.columns}
 
 ::: {.column width='40%'}
+
 ```{r}
 #| echo: true
 # Min, 3 Quartiles, Max
@@ -723,42 +738,79 @@ IQR(viertel$Schätzung)
 sd(viertel$Schätzung) # for comparison
 IQR(penguins$flipper_length_mm, na.rm = TRUE)
 sd(penguins$flipper_length_mm, na.rm = TRUE) # for comparison
-``
-`
+```
+
 :::
 
 ::: {.column width='60%'}
+
 ```{r}
 #| fig-height: 1.8
 q <- quantile(galton$Estimate, prob = seq(0, 1, by = 0.25))
-galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5) + 
- geom_vline(xintercept = q, color = "red") +
- annotate("segment", x = q[2], xend = q[4], y = 0, yend = 0, color = "blue", size = 4) + 
- theme_grey(base_size = 20)
+galton |>
+  ggplot(aes(Estimate)) +
+  geom_histogram(binwidth = 5) +
+  geom_vline(xintercept = q, color = "red") +
+  annotate(
+    "segment",
+    x = q[2],
+    xend = q[4],
+    y = 0,
+    yend = 0,
+    color = "blue",
+    size = 4
+  ) +
+  theme_grey(base_size = 20)
 ```
 
 ```{r}
 #| fig-height: 1.8
-q <- quantile(viertel$`
-Schätzung
-`, prob = seq(0, 1, by = 0.25))
-viertel |> filter(Schätzung<100000) |> ggplot(aes(`
-Schätzung
-`)) + geom_histogram(binwidth = 500) + 
- geom_vline(xintercept = q[1:4], color = "red") +
- annotate("segment", x = q[2], xend = q[4], y = 0, yend = 0, color = "blue", size = 4) + 
- theme_grey(base_size = 20)
+q <- quantile(
+  viertel$`Schätzung`,
+  prob = seq(0, 1, by = 0.25)
+)
+viertel |>
+  filter(Schätzung < 100000) |>
+  ggplot(aes(
+    `Schätzung`
+  )) +
+  geom_histogram(binwidth = 500) +
+  geom_vline(xintercept = q[1:4], color = "red") +
+  annotate(
+    "segment",
+    x = q[2],
+    xend = q[4],
+    y = 0,
+    yend = 0,
+    color = "blue",
+    size = 4
+  ) +
+  theme_grey(base_size = 20)
 ```
 
 ```{r}
 #| fig-height: 1.8
-q <- quantile(penguins$flipper_length_mm, prob = seq(0, 1, by = 0.25), na.rm = TRUE)
-penguins |> ggplot(aes(flipper_length_mm)) + geom_histogram(binwidth = 1) + 
- geom_vline(xintercept = q, color = "red") +
- annotate("segment", x = q[2], xend = q[4], y = 0, yend = 0, color = "blue", size = 4) + 
- theme_grey(base_size = 20)
-`
-``
+q <- quantile(
+  penguins$flipper_length_mm,
+  prob = seq(0, 1, by = 0.25),
+  na.rm = TRUE
+)
+penguins |>
+  ggplot(aes(flipper_length_mm)) +
+  geom_histogram(binwidth = 1) +
+  geom_vline(xintercept = q, color = "red") +
+  annotate(
+    "segment",
+    x = q[2],
+    xend = q[4],
+    y = 0,
+    yend = 0,
+    color = "blue",
+    size = 4
+  ) +
+  theme_grey(base_size = 20)
+```
+
 :::
 
 ::::
@@ -1009,7 +1061,7 @@ Modeling: Operations like linear regression or dimensionality reduction. We have
     1. Generate questions about your data.
     2. Search for answers by visualizing, transforming, and modelling your data.
     3. Use what you learn to refine your questions and/or generate new questions.
-- EDA is fundamentally a creative process.
+- EDA is fundamentally a *creative* process. *What could be interesting?*
 
 ## Questions {background-color="khaki"}
 
@@ -1074,13 +1126,15 @@ Dubin (1969). Theory Building - A Practical Guide to the Construction and Testin
 
 ## Example: COVID-19 and Vitamin D  {background-color="khaki" .smaller}
 
+Examine
+
 ::: {.incremental}
-1. **Descriptive:** frequency of hospitalisations due to COVID-19 in a set of data collected from a group of individuals
-2. **Exploratory:** examine relationships between a range of dietary factors and COVID-19 hospitalisations
-3.  **Inferential:** examine whether any relationship between taking Vitamin D supplements and COVID-19 hospitalisations found in the sample hold for the population at large
-4. **Predictive:** what types of people will take Vitamin D supplements during the next year
-5. **Causal:** whether people with COVID-19 who were randomly assigned to take Vitamin D supplements or those who were not are hospitalised 
-6.  **Mechanistic:** how increased vitamin D intake leads to a reduction in the number of viral illnesses
+1. **Descriptive:** the frequency of daily hospitalisations due to COVID-19 and the frequency of Vitamin D intake in a sample of people
+2. **Exploratory:** examine the relationships between taking Vitamine D supplements and COVID-19 hospitalisations in a sample of people diagnosed with COVID-19
+3.  **Inferential:** examine whether any relationship between taking Vitamin D supplements and COVID-19 hospitalisations found in the sample hold *for the population at large*
+4. **Predictive:** examine what types of people and how many will take Vitamin D supplements next year
+5. **Causal:** examine whether people with COVID-19 who were randomly assigned to take Vitamin D supplements or those who were not are hospitalised 
+6.  **Mechanistic:** examine when and *how* increased vitamin D intake leads to a reduction in the number of viral illnesses
 :::
 
 ## Questions to questions  {background-color="khaki"}
