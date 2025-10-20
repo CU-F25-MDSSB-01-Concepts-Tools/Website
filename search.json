@@ -70,11 +70,11 @@
     "text": "Flipper length in millimeters\n\npenguins |&gt;\n  ggplot(aes(flipper_length_mm)) +\n  geom_histogram()"
   },
   {
-    "objectID": "lectures/W07.html#relate-variables-as-a-line",
-    "href": "lectures/W07.html#relate-variables-as-a-line",
+    "objectID": "lectures/W07.html#model-linear-relation-of-variables",
+    "href": "lectures/W07.html#model-linear-relation-of-variables",
     "title": "W#07: Models in Science, Linear Model, Nonlinear Models",
-    "section": "Relate variables as a line",
-    "text": "Relate variables as a line\nA line is a shift-scale transformation of the identity function usually written in the form\n\\[f(x) = a\\cdot x + b\\]\nwhere \\(a\\) is the slope, \\(b\\) is the intercept.1\n\n\na &lt;- 0.5\nb &lt;- 1\nfunc &lt;- function(x) a*x + b\nggplot() + geom_function(fun = func, size = 2) +\n # Set axis limits and make axis equal\n    xlim(c(-0.5,2)) + ylim(c(0,2)) + coord_fixed() + \n    geom_line( # intercept line:\n     data=tibble(x=c(0,0),y=c(0,1)), \n     mapping = aes(x,y), \n     color = \"blue\", size = 2) +\n    geom_line( # slope:\n     data=tibble(x=c(1.5,1.5),y=c(1.25,1.75)), \n     mapping = aes(x,y), \n     color = \"red\", size = 2) +\n    geom_line( # x-interval of length one:\n     data=tibble(x=c(0.5,1.5),y=c(1.25,1.25)), \n     mapping = aes(x,y), color = \"gray\") +\n    theme_classic(base_size = 24)\n\n\n\n\n\n\n\n\n\nThis a scale and a shift in the \\(y\\) direction. Note: For lines there is always an analog transformations on the \\(x\\) direction."
+    "section": "Model: Linear relation of variables",
+    "text": "Model: Linear relation of variables\nA line is a shift-scale transformation of the identity function usually written in the form\n\\[f(x) = a\\cdot x + b\\]\nwhere \\(a\\) is the slope, \\(b\\) is the intercept.1\n\n\na &lt;- 0.5\nb &lt;- 1\nfunc &lt;- function(x) a*x + b\nggplot() + geom_function(fun = func, size = 2) +\n # Set axis limits and make axis equal\n    xlim(c(-0.5,2)) + ylim(c(0,2)) + coord_fixed() + \n    geom_line( # intercept line:\n     data=tibble(x=c(0,0),y=c(0,1)), \n     mapping = aes(x,y), \n     color = \"blue\", size = 2) +\n    geom_line( # slope:\n     data=tibble(x=c(1.5,1.5),y=c(1.25,1.75)), \n     mapping = aes(x,y), \n     color = \"red\", size = 2) +\n    geom_line( # x-interval of length one:\n     data=tibble(x=c(0.5,1.5),y=c(1.25,1.25)), \n     mapping = aes(x,y), color = \"gray\") +\n    theme_classic(base_size = 24)\n\n\n\n\n\n\n\n\n\nThis a scale and a shift in the \\(y\\) direction. Note: For lines there is always an analog transformations on the \\(x\\) direction."
   },
   {
     "objectID": "lectures/W07.html#penguins-linear-model",
@@ -84,11 +84,11 @@
     "text": "Penguins: Linear model\nFlipper length as a function of body mass.\n\n\npenguins |&gt;\n ggplot(aes(x = body_mass_g, \n            y = flipper_length_mm)) +\n geom_point() +\n geom_smooth(method = \"lm\", \n             se = FALSE) + \n theme_classic(base_size = 24)"
   },
   {
-    "objectID": "lectures/W07.html#penguins-a-smooth-line",
-    "href": "lectures/W07.html#penguins-a-smooth-line",
+    "objectID": "lectures/W07.html#penguins-a-smooth-curve",
+    "href": "lectures/W07.html#penguins-a-smooth-curve",
     "title": "W#07: Models in Science, Linear Model, Nonlinear Models",
-    "section": "Penguins: A smooth line",
-    "text": "Penguins: A smooth line\nFlipper length as a function of body mass with loess1 smoothing.\n\n\npenguins |&gt;\n ggplot(aes(x = body_mass_g, \n            y = flipper_length_mm)) +\n geom_point() +\n geom_smooth(method = \"loess\") + \n theme_classic(base_size = 24)\n\n\n\n\n\n\n\n\n\nThis is a less theory-driven and more data-driven model. Why?\nWe don’t have a simple mathematical form of the function.\nloess = locally estimated scatterplot smoothing"
+    "section": "Penguins: A smooth curve",
+    "text": "Penguins: A smooth curve\nFlipper length as a function of body mass with loess1 smoothing.\n\n\npenguins |&gt;\n ggplot(aes(x = body_mass_g, \n            y = flipper_length_mm)) +\n geom_point() +\n geom_smooth(method = \"loess\") + \n theme_classic(base_size = 24)\n\n\n\n\n\n\n\n\n\nThis is a less theory-driven and more data-driven model. Why?\nWe don’t have a simple mathematical form of the function.\nloess = locally estimated scatterplot smoothing"
   },
   {
     "objectID": "lectures/W07.html#terminology-variable-based-models",
@@ -144,14 +144,14 @@
     "href": "lectures/W07.html#all-models-are-wrong",
     "title": "W#07: Models in Science, Linear Model, Nonlinear Models",
     "section": "All models are wrong …",
-    "text": "All models are wrong …\n… but some are useful. (George Box)\nExtending the range of the model:\n\n\npenguins |&gt;\n ggplot(aes(x = body_mass_g, \n            y = flipper_length_mm)) +\n geom_point() +\n geom_smooth(method = \"lm\", \n             se = FALSE, \n                                                fullrange = TRUE) +\n    xlim(c(0,7000)) + ylim(c(0,230)) +\n theme_classic(base_size = 24)\n\n\n\n\n\n\n\n\n\n\nThe model predicts that penguins with zero weight still have flippers of about 140 mm on average.\nIs the model useless? Yes, around zero body mass. No, it works OK in the range of the body mass data."
+    "text": "All models are wrong …\n… but some are useful. (George Box)\nExtending the range of the model:\n\n\npenguins |&gt;\n ggplot(aes(x = body_mass_g, \n            y = flipper_length_mm)) +\n geom_point() +\n geom_smooth(\n  method = \"lm\", \n  se = FALSE, \n    fullrange = TRUE) +\n    xlim(c(0,7000)) + \n  ylim(c(0,230)) +\n  theme_classic(base_size = 24)\n\n\n\n\n\n\n\n\n\n\nThe model predicts that penguins with zero weight still have flippers of about 140 mm on average.\nIs the model useless? Yes, around zero body mass.\nHowever, it works OK in the range of the body mass data."
   },
   {
     "objectID": "lectures/W07.html#two-model-purposes",
     "href": "lectures/W07.html#two-model-purposes",
     "title": "W#07: Models in Science, Linear Model, Nonlinear Models",
     "section": "Two model purposes",
-    "text": "Two model purposes\nLinear models can be used for:\n\nExplanation: Understand the relationship of variables in a quantitative way.\nFor the linear model, interpret slope and intercept.\n\nIn other words: We make inference about relations in any sample of penguins.\n\nPrediction: Plug in new values for the explanatory variable(s) and receive the expected response value.\nFor the linear model, predict the flipper length of new penguins by their body mass."
+    "text": "Two model purposes\nLinear models can be used for:\n\nExplanation: Understand the relationship of variables in a quantitative way.\nFor the linear model, interpret slope and intercept.\n\nIn other words: We make inference about relations in any sample of penguins.\nWarning: We use the word “explain” because it is an established statistical term for describing relations. However, beware a relation is not causation!\nWhen discussing causation, much more is needed than a statistical relation.\nIn substantive discussion about model output we speak about the not-necessarily causal relation or association of variables.\n\n\nPrediction: Plug in new values for the explanatory variable(s) and receive the expected response value.\nFor the linear model, predict the flipper length of new penguins by their body mass."
   },
   {
     "objectID": "lectures/W07.html#in-r-tidymodels",
@@ -312,7 +312,7 @@
     "href": "lectures/W07.html#linear-model-r-squared",
     "title": "W#07: Models in Science, Linear Model, Nonlinear Models",
     "section": "Linear model R-squared",
-    "text": "Linear model R-squared\n\nlinear_reg() |&gt; set_engine(\"lm\") |&gt; \n fit(flipper_length_mm ~ body_mass_g, data = penguins) |&gt;\n glance()  # glance shows summary statistics of model fit\n\n# A tibble: 1 × 12\n  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC\n      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1     0.759         0.758  6.91     1071. 4.37e-107     1 -1146. 2297. 2309.\n# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;\n\n\nInterpretation R-squared? 75.9% of the variance of flipper length can be explained by a linear relation with body mass.\n\n\nlinear_reg() |&gt; set_engine(\"lm\") |&gt; \n    fit(bill_depth_mm ~ bill_length_mm, data = penguins) |&gt; \n glance()\n\n# A tibble: 1 × 12\n  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC\n      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1    0.0552        0.0525  1.92      19.9 0.0000112     1  -708. 1422. 1433.\n# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;\n\n\n5.52% of the variance of bill depth can be explained by a linear relation with bill length.\n\n\nTechnical: The idea of the glance() function is to construct a single row summary “glance” of a model, fit, or other object."
+    "text": "Linear model R-squared\n\nlinear_reg() |&gt; set_engine(\"lm\") |&gt; \n fit(flipper_length_mm ~ body_mass_g, data = penguins) |&gt;\n glance()  # glance shows summary statistics of model fit\n\n# A tibble: 1 × 12\n  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC\n      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1     0.759         0.758  6.91     1071. 4.37e-107     1 -1146. 2297. 2309.\n# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;\n\n\nInterpretation R-squared? 75.9% of the variance of flipper length can be explained by a linear relation with body mass.\nWarning: With “explain” we do not claim that there is a causal relation ship.\n\n\nlinear_reg() |&gt; set_engine(\"lm\") |&gt; \n    fit(bill_depth_mm ~ bill_length_mm, data = penguins) |&gt; \n glance()\n\n# A tibble: 1 × 12\n  r.squared adj.r.squared sigma statistic   p.value    df logLik   AIC   BIC\n      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1    0.0552        0.0525  1.92      19.9 0.0000112     1  -708. 1422. 1433.\n# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;\n\n\n5.52% of the variance of bill depth can be explained by a linear relation with bill length.\n\n\nTechnical: The idea of the glance() function is to construct a single row summary “glance” of a model, fit, or other object."
   },
   {
     "objectID": "lectures/W07.html#r-squared-and-correlation",

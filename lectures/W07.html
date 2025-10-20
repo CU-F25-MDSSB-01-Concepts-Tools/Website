@@ -387,9 +387,9 @@ Jan Lorenz
 
 </div>
 <img data-src="W07_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
-<section id="relate-variables-as-a-line" class="slide level2 smaller" data-background-color="aquamarine">
-<h2>Relate variables as a line</h2>
-<p>A <em>line</em> is a shift-scale transformation of the identity function usually written in the form</p>
+<section id="model-linear-relation-of-variables" class="slide level2 smaller" data-background-color="aquamarine">
+<h2>Model: Linear relation of variables</h2>
+<p>A <strong>line</strong> is a shift-scale transformation of the identity function usually written in the form</p>
 <p><span class="math display">\[f(x) = a\cdot x + b\]</span></p>
 <p>where <span style="color:red;"><span class="math inline">\(a\)</span> is the <em>slope</em></span>, <span style="color:blue;"><span class="math inline">\(b\)</span> is the <em>intercept</em></span>.<sup>1</sup></p>
 <div class="cell columns column-output-location">
@@ -444,8 +444,8 @@ Jan Lorenz
 </div>
 </div></div>
 </section>
-<section id="penguins-a-smooth-line" class="slide level2 smaller">
-<h2>Penguins: A smooth line</h2>
+<section id="penguins-a-smooth-curve" class="slide level2 smaller">
+<h2>Penguins: A smooth curve</h2>
 <p><strong>Flipper length</strong> as a function of <strong>body mass</strong> with <code>loess</code><sup>1</sup> smoothing.</p>
 <div class="cell columns column-output-location">
 <div class="column">
@@ -593,11 +593,13 @@ The residual tells how far above/below the expected value each case is</li>
 <span id="cb11-2"><a></a> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, </span>
 <span id="cb11-3"><a></a>            <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
 <span id="cb11-4"><a></a> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb11-5"><a></a> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, </span>
-<span id="cb11-6"><a></a>             <span class="at">se =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb11-7"><a></a>                                                <span class="at">fullrange =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb11-8"><a></a>    <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">7000</span>)) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">230</span>)) <span class="sc">+</span></span>
-<span id="cb11-9"><a></a> <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">24</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-5"><a></a> <span class="fu">geom_smooth</span>(</span>
+<span id="cb11-6"><a></a>  <span class="at">method =</span> <span class="st">"lm"</span>, </span>
+<span id="cb11-7"><a></a>  <span class="at">se =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb11-8"><a></a>    <span class="at">fullrange =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb11-9"><a></a>    <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">7000</span>)) <span class="sc">+</span> </span>
+<span id="cb11-10"><a></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">230</span>)) <span class="sc">+</span></span>
+<span id="cb11-11"><a></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">24</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
@@ -609,7 +611,8 @@ The residual tells how far above/below the expected value each case is</li>
 </div></div>
 <ul>
 <li>The model predicts that penguins with zero weight still have flippers of about 140 mm on average.</li>
-<li>Is the model useless? <span class="fragment">Yes, around zero body mass. No, it works OK in the range of the body mass data.</span></li>
+<li>Is the model useless? <span class="fragment">Yes, around zero body mass.<br>
+However, it works OK in the range of the body mass data.</span></li>
 </ul>
 </section>
 <section id="two-model-purposes" class="slide level2 smaller" data-background-color="khaki">
@@ -620,6 +623,10 @@ The residual tells how far above/below the expected value each case is</li>
 <em>For the linear model, interpret slope and intercept.</em>
 <ul>
 <li>In other words: We make <strong>inference</strong> about relations in any sample of penguins.</li>
+<li>Warning: We use the word “explain” because it is an established statistical term for describing relations. However, <strong>beware a relation is not causation!</strong><br>
+When discussing causation, much more is needed than a statistical relation.<br>
+In substantive discussion about model output we speak about the not-necessarily causal <em>relation</em> or <em>association</em> of variables.<br>
+</li>
 </ul></li>
 <li><strong>Prediction:</strong> Plug in new values for the explanatory variable(s) and receive the expected response value.<br>
 <em>For the linear model, predict the flipper length of new penguins by their body mass.</em></li>
@@ -1372,7 +1379,8 @@ Coefficients:
 # ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
 </div>
 </div>
-<p><strong>Interpretation R-squared?</strong> <span class="fragment">75.9% of the variance of flipper length can be explained by a linear relation with body mass.</span></p>
+<p><strong>Interpretation R-squared?</strong> <span class="fragment">75.9% of the variance of flipper length can be explained by a linear relation with body mass.<br>
+Warning: With “explain” we do not claim that there is a causal relation ship.</span></p>
 <div class="fragment">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a></a><span class="fu">linear_reg</span>() <span class="sc">|&gt;</span> <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">|&gt;</span> </span>
