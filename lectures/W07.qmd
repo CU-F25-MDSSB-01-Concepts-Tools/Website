@@ -203,9 +203,9 @@ penguins |>
   geom_histogram()
 ```
 
-## Relate variables as a line {.smaller background-color="aquamarine"}
+## Model: Linear relation of variables {.smaller background-color="aquamarine"}
 
-A *line* is a shift-scale transformation of the identity function usually written in the form 
+A **line** is a shift-scale transformation of the identity function usually written in the form 
 
 $$f(x) = a\cdot x + b$$
 
@@ -251,7 +251,7 @@ penguins |>
  theme_classic(base_size = 24)
 ```
 
-## Penguins: A smooth line {.smaller}
+## Penguins: A smooth curve {.smaller}
 
 **Flipper length** as a function of **body mass** with `loess`^[loess = locally estimated scatterplot smoothing] smoothing. 
 
@@ -381,15 +381,18 @@ penguins |>
  ggplot(aes(x = body_mass_g, 
             y = flipper_length_mm)) +
  geom_point() +
- geom_smooth(method = "lm", 
-             se = FALSE, 
- 												fullrange = TRUE) +
-	xlim(c(0,7000)) + ylim(c(0,230)) +
- theme_classic(base_size = 24)
+ geom_smooth(
+  method = "lm", 
+  se = FALSE, 
+ 	fullrange = TRUE) +
+	xlim(c(0,7000)) + 
+  ylim(c(0,230)) +
+  theme_classic(base_size = 24)
 ```
 
 - The model predicts that penguins with zero weight still have flippers of about 140 mm on average.
-- Is the model useless? [Yes, around zero body mass. No, it works OK in the range of the body mass data.]{.fragment}
+- Is the model useless? [Yes, around zero body mass.   
+However, it works OK in the range of the body mass data.]{.fragment}
 
 ## Two model purposes {.smaller background-color="khaki"}
 
@@ -398,6 +401,9 @@ Linear models can be used for:
 - **Explanation:** Understand the relationship of variables in a quantitative way.   
 *For the linear model, interpret slope and intercept.*
     - In other words: We make **inference** about relations in any sample of penguins.
+    - Warning: We use the word "explain" because it is an established statistical term for describing relations. However, **beware a relation is not causation!**  
+    When discussing causation, much more is needed than a statistical relation.   
+    In substantive discussion about model output we speak about the not-necessarily causal *relation* or *association* of variables.  
 - **Prediction:** Plug in new values for the explanatory variable(s) and receive the expected response value.   
 *For the linear model, predict the flipper length of new penguins by their body mass.*
 
@@ -789,7 +795,8 @@ linear_reg() |> set_engine("lm") |>
  glance()  # glance shows summary statistics of model fit
 ```
 
-**Interpretation R-squared?** [75.9% of the variance of flipper length can be explained by a linear relation with body mass. ]{.fragment}
+**Interpretation R-squared?** [75.9% of the variance of flipper length can be explained by a linear relation with body mass.   
+Warning: With "explain" we do not claim that there is a causal relation ship.]{.fragment}
 
 . . .
 
