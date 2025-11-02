@@ -201,6 +201,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">W#08</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./material/M09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">W#09</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -245,13 +251,13 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#how-to-write-a-project-report-in-a-nutshell" id="toc-how-to-write-a-project-report-in-a-nutshell" class="nav-link active" data-scroll-target="#how-to-write-a-project-report-in-a-nutshell"><span class="header-section-number">1</span> How to write a project report in a nutshell</a></li>
   <li><a href="#work-in-teams-and-register-your-project" id="toc-work-in-teams-and-register-your-project" class="nav-link" data-scroll-target="#work-in-teams-and-register-your-project"><span class="header-section-number">2</span> Work in Teams and Register your Project</a></li>
-  <li><a href="#advice-for-data-science-team-work-with-git" id="toc-advice-for-data-science-team-work-with-git" class="nav-link" data-scroll-target="#advice-for-data-science-team-work-with-git"><span class="header-section-number">3</span> Advice for data science team work (with git)</a></li>
-  <li><a href="#delivery" id="toc-delivery" class="nav-link" data-scroll-target="#delivery"><span class="header-section-number">4</span> Delivery</a></li>
-  <li><a href="#deadline" id="toc-deadline" class="nav-link" data-scroll-target="#deadline"><span class="header-section-number">5</span> Deadline</a></li>
-  <li><a href="#grading" id="toc-grading" class="nav-link" data-scroll-target="#grading"><span class="header-section-number">6</span> Grading</a></li>
+  <li><a href="#delivery" id="toc-delivery" class="nav-link" data-scroll-target="#delivery"><span class="header-section-number">3</span> Delivery</a></li>
+  <li><a href="#deadline" id="toc-deadline" class="nav-link" data-scroll-target="#deadline"><span class="header-section-number">4</span> Deadline</a></li>
+  <li><a href="#grading" id="toc-grading" class="nav-link" data-scroll-target="#grading"><span class="header-section-number">5</span> Grading</a></li>
+  <li><a href="#advice-for-data-science-team-work-with-git" id="toc-advice-for-data-science-team-work-with-git" class="nav-link" data-scroll-target="#advice-for-data-science-team-work-with-git"><span class="header-section-number">6</span> Advice for data science team work (with git)</a></li>
   <li><a href="#how-to-define-a-project" id="toc-how-to-define-a-project" class="nav-link" data-scroll-target="#how-to-define-a-project"><span class="header-section-number">7</span> How to define a project?</a></li>
   <li><a href="#guidelines-for-drafting-your-project" id="toc-guidelines-for-drafting-your-project" class="nav-link" data-scroll-target="#guidelines-for-drafting-your-project"><span class="header-section-number">8</span> Guidelines for drafting your project</a></li>
-  <li><a href="#making-your-project-public" id="toc-making-your-project-public" class="nav-link" data-scroll-target="#making-your-project-public"><span class="header-section-number">9</span> Making your project public</a></li>
+  <li><a href="#optional-making-your-project-public" id="toc-optional-making-your-project-public" class="nav-link" data-scroll-target="#optional-making-your-project-public"><span class="header-section-number">9</span> (Optional) Making your project public</a></li>
   <li><a href="#frequently-asked-questions-may-be-extended" id="toc-frequently-asked-questions-may-be-extended" class="nav-link" data-scroll-target="#frequently-asked-questions-may-be-extended"><span class="header-section-number">10</span> Frequently Asked Questions <em>(may be extended)</em></a></li>
   </ul>
 </nav>
@@ -278,17 +284,21 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Caution
+Important
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>Project check-in starts in the second half of the semester! Before there is no need to register or contact instructors on your project teams or ideas. However, you can start thinking about it and read the guidelines below.</p>
+<p>Project check-in has started. Deadline: Saturday, Nov 8.<br>
+Fill the form <a href="https://forms.office.com/e/75qEdyZbim">Data Science Tools Final Project Check-In</a>. (Ideally after you have formed a team and discussed your data source and initial questions.)</p>
+</div>
 </div>
 </div>
 <p>These are specifications and guidelines for the final <strong>Data Science Project</strong> and the <strong>Project report</strong>, the assessment for the <em>Data Science Tools</em> (see <a href="./index.html">Syllabus</a>): How to write it, when and how to deliver it, and how it will be graded.</p>
@@ -297,21 +307,20 @@ Caution
 <ul>
 <li>You find a team,<br>
 </li>
-<li>pick a dataset,</li>
-<li>register your project,</li>
-<li>do some interesting question-driven data analysis with it,</li>
-<li>present a draft version at the end of the semester, and</li>
+<li>pick a dataset or the data source of the Homework Projects COVID19, FuelWatch, or DataScienceProfiles</li>
+<li>check-in your project in the Form <a href="https://forms.office.com/e/75qEdyZbim">Data Science Tools Final Project Check-In</a>,</li>
+<li>do some interesting question-driven data analysis with it, and</li>
 <li>write up a well-structured and nicely formatted report about the analysis in your team’s repository.</li>
 </ul>
 </section>
 <section id="work-in-teams-and-register-your-project" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="work-in-teams-and-register-your-project"><span class="header-section-number">2</span> Work in Teams and Register your Project</h2>
-<p>Projects should be done in <strong>teams of 2-3 students</strong>. This serves two additional learning goals:</p>
+<p>Projects should be done in <strong>teams of 3-6 students</strong>. This serves two additional learning goals:</p>
 <ol type="1">
 <li>Learning to pursue and coordinate data science workflows collaboratively.</li>
 <li>Learning to work collaboratively on code with <code>git</code> and <a href="http://GitHub.com">GitHub</a>.</li>
 </ol>
-<p><strong>Single teams</strong> and <strong>teams with more the 3 members</strong> are possible upon request when there are reasons for it.</p>
+<p><strong>Individual teams</strong> are possible upon request when there are reasons for it.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -324,64 +333,41 @@ The team’s work is graded as one piece.
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>All members receive the same grade for it. However, the module grade can be different because of the bonus for fully complete homework. A dysfunctional team can be split upon request by individual members.</p>
+<p>All members receive the same grade for it. However, the module grade can be different because of the bonus for fully complete homework. <strong>A dysfunctional team can be split anytime before submission upon request by any individual member.</strong> Write to the instructors in case you want to depart from your team.</p>
 </div>
 </div>
 </div>
 <p><strong>How to form a team and register your project:</strong></p>
 <ol type="1">
 <li>Form a team on your own with fellow students.</li>
-<li>Go through this guidelines together.<br>
-</li>
+<li>Go through these guidelines together.</li>
+<li>Decide if you want to build on one of your Homework Projects or search for your own data.
+<ol type="a">
 <li>Find a suitable dataset (see below).</li>
-<li>Come up with a few initial questions.</li>
-<li>All team members should write to the instructors.</li>
-</ol>
-<p><span style="color:red;"><strong>One member should write to the <a href="mailto:jlorenz@constructor.university">Jan Lorenz</a> and <a href="mailto:armmueller@constructor.university">Armin Müller</a></strong></span> and provide</p>
-<ul>
-<li>all names of the team members,</li>
-<li>information about the dataset,</li>
-<li>the initial questions, and</li>
-<li>a short working title for the repository name.</li>
-</ul>
-<p><span style="color:red;">All other members should write to the instructors for confirmation.</span></p>
-</section>
-<section id="advice-for-data-science-team-work-with-git" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="advice-for-data-science-team-work-with-git"><span class="header-section-number">3</span> Advice for data science team work (with git)</h2>
-<ul>
-<li>Select your language R or python!</li>
-<li>Put the data you need into a folder <code>data</code>. For large data sets better not to commit and push it, but to document where the data can be retrieved and where it should be put to load it with your code.<br>
+</ol></li>
+<li>Come up with <strong>one initial question per team member</strong>. Discuss in your team how the questions are related and if and how they build on each other.<br>
 </li>
-<li>All team members need to clone the repository to their local computers.</li>
-<li>Try both:
-<ul>
-<li>Working together at the same time with realtime communction.</li>
-<li>Working together remotely based on a plan who should do what. Feel free to use GitHub issues in your repository for this!</li>
-</ul></li>
-<li>Every team member should finally have pushed some work to GitHub!</li>
-<li>Commit early and often! Then we can help you when you have questions or need directions.</li>
-<li>Before you start to work as a team member: Always do <code>git pull</code> first to receive potentially new content!</li>
-<li>Try to finish an individual work session with comments on next steps and open questions. Push the files in a state such that it renders.</li>
-<li><em>Conflicts in git:</em> Git conflicts will probably occur when you work in teams while pulling and pushing. These can be solved. If you do not manage, ask for help.</li>
-<li><strong>Conflicts in the team.</strong> Please communicate about tensions in your team and try to solve them. However, you are not obliged to finish your project as a dysfunctional team. To avoid being bound to the same grade in a dysfunctional team, every team member has the right to leave the team and continue independently. This can only be realized upon prior communication with team members and consequently with the instructors!</li>
-</ul>
+<li>Fill out the Form <a href="https://forms.office.com/e/75qEdyZbim">Data Science Tools Final Project Check-In</a></li>
+</ol>
 </section>
-<section id="delivery" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="delivery"><span class="header-section-number">4</span> Delivery</h2>
+<section id="delivery" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="delivery"><span class="header-section-number">3</span> Delivery</h2>
 <ul>
 <li>Delivery is via GitHub in a private repository (the same way as Homework Projects).</li>
 <li>The repository for the final project will be created in the <a href="https://github.com/CU-F25-MDSSB-01-Concepts-Tools">CU-F25-MDSSB-01-Concepts-Tools</a> by the instructors <strong>upon team and project approval</strong>.</li>
 <li>The source file as well as the rendered html-file should be included.</li>
 <li>The assessment will start after the deadline with the latest commit.</li>
-<li>Assessment will be done based on reading the HTML-file. Additionally and if necessary, the Quarto Markdown File and other provided files may be looked at. Ideally, the HTML-Report is sufficient to assess the project! (To test if the HTML file looks good for the instructors do the following: Clone the repository anew to a temporaty directory on your computer, open the HTML file from this newly cloned directory. Check if it looks good. This is what instructors will do.)</li>
+<li>Assessment will be done based on reading the HTML-file. Additionally and if necessary, the Quarto Markdown File and other provided files may be looked at. Ideally, the HTML-Report is sufficient to assess the project!<br>
+(To test if the HTML file looks good for the instructors do the following: Clone the repository anew to a temporaty directory on your computer, open the HTML file from this newly cloned directory. Check if it looks good. This is what instructors will do.)</li>
 </ul>
 </section>
-<section id="deadline" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="deadline"><span class="header-section-number">5</span> Deadline</h2>
-<p>See <a href="./schedule.html">Schedule</a></p>
+<section id="deadline" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="deadline"><span class="header-section-number">4</span> Deadline</h2>
+<p>See <a href="./schedule.html">Schedule</a>.</p>
+<p>Note: The deadline is before the Winter (German Christmas) break in December. In total you have 3 attampts to pass any module. The second attempt will be with a deadline in late January 2025. The third attempt will be in the next academic year. If you feel very time pressured in December and you are still keeping up with learning. You can consider to let the first attempt pass and work furterh in January. A failed attempt does not harm your transcript.</p>
 </section>
-<section id="grading" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="grading"><span class="header-section-number">6</span> Grading</h2>
+<section id="grading" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="grading"><span class="header-section-number">5</span> Grading</h2>
 <ul>
 <li>The reports will be graded jointly by the instructor of Data Science Tools and Data Science Concepts.<br>
 </li>
@@ -401,6 +387,26 @@ The team’s work is graded as one piece.
 <li>Document Structure and Layout (10%)</li>
 </ul>
 </section>
+<section id="advice-for-data-science-team-work-with-git" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="advice-for-data-science-team-work-with-git"><span class="header-section-number">6</span> Advice for data science team work (with git)</h2>
+<ul>
+<li>Select your language R or python!</li>
+<li>Put the data you need into a folder <code>data</code>. For large data sets better not to commit and push it, but to document where the data can be retrieved and where it should be put to load it with your code.<br>
+</li>
+<li>All team members need to clone the repository to their local computers.</li>
+<li>Try both:
+<ul>
+<li>Working together at the same time with realtime communction.</li>
+<li>Working together remotely based on a plan who should do what. Feel free to use GitHub issues in your repository for this!</li>
+</ul></li>
+<li>Every team member should finally have pushed some work to GitHub!</li>
+<li>Commit early and often! Then we can help you when you have questions or need directions.</li>
+<li>Before you start to work as a team member: Always do <code>git pull</code> first to receive potentially new content!</li>
+<li>Try to finish an individual work session with comments on next steps and open questions. Push the files in a state such that it renders.</li>
+<li><em>Conflicts in git:</em> Git conflicts will probably occur when you work in teams while pulling and pushing. These can be solved. If you do not manage, ask for help.</li>
+<li><strong>Conflicts in the team.</strong> Please communicate about tensions in your team and try to solve them. However, you are not obliged to finish your project as a dysfunctional team. To avoid being bound to the same grade in a dysfunctional team, every team member has the right to leave the team and continue independently. This can only be realized upon prior communication with team members and consequently with the instructors!</li>
+</ul>
+</section>
 <section id="how-to-define-a-project" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="how-to-define-a-project"><span class="header-section-number">7</span> How to define a project?</h2>
 <p>Part of the work is to define a good project for question-driven data analysis.</p>
@@ -414,15 +420,15 @@ The team’s work is graded as one piece.
 <section id="guidelines-for-drafting-your-project" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="guidelines-for-drafting-your-project"><span class="header-section-number">8</span> Guidelines for drafting your project</h2>
 <ul>
-<li>Find a manageable dataset: at least 50 cases (rows), good is 10-20 variables (columns) with a mix of categorical and numeric. Deviations are allowed based on your interest and capability.</li>
+<li>If you do not build on a Homework Project: Find a manageable dataset. A guideline is at least 50 cases (rows), good is 10-20 variables (columns) with a mix of categorical and numerical ones. Deviations are allowed based on your interest and capability.</li>
 <li>Go through the visualizations, statistics, and models we had in lectures and homework and think if similar things would be interesting.</li>
 <li>The goal is not an exhaustive data analysis with every method! Do not calculate every statistic and procedure you have learned for every variable, but rather show that you can ask meaningful questions and answer them with results of data analysis and proficient interpretation and presentation of the results.</li>
 <li>Do NOT blindly do all visualization and all statistics on all variables in the data set! You may do that in your data exploration. But not all exploratory data analysis goes into your report. At some point, you have to focus on what is needed to answer your questions. Your report is not a documentation of all your exploratory steps. Throw out what is not needed anymore, improve the remaining visualizations, and explain well in the text what you want to communicate.</li>
 <li>A single high-quality visualization that shows a point clearly will receive a much higher appreciation than a large number of poor-quality visualizations without an explanation of what they should communicate.</li>
 </ul>
 </section>
-<section id="making-your-project-public" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="making-your-project-public"><span class="header-section-number">9</span> Making your project public</h2>
+<section id="optional-making-your-project-public" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="optional-making-your-project-public"><span class="header-section-number">9</span> (Optional) Making your project public</h2>
 <p>By default, project repositories are <em>private</em> and only visible to team members and instructors. The repositories can be made <em>public</em> such that students can use it as part of their portfolio, for example for referring to it in applications for internships and student jobs. Please let the instructors know if you want to make the repository public.</p>
 <p>Additionally, the HTML file can be made accessible directly as a webpage with a few tweaks from quarto using the service of <em>GitHub Pages</em>. See the <a href="https://quarto.org/docs/publishing/github-pages.html">documentation</a>.</p>
 </section>
