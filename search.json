@@ -294,11 +294,11 @@
     "text": "Evaluate the performance\n\nsimple_email_pred |&gt;\n  roc_curve(\n    truth = spam,\n    .pred_1,\n    event_level = \"second\" # this adjusts the location above the diagonal\n  ) |&gt;\n  autoplot()\n\n\n\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 roc_auc binary         0.753\n\n\nConclusion: It is not as good compared to AUC 0.86"
   },
   {
-    "objectID": "lectures/W09.html#predict-penguins-sex",
-    "href": "lectures/W09.html#predict-penguins-sex",
+    "objectID": "lectures/W09.html#compare-predict-penguins-sex",
+    "href": "lectures/W09.html#compare-predict-penguins-sex",
     "title": "W#09: Prediction (Building a Spam Filter), Classification and Regression with Decision Trees",
-    "section": "Predict Penguins’ Sex",
-    "text": "Predict Penguins’ Sex\nFollowing all the steps introduced before:\n\nset.seed(1)\n# Put 80% of the data into the training set\npeng_split &lt;- initial_split(penguins, prop = 0.80)\n# Create data frames for the two sets:\ntrain_data_peng &lt;- training(peng_split)\ntest_data_peng &lt;- testing(peng_split)\n\n# Create a recipe for the model\npeng_rec &lt;- recipe(\n  sex ~ .,\n  data = train_data_peng\n) |&gt;\n  step_naomit(all_predictors()) |&gt;\n  step_dummy(all_nominal(), -all_outcomes()) |&gt;\n  step_zv(all_predictors())\n\n# Create a logistic regression model\npeng_mod &lt;- logistic_reg() |&gt;\n  set_engine(\"glm\")\n\n# Create a workflow\npeng_wflow &lt;- workflow() |&gt;\n  add_model(peng_mod) |&gt;\n  add_recipe(peng_rec)\n\n# Fitting model to training data\npeng_fit &lt;- peng_wflow |&gt;\n  fit(data = train_data_peng)\n\n# Make predictions for test data\npeng_pred &lt;- peng_fit |&gt;\n  predict(test_data_peng, type = \"prob\") |&gt;\n  bind_cols(test_data_peng)"
+    "section": "Compare: Predict Penguins’ Sex",
+    "text": "Compare: Predict Penguins’ Sex\nFollowing all the steps introduced before:\n\nset.seed(1)\n# Put 80% of the data into the training set\npeng_split &lt;- initial_split(penguins, prop = 0.80)\n# Create data frames for the two sets:\ntrain_data_peng &lt;- training(peng_split)\ntest_data_peng &lt;- testing(peng_split)\n\n# Create a recipe for the model\npeng_rec &lt;- recipe(\n  sex ~ .,\n  data = train_data_peng\n) |&gt;\n  step_naomit(all_predictors()) |&gt;\n  step_dummy(all_nominal(), -all_outcomes()) |&gt;\n  step_zv(all_predictors())\n\n# Create a logistic regression model\npeng_mod &lt;- logistic_reg() |&gt;\n  set_engine(\"glm\")\n\n# Create a workflow\npeng_wflow &lt;- workflow() |&gt;\n  add_model(peng_mod) |&gt;\n  add_recipe(peng_rec)\n\n# Fitting model to training data\npeng_fit &lt;- peng_wflow |&gt;\n  fit(data = train_data_peng)\n\n# Make predictions for test data\npeng_pred &lt;- peng_fit |&gt;\n  predict(test_data_peng, type = \"prob\") |&gt;\n  bind_cols(test_data_peng)"
   },
   {
     "objectID": "lectures/W09.html#penguins-evaluate-performance",
