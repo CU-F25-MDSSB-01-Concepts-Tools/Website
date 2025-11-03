@@ -32,7 +32,7 @@
     "href": "lectures/W09.html#balance-over--and-underfitting",
     "title": "W#09: Prediction (Building a Spam Filter), Classification and Regression with Decision Trees",
     "section": "Balance Over- and Underfitting",
-    "text": "Balance Over- and Underfitting\nIn a one predictor model we can show both visually:\n\n\n\n\n\n\n\n\n\n\n\nThis is simulated data."
+    "text": "Balance Over- and Underfitting\nIn a one predictor model we can show both visually:\n\n\nCode\nlm_fit &lt;- linear_reg() |&gt;\n  set_engine(\"lm\") |&gt;\n  fit(y4 ~ x2, data = association)\n\nloess_fit &lt;- loess(y4 ~ x2, data = association)\n\nloess_overfit &lt;- loess(y4 ~ x2, span = 0.05, data = association)\n\nassociation |&gt;\n  select(x2, y4) |&gt;\n  mutate(\n    Underfit = augment(lm_fit$fit) |&gt; select(.fitted) |&gt; pull(),\n    OK = augment(loess_fit) |&gt; select(.fitted) |&gt; pull(),\n    Overfit = augment(loess_overfit) |&gt; select(.fitted) |&gt; pull(),\n  ) |&gt;\n  pivot_longer(\n    cols = Underfit:Overfit,\n    names_to = \"fit\",\n    values_to = \"y_hat\"\n  ) |&gt;\n  mutate(fit = fct_relevel(fit, \"Underfit\", \"OK\", \"Overfit\")) |&gt;\n  ggplot(aes(x = x2)) +\n  geom_point(aes(y = y4), color = \"darkgray\") +\n  geom_line(aes(y = y_hat, group = fit, color = fit), size = 1) +\n  labs(x = NULL, y = NULL, color = NULL) +\n  scale_color_viridis_d(option = \"plasma\", end = 0.7)\n\n\n\n\n\n\n\n\n\n\n\nThis is simulated data."
   },
   {
     "objectID": "lectures/W09.html#spending-our-data",
