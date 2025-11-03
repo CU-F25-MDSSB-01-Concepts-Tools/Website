@@ -1267,9 +1267,9 @@ Computational engine: glm </code></pre>
 <p><strong>Sensitivity:</strong> 3/(3+65) = 0.044<br>
 <strong>Specificity:</strong> 716/(716+1) = 0.999</p>
 </section>
-<section id="check-our-very-first-model" class="slide level2 smaller">
-<h2>Check our very first model</h2>
-<p>We make a new simple recipe and draw workflow and fitting re-using the same specified logisitc regression model <code>email_mod</code>.</p>
+<section id="compare-check-our-very-first-model" class="slide level2 smaller">
+<h2>Compare: Check our very first model</h2>
+<p>Using the modular sturcutr: We make a new simple recipe and draw workflow and fitting re-using the same specified logisitc regression model <code>email_mod</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a>simple_email_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
 <span id="cb67-2"><a></a>  spam <span class="sc">~</span> num_char, <span class="co"># formula</span></span>
