@@ -1048,13 +1048,14 @@ Computational engine: glm </code></pre>
 27 time_month_Apr -12.0     394.        -0.0306 9.76e- 1</code></pre>
 </div>
 </div>
+<p>Note: <code>email_fit</code> builds on the workflow object <code>email_wflow</code> defined before, which specified a model and a recipe.</p>
 </section>
 <section id="make-predictions-for-test-data" class="slide level2 smaller">
 <h2>Make predictions for test data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>email_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(email_fit, test_data, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb61-2"><a></a>  <span class="fu">bind_cols</span>(test_data)</span>
-<span id="cb61-3"><a></a></span>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>email_pred <span class="ot">&lt;-</span> email_fit <span class="sc">|&gt;</span></span>
+<span id="cb61-2"><a></a>  <span class="fu">predict</span>(test_data, <span class="at">type =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb61-3"><a></a>  <span class="fu">bind_cols</span>(test_data)</span>
 <span id="cb61-4"><a></a>email_pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 785 × 23
@@ -1077,6 +1078,19 @@ Computational engine: glm </code></pre>
 #   urgent_subj &lt;fct&gt;, exclaim_mess &lt;dbl&gt;, number &lt;fct&gt;</code></pre>
 </div>
 </div>
+<p>Note: <code>email_pred</code> builds on the fit object <code>email_fit</code> defined and computed before, which in turn builds on workflow defined before, which specified a model and a recipe.</p>
+</section>
+<section id="summary-of-the-workflow-steps" class="slide level2 smaller">
+<h2>Summary of the workflow steps</h2>
+<ul>
+<li>Define a model</li>
+<li>Define a recipe for data preprocessing, feature engineering and selection</li>
+<li>Define a workflow that brings model and recipe together</li>
+<li>Nothing is computed so far!</li>
+<li>Fit the workflow with the <strong>training</strong> data</li>
+<li>Make predictions for the <strong>test</strong> data</li>
+</ul>
+<p>The purpose of modularization is to separate the different tasks and to make it easy to re-use and combine parts of it, e.g.&nbsp;to test and compare different versions or to do cross-validation with different splits of <em>testing</em> and <em>training</em> data.</p>
 </section>
 <section id="evaluate-the-performance-2" class="slide level2 smaller">
 <h2>Evaluate the performance</h2>
