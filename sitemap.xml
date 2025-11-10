@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W09.html</loc>
-    <lastmod>2025-11-03T08:38:09.709Z</lastmod>
+    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W10.html</loc>
+    <lastmod>2025-11-10T08:17:28.967Z</lastmod>
   </url>
   <url>
-    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W07.html</loc>
-    <lastmod>2025-11-02T22:37:02.127Z</lastmod>
+    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W08.html</loc>
+    <lastmod>2025-10-27T08:37:56.704Z</lastmod>
   </url>
   <url>
-    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W05.html</loc>
-    <lastmod>2025-10-12T17:38:14.485Z</lastmod>
+    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W06.html</loc>
+    <lastmod>2025-10-12T18:06:31.239Z</lastmod>
   </url>
   <url>
-    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W03.html</loc>
-    <lastmod>2025-09-29T14:23:52.123Z</lastmod>
+    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W04.html</loc>
+    <lastmod>2025-09-29T14:55:30.198Z</lastmod>
+  </url>
+  <url>
+    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W02.html</loc>
+    <lastmod>2025-10-01T13:41:39.744Z</lastmod>
   </url>
   <url>
     <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/material/M09.html</loc>
@@ -50,7 +54,7 @@
   </url>
   <url>
     <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/index.html</loc>
-    <lastmod>2025-11-03T08:23:27.192Z</lastmod>
+    <lastmod>2025-11-09T08:42:18.438Z</lastmod>
   </url>
   <url>
     <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/setup.html</loc>
@@ -81,19 +85,23 @@
     <lastmod>2025-11-03T08:02:05.060Z</lastmod>
   </url>
   <url>
-    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W02.html</loc>
-    <lastmod>2025-10-01T13:41:39.744Z</lastmod>
+    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/material/M10.html</loc>
+    <lastmod>2025-11-10T08:29:19.443Z</lastmod>
   </url>
   <url>
-    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W04.html</loc>
-    <lastmod>2025-09-29T14:55:30.198Z</lastmod>
+    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W03.html</loc>
+    <lastmod>2025-09-29T14:23:52.123Z</lastmod>
   </url>
   <url>
-    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W06.html</loc>
-    <lastmod>2025-10-12T18:06:31.239Z</lastmod>
+    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W05.html</loc>
+    <lastmod>2025-10-12T17:38:14.485Z</lastmod>
   </url>
   <url>
-    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W08.html</loc>
-    <lastmod>2025-10-27T08:37:56.704Z</lastmod>
+    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W07.html</loc>
+    <lastmod>2025-11-02T22:37:02.127Z</lastmod>
+  </url>
+  <url>
+    <loc>https://CU-F25-MDSSB-01-Concepts-Tools.github.io/Website/lectures/W09.html</loc>
+    <lastmod>2025-11-03T08:38:09.709Z</lastmod>
   </url>
 </urlset>
