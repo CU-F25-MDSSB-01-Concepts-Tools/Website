@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.7.33">
 
   <meta name="author" content="Jan Lorenz">
-  <title>Data Science Concepts / Data Science Tools – W#10: Overfitting Systematic, Clustering Algorithms, Bias and Variance in Crowd Wisdom</title>
+  <title>Data Science Concepts / Data Science Tools – W#10: Overfitting, Clustering Algorithms, Bias and Variance in Crowd Wisdom</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -196,7 +196,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">W#10: Overfitting Systematic, Clustering Algorithms, Bias and Variance in Crowd Wisdom</h1>
+  <h1 class="title">W#10: Overfitting, Clustering Algorithms, Bias and Variance in Crowd Wisdom</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -971,8 +971,8 @@ predictor: 20</code></pre>
 
 </div>
 <img data-src="W10_files/figure-revealjs/unnamed-chunk-27-1.png" width="960" class="r-stretch"></section>
-<section id="summary-overfitting-and-systematic-analysis" class="slide level2">
-<h2>Summary: Overfitting and Systematic Analysis</h2>
+<section id="summary-overfitting-analysis" class="slide level2">
+<h2>Summary: Overfitting Analysis</h2>
 <ul>
 <li class="fragment">The complexity of a model is often controlled by <strong>hyper-parameters</strong>.</li>
 <li class="fragment"><strong>Overfitting</strong> means that a model fits the training data too well, capturing noise and random fluctuations instead of the underlying patterns relevant for new data.</li>
@@ -997,7 +997,7 @@ Example: In a linear regression, we model a numerical response variable as a lin
 Example: In a logistic regression, we assume the binary outcomes are realized randomly based on a probability which is a the logistic transformation of a linear combination of predictors and estimate the coefficients with data.</li>
 <li><span style="color:red;"><strong>Clustering:</strong></span> We want to label cases in data.</li>
 </ol>
-<p><strong>Classification and clustering</strong> are about producing new nominal data. In classification the categories are already know from the training data. <span style="color:blue;">Clustering algorithms produces the categories without training data.</span></p>
+<p><strong>Classification and clustering</strong> are about producing new nominal/categorical data. In classification the categories are already know from the training data. <span style="color:blue;">Clustering algorithms produces the categories without training data.</span></p>
 </section>
 <section id="supervised-vs.-unsupervised-statistical-learning" class="slide level2 smaller">
 <h2>Supervised vs.&nbsp;unsupervised statistical learning</h2>
@@ -1247,7 +1247,7 @@ Example: In a logistic regression, we assume the binary outcomes are realized ra
   .. ..$ ordered: logi NA
  $ fit_times         : tibble [6 × 2] (S3: tbl_df/tbl/data.frame)
   ..$ stage_id: chr [1:6] "prep.rm_BQwdn" "bake.rm_BQwdn" "prep.center_iYLQg" "bake.center_iYLQg" ...
-  ..$ elapsed : num [1:6] 0.001 0.001 0.002 0 0.003 ...
+  ..$ elapsed : num [1:6] 0.001 0 0.003 0 0.002 ...
  $ last_term_info    : gropd_df [8 × 6] (S3: grouped_df/tbl_df/tbl/data.frame)
   ..$ variable: chr [1:8] "bill_depth_mm" "bill_length_mm" "body_mass_g" "flipper_length_mm" ...
   ..$ type    :List of 8
@@ -16276,7 +16276,7 @@ Number of objects: 333 </code></pre>
 <ul>
 <li>All <em>estimates</em> are made to predict the same value: the truth.
 <ul>
-<li>In contrast to the regression model, the estimate come from people and not from a regression formula.</li>
+<li>In contrast to the regression model, the estimates come from people and not from a regression formula.</li>
 </ul></li>
 <li>The <em>truth</em> is the same for all.
 <ul>
@@ -16403,9 +16403,16 @@ For example outcomes of estimation games, or linear regression models?</p>
 <li>Of course, high trueness and high precision! But, …</li>
 <li>Focusing on the <strong>crowd</strong> being wise instead of its <strong>individuals</strong>: High trueness, low precision.</li>
 </ul>
-
-
 </div>
+</section>
+<section id="bias-variance-tradeoff" class="slide level2">
+<h2>Bias-Variance Tradeoff</h2>
+<ul>
+<li>This was a simple demonstration of the difference of error through bias and variance and how the average individual error can be decomposed into the two components</li>
+<li>This topic is deeply related to overfitting in Statistical Learning under the name <strong>Bias-Variance tradeoff</strong></li>
+</ul>
+
+
 </section></section>
 
     </div>
