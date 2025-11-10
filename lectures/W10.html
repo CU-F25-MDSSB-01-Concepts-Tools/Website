@@ -620,8 +620,8 @@ node), split, n, deviance, yval
 <h1>Overfitting</h1>
 <p>Phenomenon: Overfitting means that a model fits the training data too well, capturing noise and random fluctuations instead of the underlying patterns relevant for new data. Generalization error increases.</p>
 </section>
-<section id="compare-with-fitting-training-data" class="slide level2">
-<h2>Compare with fitting training data</h2>
+<section id="compare-with-predicting-training-data" class="slide level2">
+<h2>Compare with predicting training data</h2>
 <div class="columns">
 <div class="column" style="width:33%;">
 <p><strong>Default Tree</strong></p>
@@ -943,7 +943,7 @@ predictor: 20</code></pre>
 <ul>
 <li>sensitivity = TP / (TP + FN) true positive rate, probability spam in spam-folder<br>
 </li>
-<li>specificity = TN / (TN + FP) true negative tate, probability wanted mail in inbox<br>
+<li>specificity = TN / (TN + FP) true negative rate, probability wanted mail in inbox<br>
 </li>
 <li>accuracy = (TP + TN) / (TP + TN + FP + FN) probability of correct classification</li>
 </ul>
@@ -1247,7 +1247,7 @@ Example: In a logistic regression, we assume the binary outcomes are realized ra
   .. ..$ ordered: logi NA
  $ fit_times         : tibble [6 × 2] (S3: tbl_df/tbl/data.frame)
   ..$ stage_id: chr [1:6] "prep.rm_BQwdn" "bake.rm_BQwdn" "prep.center_iYLQg" "bake.center_iYLQg" ...
-  ..$ elapsed : num [1:6] 0.001 0 0.003 0 0.002 ...
+  ..$ elapsed : num [1:6] 0.001 0 0.002 0 0.002 ...
  $ last_term_info    : gropd_df [8 × 6] (S3: grouped_df/tbl_df/tbl/data.frame)
   ..$ variable: chr [1:8] "bill_depth_mm" "bill_length_mm" "body_mass_g" "flipper_length_mm" ...
   ..$ type    :List of 8
