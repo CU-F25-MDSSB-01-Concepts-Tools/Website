@@ -1,5 +1,5 @@
 ---
-title: "W#10: Overfitting, Clustering Algorithms, Bias and Diversity in Crowd Wisdom"
+title: "W#10: Overfitting, Clustering Algorithms, Bias and Variance in Crowd Wisdom"
 author: Jan Lorenz
 format: 
   revealjs: 
@@ -13,194 +13,594 @@ format:
     logo: img/ConstructorUniversity.png
     footer: "MDSSB-DSCO-02: Data Science Concepts"
 bibliography: "/home/janlo/Documents/literature/litlorenz_zot.bib"
-editor_options: 
-  chunk_output_type: console
+css: ../styles.css
 ---
 
 
 ## Preliminaries 
 
 ```{r}
-#| echo: true 
+#| echo: true
 library(tidymodels)
 library(openintro)
 library(palmerpenguins)
 library(tidyverse)
 library(rpart.plot)
-library(ranger)
 ```
 
-# Overfitting
+# Decisions Trees
 
-By example of decision trees
+## Workflow make a prediction model
+
+::: {.incremental}
+1. Data splitting into training and test data  
+`initial_split()`, `training()`, `testing()` $\to$ `train` and `test` datasets
+2. Recipe for preprocessing  
+`recipe()`, specify response variable and preprocessing steps for predictors 
+3. Model specification  
+E.g. `decision_tree()`, set engine `rpart`, mode `regression` or `classification`
+4. Workflow to combine recipe and model (still all just specifications)   
+`workflow()` with `add_recipe()`, `add_model()` creates a workflow object
+5. Fit the model with training data using the workflow  (finally the computation happens!)
+`fit()` with workflow and `train` data
+6. Predict response variable for rows of the test data  
+`predict()` with fitted workflow and `test` data
+7. Evaluate performance using the orignal variable (ground truth) in test data  
+`metrics()` by specifying `truth` and `estimate` columns
+:::
 
 
+## Decision tree
 
-## Email spam-prediction: Recipe
-
-Make a recipe for a spam-prediction function for the `email` dataset from `openintro`:
+Steps: 1. Train-Test-Split, 2. Preprocessing-Recipe 3. Model 4. Workflow 5. Fit     
+Postponed: 6. Make predictions, 7. Evaluate performance
 
 ```{r}
 #| echo: true
-#| message: true
+#| output-location: column
+set.seed(12345) # Just to fix the presentation, test without when doing yourself!
 
-email_recipe <- recipe(spam ~ ., data = email) |>
- step_rm(from, sent_email, viagra) |> # Remove some variables (see former lectures)
- step_date(time, features = c("dow", "month")) |> # Make day-of-week and month features ...
- step_rm(time) |> # ... and remove the date-time itself
- step_zv(all_predictors()) # remove predictors with zero variance
-email_recipe
+# 1. Train-Test-Split
+peng_split <- initial_split(na.omit(penguins), prop = 0.7, strata = sex)
+peng_train <- training(peng_split)
+peng_test <- testing(peng_split)
+# 2. Preprocessing-Recipe
+peng_recipe <- recipe(body_mass_g ~ ., data = peng_train) |>
+  step_rm(year)
+# 3. Model
+peng_regtree <- decision_tree() |>
+  set_engine("rpart") |>
+  set_mode("regression")
+# 4. Workflow
+peng_regtree_fit <- workflow() |>
+  add_recipe(peng_recipe) |>
+  add_model(peng_regtree) |>
+  # 5. Fit
+  fit(data = peng_train)
+# Look at the output
+peng_regtree_fit
 ```
 
 
-## Specify a deep decision tree
+## Show rules / visualize tree {.smaller}
+
+
+::: {.columns}
+::: {.column}
 
 ```{r}
 #| echo: true
-#| message: true
+rpart.rules(peng_regtree_fit$fit$fit$fit, roundint = FALSE)
+```
 
-email_tree <- decision_tree(
- cost_complexity = -1, # This specifies the deepest tree
- tree_depth = 30
+:::
+::: {.column}
+
+```{r}
+#| echo: true
+rpart.plot(peng_regtree_fit$fit$fit$fit, roundint = FALSE, tweak = 1.5)
+```
+
+:::
+:::
+
+- The percentage is the fraction of the total cases in this group
+- The number is the predicted outcome (mean body mass) at this decision node
+- Finally only 4 different values are possible in this tree
+
+[**Can we add more decisions?**]{.red .fragment}  [Yes, by tuning **hyper-parameters**.]{.green .fragment} 
+
+## How a tree is made {.smaller}
+
+The algorithm is **recursive partioning**:
+
+- First the single variable is found which *best* splits the data into two groups of rows (what *best* is will not be explained and discussed here) 
+- The data is separated, and then this process is applied separately to each sub-group, and so on recursively until the subgroups either 
+  - reach a minimum number of rows or 
+  - until no improvement can be made.
+
+
+
+::: aside 
+- For learning more: Use help functions. Here `?rpart` and `?rpart.control` (This explains several hyper-parameters). Or see the CRAN page [rpart](https://cran.r-project.org/web/packages/rpart) and watch out for *Vignettes*. These are introductory texts. See [rpart Vignette](https://cran.r-project.org/web/packages/rpart/vignettes/longintro.pdf).   
+- `tidymodels` uses `rpart` as engine for decision trees. The command `decision_tree()` has hyper-parameters which are passed to `rpart` when setting the engine with `set_engine("rpart")`, though the parameters have not identical names! See `?decision_tree` for that.
+:::
+
+
+## Deeper tree
+
+Two hyper-parameters of `decision_tree()` to control the tree growth.
+
+- `cost_complexity` (`cp` in `rpart`): Complexity parameter. Higher values prune the tree more. Default is 0.01.
+- `min_n` (`minsplit` in `rpart`): Minimum number of data points in a node to continue splitting. Default is 20.
+
+A deeper tree with lower `cost_complexity` and same `min_n`:
+
+```{r}
+#| echo: true
+peng_regtree_deep <- decision_tree(
+  cost_complexity = 0.001,
+  min_n = 20
 ) |>
- set_engine("rpart") |>
- set_mode("classification")
-email_tree
+  set_engine("rpart") |>
+  set_mode("regression")
+peng_regtree_deep_fit <- workflow() |>
+  add_recipe(peng_recipe) |>
+  add_model(peng_regtree_deep) |>
+  fit(data = peng_train)
 ```
 
-
-## Workflow: Recipe and Model, Train-Test Split
+## The deep tree
 
 ```{r}
 #| echo: true
-
-email_workflow <- workflow() |>
- add_recipe(email_recipe) |>
- add_model(email_tree)
-
-set.seed(123)
-email_split <- initial_split(email, prop = 0.7, strata = spam)
-email_train <- training(email_split)
-email_test <- testing(email_split)
+rpart.plot(peng_regtree_deep_fit$fit$fit$fit, roundint = FALSE, tweak = 1)
 ```
 
-## Train the model
+Note: Some variables are used multiple times in different parts of the tree.
+
+## The deepest tree
 
 ```{r}
 #| echo: true
-email_fit <- fit(email_workflow, data = email_train)
-email_fit
-```
-
-## Plot the tree
-
-This is not even the full tree ...
-
-```{r}
-#| echo: true
-email_fit$fit$fit$fit |> 
- rpart.plot(roundint=FALSE)
+#| code-fold: true
+peng_regtree_deepest <- decision_tree(
+  cost_complexity = 0,
+  min_n = 2
+) |>
+  set_engine("rpart") |>
+  set_mode("regression")
+peng_regtree_deepest_fit <- workflow() |>
+  add_recipe(peng_recipe) |>
+  add_model(peng_regtree_deepest) |>
+  fit(data = peng_train)
+rpart.plot(peng_regtree_deepest_fit$fit$fit$fit, roundint = FALSE, tweak = 1)
 ```
 
 
 
 ## Make predictions
 
+6\. Predict response variable for rows of the test data.  
+
+::: {.columns}
+
+::: {.column width="33%"}
+**Default Tree**
+```{r}
+#| echo: true
+peng_regtree_pred <-
+  predict(peng_regtree_fit, peng_test)
+peng_regtree_pred
+```
+
+:::
+
+::: {.column width="33%"}
+**Deeper Tree**
+```{r}
+#| echo: true
+peng_regtree_deep_pred <-
+  predict(peng_regtree_deep_fit, peng_test)
+peng_regtree_deep_pred
+```
+
+:::
+
+::: {.column width="33%"}
+**Deepest Tree**
+```{r}
+#| echo: true
+peng_regtree_deepest_pred <-
+  predict(peng_regtree_deepest_fit, peng_test)
+peng_regtree_deepest_pred
+```
+
+:::
+
+:::
+
+. . . 
+
+See how the number of different predicted values increases with tree depth.
+
+## Evaluate performance (Step 1)
+
+7\. Evaluate performance using the orignal variable (ground truth) in test data attached with `bind_cols()`.    
+
+
+::: {.columns}
+
+::: {.column width="33%"}
+**Default Tree**
+```{r}
+#| echo: true
+peng_regtree_pred |>
+  bind_cols(peng_test) |>
+  select(.pred, body_mass_g)
+```
+
+:::
+
+::: {.column width="33%"}
+**Deeper Tree**
+```{r}
+#| echo: true
+peng_regtree_deep_pred |>
+  bind_cols(peng_test) |>
+  select(.pred, body_mass_g)
+```
+
+:::
+
+::: {.column width="33%"}
+**Deepest Tree**
+```{r}
+#| echo: true
+peng_regtree_deepest_pred |>
+  bind_cols(peng_test) |>
+  select(.pred, body_mass_g)
+```
+
+:::
+
+:::
+
+
+
+
+
+## Evaluate performance (Step 2)
+
+7\. Use `metrics()` by specifying `truth` and `estimate` columns
+   
+::: {.columns}
+
+::: {.column width="33%"}
+**Default Tree**
+```{r}
+#| echo: true
+peng_regtree_pred |>
+  bind_cols(peng_test) |>
+  metrics(truth = body_mass_g, estimate = .pred)
+```
+
+:::
+
+::: {.column width="33%"}
+**Deeper Tree**
+```{r}
+#| echo: true
+peng_regtree_deep_pred |>
+  bind_cols(peng_test) |>
+  metrics(truth = body_mass_g, estimate = .pred)
+```
+
+:::
+
+::: {.column width="33%"}
+**Deepest Tree**
+```{r}
+#| echo: true
+peng_regtree_deepest_pred |>
+  bind_cols(peng_test) |>
+  metrics(truth = body_mass_g, estimate = .pred)
+```
+
+:::
+
+:::
+
+Focus on RMSE (Root Mean Squared Error). The lower the better.  
+
+. . . 
+
+[Why is the deepest tree not best?]{.red} [Overfitting?]{.green .fragment}
+
+# Overfitting
+
+Phenomenon: Overfitting means that a model fits the training data too well, capturing noise and random fluctuations instead of the underlying patterns relevant for new data. Generalization error increases.
+
+## Compare with predicting training data
+
+::: {.columns}
+
+::: {.column width="33%"}
+**Default Tree**
+
 ```{r}
 #| echo: true
 
-email_pred_test <- predict(email_fit, email_test) |>
- bind_cols(email_test) 
-email_pred_train <- predict(email_fit, email_train) |>
- bind_cols(email_train) 
-email_pred_test
+predict(peng_regtree_fit, peng_train) |>
+  bind_cols(peng_train) |>
+  metrics(truth = body_mass_g, estimate = .pred)
 ```
 
-## Print the evaluation metrics
+:::
+
+::: {.column width="33%"}
+**Deeper Tree**
+```{r}
+#| echo: true
+predict(peng_regtree_deep_fit, peng_train) |>
+  bind_cols(peng_train) |>
+  metrics(truth = body_mass_g, estimate = .pred)
+```
+
+:::
+
+::: {.column width="33%"}
+**Deepest Tree**
+```{r}
+#| echo: true
+predict(peng_regtree_deepest_fit, peng_train) |>
+  bind_cols(peng_train) |>
+  metrics(truth = body_mass_g, estimate = .pred)
+```
+
+:::
+
+:::
+
+Ah! The deepest tree makes perfect predictions on the training data (RMSE = 0) but is worst on the test data.
+
+. . . 
+
+[Let us look at it more systematically!]{.red}
+
+
+
+
+## Use `expand_grid` and list-columns
+
+For a [**systematic comparison**]{.green} of the three models on train and test data we build a [**analysis dataframe**]{.green} with all combinations of model and data. 
 
 ```{r}
 #| echo: true
+#| output-location: column
 
-email_pred_test |> conf_mat(truth = spam, estimate = .pred_class)
-email_pred_train |> conf_mat(truth = spam, estimate = .pred_class)
-email_pred_test |> conf_mat(truth = spam, estimate = .pred_class) |> summary()
+peng_deep_analysis_structure <- expand_grid(
+  tibble(
+    model = c("Default", "Deeper", "Deepest"),
+    fit = list(
+      peng_regtree_fit,
+      peng_regtree_deep_fit,
+      peng_regtree_deepest_fit
+    )
+  ),
+  tibble(
+    data_name = c("train", "test"),
+    data = list(peng_train, peng_test)
+  )
+)
+peng_deep_analysis_structure
 ```
 
-## Select accuracy
+- The two `tibble` commands produce two data-frames of sizes 3 x 2 and 2 x 2.
+- `expand_grid` creates all combinations of rows resulting in a 6 x 4 data-frame. 
+- The columns `fit` and `data` are [**list-columns**]{.red}. Instead of a vector, each entry is a list. 
+- Each list entry in `fit` is a fitted workflow, and in `data` it is a data-frame.
+
+## Use `mutate` and `map2` and `map_dbl` 
+
+We predict for all combinations of model and data:
 
 ```{r}
 #| echo: true
+#| output-location: column
 
-email_pred_test |> 
- conf_mat(truth = spam, estimate = .pred_class) |> 
- summary() |> filter(.metric == "accuracy")
-email_pred_train |> 
- conf_mat(truth = spam, estimate = .pred_class) |> 
- summary()|> filter(.metric == "accuracy")
+peng_deep_analysis <- peng_deep_analysis_structure |>
+  mutate(
+    predictions = map2(fit, data, \(f, d) {
+      predict(f, d) |> bind_cols(d)
+    }),
+    r_squared = map_dbl(predictions, \(p) {
+      p |>
+        rsq(truth = body_mass_g, estimate = .pred) |>
+        pull(.estimate)
+    })
+  )
+peng_deep_analysis |> select(model, data_name, r_squared)
 ```
 
-## Function accuracy of tree by complexity cost
+- `map2` goes through 2 lists (here `fit` and `data`) and applies the [**anonymous function**]{.red}   
+` \(f, d) {predict(f, d) |> bind_cols(d))}` to all 6 pair of entries. Results go into `predictions`, a new list-column.
+- `map_dbl` outputs a vector instead of list. (`pull` extracts the value from the one-row tibble output of `rsq`.)
+
+## Summary new programming concepts
+
+::: {.incremental}
+- `expand_grid()` to create all combinations of two data-frames
+- list-columns can store complex objects in a matrix. Powerful for structuring a systematic analysis. 
+- The analysis can be executed with `map`-functions.
+- `map` takes as inputs *a vector or list*, and a *function* which is applies to each entry.
+- Often an *anonymous function* is enough. It does not need a name and can be defined on-the-fly as `\(arg1, arg2, ...) { ... }`
+- `map` always returns a list of the same length as the input vector or list.
+- Different `map`-versions: `map2()` takes two input vectors or lists. `map_dbl` (or similar `map_*` function return a vector instead of a list.
+:::
+
+## Visualization
 
 ```{r}
 #| echo: true
+#| output-location: column
 
-decisiontree_fit_predict_accuracy_by_complexitycost <- function(compl) {
- data_fit <- fit(workflow() |>
-      add_recipe(email_recipe) |>
-      add_model(decision_tree(cost_complexity = compl, tree_depth = 30, min_n = 1) |> 
-                 set_engine("rpart") |> set_mode("classification")), 
-     data = email_train)
- data_pred_test <- predict(data_fit, email_test) |> bind_cols(email_test)
- data_pred_train <- predict(data_fit, email_train) |> bind_cols(email_train)
- bind_rows (
-  data_pred_test |> accuracy(truth = spam, estimate = .pred_class) |> mutate(data = "test"),
-  data_pred_train |> accuracy(truth = spam, estimate = .pred_class) |> mutate(data = "train")
- ) |> 
-  mutate(cost_complexity = compl)
-}
-decisiontree_fit_predict_accuracy_by_complexitycost(0.05)  |> filter(.metric == "accuracy")
+peng_deep_analysis |>
+  ggplot(aes(
+    x = fct_inorder(model),
+    y = r_squared,
+    color = data_name,
+    group = data_name
+  )) +
+  geom_line() +
+  geom_point() +
+  theme_minimal(base_size = 20)
 ```
-
-## Test the function {.scrollable}
 
 ```{r}
 #| echo: true
+#| output-location: column
 
-decisiontree_fit_predict_accuracy_by_complexitycost(0.02)  |> filter(.metric == "accuracy")
-decisiontree_fit_predict_accuracy_by_complexitycost(0.01)  |> filter(.metric == "accuracy")
-decisiontree_fit_predict_accuracy_by_complexitycost(0.005)  |> filter(.metric == "accuracy")
-decisiontree_fit_predict_accuracy_by_complexitycost(0.002)  |> filter(.metric == "accuracy")
-decisiontree_fit_predict_accuracy_by_complexitycost(0.001)  |> filter(.metric == "accuracy")
-decisiontree_fit_predict_accuracy_by_complexitycost(0)  |> filter(.metric == "accuracy")
+peng_deep_analysis |>
+  ggplot(aes(
+    x = fct_inorder(data_name),
+    y = r_squared,
+    color = fct_inorder(model),
+    group = fct_inorder(model)
+  )) +
+  geom_line() +
+  geom_point() + 
+  theme_minimal(base_size = 20)
+
 ```
-
-
-## Collect values in a dataframe
-
+  
+## Overfitting in classification: Spam
+  
+`email` dataset from `openintro`:   
+Steps: 1. Train-Test-Split, 2. Preprocessing-Recipe 
+  
 ```{r}
 #| echo: true
 #| message: true
 
-simtest <- seq(0, 0.02, 0.001) |> 
- map_df(\(x) decisiontree_fit_predict_accuracy_by_complexitycost(x))
-simtest
+set.seed(12345) # Just to fix the presentation, test without when doing yourself!
+email_split <- initial_split(email, prop = 0.7, strata = spam)
+email_train <- training(email_split)
+email_test <- testing(email_split)
+email_recipe <- recipe(spam ~ ., data = email) |>
+  step_rm(from, sent_email, viagra) |> # Remove some variables (see former lectures)
+  step_date(time, features = c("dow", "month")) |> # Make day-of-week and month features ...
+  step_rm(time) |> # ... and remove the date-time itself
+  step_zv(all_predictors()) # remove predictors with zero variance
+email_recipe
 ```
 
-## Show the overfitting in a plot
+## Classification trees
+
+Analysis structure for different complexity costs and train/test data
 
 ```{r}
 #| echo: true
-simtest |> 
- ggplot(aes(x = cost_complexity, y = .estimate, color = data)) +
- geom_line() +
- geom_point() +
- scale_x_reverse() +
- labs(x = "Cost complexity (-> Less pruning)", y = "Accuracy")
+email_cp_analysis_structure <- expand_grid(
+  tibble(
+    complexity_cost = seq(0, 0.02, by = 0.002),
+    model_spec = map(complexity_cost, \(x) decision_tree(
+      cost_complexity = x,
+      tree_depth = 30,
+      min_n = 2
+      ) |>
+      set_engine("rpart") |>
+      set_mode("classification")
+    )
+  ),
+  tibble(
+    data_name = c("train", "test"),
+    data = list(email_train, email_test)
+  )
+)
+email_cp_analysis_structure
 ```
 
 
+## Fit, predict, evaluate performance
 
+```{r}
+#| echo: true
 
+email_cp_analysis <- email_cp_analysis_structure |>
+  mutate(
+    workflow = map(model_spec, \(m) {
+      workflow() |>
+        add_recipe(email_recipe) |>
+        add_model(m)
+    }),
+    fit = map(workflow, \(w,d) {
+      fit(w, data = email_train)
+    }),
+    predictions = map2(fit, data, \(f, d) {
+      predict(f, d) |> bind_cols(d)
+    }),
+    accuracy = map_dbl(predictions, \(p) {
+      p |>
+        accuracy(truth = spam, estimate = .pred_class) |>
+        pull(.estimate)
+    }
+    ),
+    specificity = map_dbl(predictions, \(p) {
+      p |>
+        specificity(truth = spam, estimate = .pred_class, event_level = "second") |>
+        pull(.estimate)
+    }
+    ),
+    sensitivity = map_dbl(predictions, \(p) {
+      p |>
+        sensitivity(truth = spam, estimate = .pred_class, event_level = "second") |>
+        pull(.estimate)
+    }
+    )
+  )  
+```
+
+## Overfitting plot
+
+- sensitivity = TP / (TP + FN) true positive rate, probability spam in spam-folder  
+- specificity = TN / (TN + FP) true negative rate, probability wanted mail in inbox    
+- accuracy = (TP + TN) / (TP + TN + FP + FN) probability of correct classification
+
+```{r}
+#| echo: true
+#| code-fold: true
+
+email_cp_analysis |>
+  pivot_longer(
+    cols = c(accuracy, specificity, sensitivity),
+    names_to = "metric",
+    values_to = "value"
+  ) |>
+  ggplot(aes(
+    x = complexity_cost,
+    y = value,
+    color = data_name,
+    group = data_name
+  )) +
+  geom_line() +
+  geom_point() +
+  scale_x_reverse() +
+  facet_wrap(~metric, nrow = 1, scales = "free_y") +
+  theme_minimal()
+```
+
+## Summary: Overfitting Analysis 
+
+::: {.incremental}
+- The complexity of a model is often controlled by **hyper-parameters**.
+- **Overfitting** means that a model fits the training data too well, capturing noise and random fluctuations instead of the underlying patterns relevant for new data. 
+- There is no general rule how to set hyper-parameters to avoid overfitting! It depends on data and model. 
+- Ultimately, **generalization** capability on new data is what matters. We mimick it with the train-test-split. 
+- A **systematic analysis** of different models on different data-sets can be organized in a data-frame with list-columns and executed with `map`-functions. [**Learn it!**]{.red}
+- Best learning: [**Try it yourself with other predicition models and other hyper-parameters!**]{.red}
+- Document it in a repository. That way you can show analytical skills and ability to go "under the hood" of prediction models to future employers.
+:::
 
 # Cluster Analysis
 
@@ -210,9 +610,9 @@ simtest |>
 Example: In a linear regression, we model a numerical response variable as a linear combination of predictors and estimate the coefficients with data. 
 2. **Classification:** We want to *explain/predict* a **nominal** (often binary) variable.  
 Example: In a logistic regression, we assume the binary outcomes are realized randomly based on a probability which is a the logistic transformation of a linear combination of predictors and estimate the coefficients with data. 
-3. [**Clustering:**]{style='color:red;'} We want label cases in data. 
+3. [**Clustering:**]{style='color:red;'} We want to label cases in data. 
 
-**Classification and clustering** are about producing new nominal data. In classification the categories are already know from the training data. [Clustering algorithms produces the categories without training data.]{style='color:blue;'}
+**Classification and clustering** are about producing new nominal/categorical data. In classification the categories are already know from the training data. [Clustering algorithms produces the categories without training data.]{style='color:blue;'}
 
 
 ## Supervised vs. unsupervised statistical learning {.smaller}
@@ -343,13 +743,17 @@ From <https://allisonhorst.com/k-means-clustering>
 
 ```{r}
 #| echo: true
-peng_rec <- penguins |> recipe() |> # No model specification to distinguish response ond predictor!
- step_rm(all_nominal(), year) |> # Keep only numeric variables
- step_center(all_numeric()) |> # shift by mean
- step_scale(all_numeric()) 
+peng_rec <- penguins |>
+  recipe() |> # No model specification to distinguish response ond predictor!
+  step_rm(all_nominal(), year) |> # Keep only numeric variables
+  step_center(all_numeric()) |> # shift by mean
+  step_scale(all_numeric())
 # Call prep to calculate transformed variables
 peng_prepped <- peng_rec |> prep(penguins |> drop_na())
 ```
+
+Note: `prep` is a `tidyverse`-function to execute preprocessing steps specified in a `recipe` on a dataset. When we fit a prediction model, `prep` is done as a part of `fit`!
+
 
 ## Whats in the `prep`ed object? {.smaller .scrollable}
 
@@ -399,7 +803,7 @@ peng_transformed |> kmeans(centers = 3)
 
 ## How many clusters should we ask for? {.smaller .scrollable}
 
-- Computer solutions for different numbers of cluster $k$ 
+- Compute solutions for different numbers of cluster $k$ 
 
 ```{r}
 #| echo: true
@@ -407,8 +811,8 @@ set.seed(2023)
 kclusts <- tibble(k = 1:9) |>
   mutate(
     kclust = map(k, \(x) kmeans(peng_transformed, x)), # kmeans for k=1:9
-    tidied = map(kclust, tidy), # tidy extracts the centroids here 
-    glanced = map(kclust, glance), # 
+    tidied = map(kclust, tidy), # tidy extracts the centroids here
+    glanced = map(kclust, glance), #
     augmented = map(kclust, augment, peng_transformed) # add cluster labels to data
   ) # This is large data frame with nested objects as entries. We unnest next
 
@@ -428,7 +832,10 @@ assignments
 ```{r}
 #| echo: true
 ggplot(clusterings, aes(k, tot.withinss)) +
-  geom_line() + geom_point() + scale_x_continuous(breaks = 1:9) + theme_minimal(base_size = 20)
+  geom_line() +
+  geom_point() +
+  scale_x_continuous(breaks = 1:9) +
+  theme_minimal(base_size = 20)
 ```
 
 - From 3 to 4 clusters there is little improvement
@@ -441,15 +848,26 @@ ggplot(clusterings, aes(k, tot.withinss)) +
 ```{r}
 #| echo: true
 #| fig-width: 18
+#| code-fold: true
 library(patchwork)
-g_3clusters <- clusters |> filter(k==3) |> 
- select(bill_length_mm:body_mass_g, cluster) |> 
- pivot_longer(bill_length_mm:body_mass_g) |> 
- ggplot(aes(value,name)) + geom_col() + facet_grid(~cluster) + geom_vline(xintercept = 0, color = "blue") + theme_minimal(base_size = 16)
-g_6clusters <- clusters |> filter(k==6) |> 
- select(bill_length_mm:body_mass_g, cluster) |> 
- pivot_longer(bill_length_mm:body_mass_g) |> 
- ggplot(aes(value,name)) + geom_col() + facet_grid(~cluster) + geom_vline(xintercept = 0, color = "blue") + theme_minimal(base_size = 16)
+g_3clusters <- clusters |>
+  filter(k == 3) |>
+  select(bill_length_mm:body_mass_g, cluster) |>
+  pivot_longer(bill_length_mm:body_mass_g) |>
+  ggplot(aes(value, name)) +
+  geom_col() +
+  facet_grid(~cluster) +
+  geom_vline(xintercept = 0, color = "blue") +
+  theme_minimal(base_size = 16)
+g_6clusters <- clusters |>
+  filter(k == 6) |>
+  select(bill_length_mm:body_mass_g, cluster) |>
+  pivot_longer(bill_length_mm:body_mass_g) |>
+  ggplot(aes(value, name)) +
+  geom_col() +
+  facet_grid(~cluster) +
+  geom_vline(xintercept = 0, color = "blue") +
+  theme_minimal(base_size = 16)
 g_3clusters + g_6clusters
 ```
 
@@ -457,15 +875,31 @@ g_3clusters + g_6clusters
 
 ```{r}
 #| echo: true
-library(patchwork) 
-g1 <- assignments |> filter(k==3) |> 
- ggplot(aes(bill_length_mm, bill_depth_mm, color = .cluster)) +  geom_point()
-g2 <- assignments |> filter(k==6) |> mutate(species = na.omit(penguins)$species) |> 
- ggplot(aes(bill_length_mm, bill_depth_mm, color = species)) +  geom_point()
-g1 + g2
+#| message: false
+#| code-fold: true
+g1 <- assignments |>
+  filter(k == 3) |>
+  ggplot(aes(bill_length_mm, bill_depth_mm, color = .cluster)) +
+  geom_point() +
+  labs(title = "k = 3 clusters")
+g2 <- assignments |>
+  filter(k == 6) |>
+  mutate(species = na.omit(penguins)$species) |>
+  ggplot(aes(bill_length_mm, bill_depth_mm, color = .cluster)) +
+  geom_point() +
+  labs(title = "k = 6 clusters")
+g3 <- penguins |>
+  ggplot(aes(bill_length_mm, bill_depth_mm, color = species)) +
+  geom_point() +
+  labs(title = "Species")
+g4 <- penguins |>
+  ggplot(aes(bill_length_mm, bill_depth_mm, color = sex)) +
+  geom_point() +
+  labs(title = "Sex")
+g1 + g2 + g3 + g4 + plot_layout(nrow = 2)
 ```
 
-- This 3-cluster solution finds the species fairly well! 
+- This 3-cluster solution "finds the species fairly well! 
 - [Attention:]{style='color:red;'} These are just two out of four variables!
 
 
@@ -474,9 +908,11 @@ g1 + g2
 
 ```{r}
 #| echo: true
-clustspecies <- assignments |> filter(k==6) |> 
- mutate(species = na.omit(penguins)$species) |> 
- select(.cluster, species) |> arrange(.cluster, species)
+clustspecies <- assignments |>
+  filter(k == 6) |>
+  mutate(species = na.omit(penguins)$species) |>
+  select(.cluster, species) |>
+  arrange(.cluster, species)
 g1 <- clustspecies |> ggplot(aes(.cluster, fill = species)) + geom_bar()
 g1 + g_6clusters
 ```
@@ -490,9 +926,10 @@ g1 + g_6clusters
 ```{r}
 #| echo: true
 set.seed(2)
-peng_transformed |> 
- mutate(cluster = kmeans(peng_transformed, 3)$cluster) |> 
- ggplot(aes(bill_length_mm, bill_depth_mm, color = factor(cluster))) +  geom_point()
+peng_transformed |>
+  mutate(cluster = kmeans(peng_transformed, 3)$cluster) |>
+  ggplot(aes(bill_length_mm, bill_depth_mm, color = factor(cluster))) +
+  geom_point()
 ```
 
 This 3-cluster solution divides the Gentoo penguins into two clusters and keeps most Adelie and Chinstrap in one cluster.
@@ -580,8 +1017,8 @@ From <https://allisonhorst.com/agglomerative-hierarchical-clustering>
 - First compute the distance matrix (entry $i,j$ is the distance between case $i$ and case $j$)
 
 ```{r}
-#| echo: true 
-peng_transformed |> dist(method = "euclidean") 
+#| echo: true
+peng_transformed |> dist(method = "euclidean")
 ```
 
 ## Calculate hierarchical clustering in R {.smaller}
@@ -589,8 +1026,8 @@ peng_transformed |> dist(method = "euclidean")
 - `hclust` from base-R
 
 ```{r}
-#| echo: true 
-peng_df <- as.data.frame(peng_transformed) # base-R data.frame 
+#| echo: true
+peng_df <- as.data.frame(peng_transformed) # base-R data.frame
 #row.names(peng_df) <- peng_df$iso_code # base-R way to have row names for hclust
 hc_peng <- peng_df |> dist(method = "euclidean") |> hclust()
 hc_peng
@@ -601,7 +1038,7 @@ glimpse(hc_peng)
 ## Plot the dendrogram {.smaller}
 
 ```{r}
-#| echo: true 
+#| echo: true
 plot(hc_peng, cex = 0.4) # base-R way of plotting hclust object
 ```
 
@@ -612,10 +1049,14 @@ plot(hc_peng, cex = 0.4) # base-R way of plotting hclust object
 
 
 ```{r}
-#| echo: true 
-tibble(height = hc_peng$height |> tail(10), # last ten values of height
-       num_cluster = 10:1) |> 
- ggplot(aes(num_cluster,height)) + geom_point() + geom_line()
+#| echo: true
+tibble(
+  height = hc_peng$height |> tail(10), # last ten values of height
+  num_cluster = 10:1
+) |>
+  ggplot(aes(num_cluster, height)) +
+  geom_point() +
+  geom_line()
 ```
 
 - Empirically, we do not see clear cut points in this case. 
@@ -624,27 +1065,32 @@ tibble(height = hc_peng$height |> tail(10), # last ten values of height
 ## Dendrogram with cutpoints {.smaller}
 
 ```{r}
-#| echo: true 
+#| echo: true
 plot(hc_peng, cex = 0.4) # base-R way of plotting hclust object
 rect.hclust(hc_peng, k = 3) # base-R way of plotting in an existing plot
 rect.hclust(hc_peng, k = 6)
 ```
 
-## Visualization: Clusters and continents {.smaller}
+## Visualization: Clusters {.smaller}
 
 Use `cutree`. 
 
 ```{r}
 #| echo: true
-peng_transformed |> mutate(species = na.omit(penguins)$species,
-                           sex = na.omit(penguins)$sex,
-                           hclust3 = cutree(hc_peng, k = 3),
-                           hclust4 = cutree(hc_peng, k = 4),
-                           hclust6 = cutree(hc_peng, k = 6)) |> 
- pivot_longer(c(hclust3,hclust4,hclust6)) |> 
- ggplot(aes(value, fill = species, alpha = sex)) + geom_bar() + 
- facet_wrap(~name, scales = "free_x") + 
- scale_alpha_discrete(range = c(0.6,1)) + theme_minimal(base_size = 24)
+peng_transformed |>
+  mutate(
+    species = na.omit(penguins)$species,
+    sex = na.omit(penguins)$sex,
+    hclust3 = cutree(hc_peng, k = 3),
+    hclust4 = cutree(hc_peng, k = 4),
+    hclust6 = cutree(hc_peng, k = 6)
+  ) |>
+  pivot_longer(c(hclust3, hclust4, hclust6)) |>
+  ggplot(aes(value, fill = species, alpha = sex)) +
+  geom_bar() +
+  facet_wrap(~name, scales = "free_x") +
+  scale_alpha_discrete(range = c(0.6, 1)) +
+  theme_minimal(base_size = 24)
 ```
 
 ## Clustering Summary {.smaller}
@@ -683,9 +1129,12 @@ Tip: For visualization purposes it could make sense to plot the data in principa
 #| echo: true
 #| fig-height: 2.5
 library(readxl)
-galton <- read_csv("data/galton.csv")
-galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5) + geom_vline(xintercept = 1198, color = "green") + 
- geom_vline(xintercept = mean(galton$Estimate), color = "red")
+galton <- read_csv("galton.csv")
+galton |>
+  ggplot(aes(Estimate)) +
+  geom_histogram(binwidth = 5) +
+  geom_vline(xintercept = 1198, color = "green") +
+  geom_vline(xintercept = mean(galton$Estimate), color = "red")
 ```
 
 `r nrow(galton)` estimates, [true value]{style="color:green;"} 1198, [mean]{style="color:red;"} `r round(mean((galton$Estimate)), digits=1)`
@@ -700,7 +1149,7 @@ We focus on the arithmetic mean as aggregation function for the wisdom of the cr
 Describe the estimation game as a predictive model:
 
 - All *estimates* are made to predict the same value: the truth. 
-  - In contrast to the regression model, the estimate come from people and not from a regression formula.
+  - In contrast to the regression model, the estimates come from people and not from a regression formula.
 - The *truth* is the same for all.
   - In contrast to the regression model, the truth is one value and not a value for each prediction
 
@@ -826,3 +1275,9 @@ Assume the dots are estimates. **Which is a wise crowd?**
 
 - Of course, high trueness and high precision! But, ...
 - Focusing on the **crowd** being wise instead of its **individuals**: High trueness, low precision. 
+
+
+## Bias-Variance Tradeoff
+
+- This was a simple demonstration of the difference of error through bias and variance and how the average individual error can be decomposed into the two components
+- This topic is deeply related to overfitting in Statistical Learning under the name **Bias-Variance tradeoff**

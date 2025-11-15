@@ -17,7 +17,22 @@ editor_options:
   chunk_output_type: console
 ---
 
+
+
+## Preliminary
+
+```{r}
+#| echo: true
+library(tidyverse)
+library(readxl)
+library(tidymodels)
+library(palmerpenguins)
+library(patchwork)
+```
+
 # Final Project {background-color=khaki}
+
+
 
 
 ## A project report in a nutshell  {background-color=khaki}
@@ -129,6 +144,11 @@ A good question
 ::::
 
 
+
+
+
+
+
 # Modeling Mindsets
 
 ![](img/ModelingMindsets_annotated.png){height=300}
@@ -139,6 +159,358 @@ Some methods:
 **k-means Clustering:** [Exploratory]{style='color:red;' .fragment}
 
 [**Let's check your questions in the Course Organization Repo!**]{style='color:blue;' .fragment}
+
+
+# Hypothesis testing
+Large part of the content adapted from <http://datasciencebox.org>.
+
+
+## Organ donors {.smaller}
+
+**Background story:** People providing an organ for donation sometimes seek the help of a special "medical consultant". These consultants assist the patient in all aspects of the surgery, with the goal of reducing the possibility of complications during the medical procedure and recovery. Patients might choose a consultant based in part on the historical complication rate of the consultant's clients. 
+
+. . . 
+
+**Example track record:** One consultant tried to attract patients by noting that the average complication rate for liver donor surgeries in the US is about 10%, but her clients have only had 3 complications in the 62 liver donor surgeries she has facilitated. She claims this is strong evidence that her work meaningfully contributes to reducing complications (and therefore she should be hired!).
+
+. . . 
+
+[Is this strong evidence for a good track record?]{style='color:red;'}
+
+## Data {.smaller}
+
+```{r}
+#| echo: true
+organ_donor <- tibble(
+  outcome = c(rep("complication", 3), rep("no complication", 59))
+)
+```
+
+```{r }
+#| echo: true
+organ_donor |>
+  count(outcome)
+```
+
+
+## Parameter vs. statistic {.smaller}
+
+A **parameter** for a hypothesis test is the "true" value of interest. We typically estimate the parameter using a **sample statistic** as a **point estimate**.
+
+$q$: true rate of complication, here 0.1 (10% complication rate in US)
+
+$\hat{q}$: rate of complication in the sample = $\frac{3}{62}$ = 
+`r round(3/62, 3)` (This is the point estimate.)
+
+
+## Correlation vs. causation  {.smaller}
+
+**Is it possible to infer the consultant's claim using the data?**
+
+No. The claim is: *There is a causal connection*. However, the data are observational.
+For example, maybe patients who can afford a medical consultant can afford better medical care, which can also lead to a lower complication rate (for example).
+
+. . .
+
+**What is possible?**
+
+While it is not possible to assess the causal claim, it is still possible to test for an association using these data. For this question we ask, **could the low complication rate of $\hat{q}$ = `r round(3/62, 3)` be due to chance?**
+
+
+
+## Two claims
+
+- [**Null hypothesis $H_0$:**]{style='color:blue;'} "There is nothing going on"
+
+Complication rate for this consultant is no different than the US average of 10%
+
+- [**Alternative hypothesis $H_1$:**]{style='color:blue;'} "There is something going on"
+
+Complication rate for this consultant is **lower** than the US average of 10%
+
+
+## Understand hypothesis testing as a court trial {.smaller}
+
+- **Null hypothesis**, $H_0$: Defendant is innocent
+- **Alternative hypothesis**, $H_A$: Defendant is guilty
+
+
+- **Present the evidence:** Collect data
+
+- **Judge the evidence:** "Could these data plausibly have happened by chance if the null hypothesis were true?"
+    * Yes: Fail to reject $H_0$
+    * No: Reject $H_0$
+    
+
+## Hypothesis testing framework {.smaller}
+
+- Start with a null hypothesis, $H_0$, that represents the status quo
+
+- Set an alternative hypothesis, $H_A$, that represents the research question, i.e. what we are testing for
+
+- Conduct a hypothesis test under the assumption that the null hypothesis is true and calculate a **p-value**.    
+**Definition p-value:** *Probability of observed or more extreme outcome given that the null hypothesis is true.*
+    - if the test results suggest that the data do not provide convincing evidence for the alternative hypothesis, stick with the null hypothesis
+    - if they do, then reject the null hypothesis in favor of the alternative
+
+
+## Setting the hypotheses {.smaller}
+
+Which of the following is the correct set of hypotheses for the claim that the consultant has lower complication rates?
+
+(a) $H_0: q = 0.10$; $H_A: q \ne 0.10$ 
+
+(b) $H_0: q = 0.10$; $H_A: q > 0.10$ 
+
+(c) $H_0: q = 0.10$; $H_A: q < 0.10$ 
+
+(d) $H_0: \hat{q} = 0.10$; $H_A: \hat{q} \ne 0.10$ 
+
+(e) $H_0: \hat{q} = 0.10$; $H_A: \hat{q} > 0.10$ 
+
+(f) $H_0: \hat{q} = 0.10$; $H_A: \hat{q} < 0.10$ 
+
+. . . 
+
+(c) is correct.   
+Hypotheses are about the true rate of complication $q$ not the observed ones $\hat{q}$
+
+
+# Simulation for Hypothesis Testing
+
+## Simulating the null distribution {.smaller}
+
+Since $H_0: q = 0.10$, we need to simulate a null distribution where the probability of success (complication) for each trial (patient) is 0.10.
+
+**How should we simulate the null distribution for this study using a bag of chips?**
+
+- How many chips? [For example 10 which makes 10% choices possible]{.fragment style='color:red;'}
+- How many colors? [2]{.fragment style='color:red;'}
+- What should colors represent? ["complication", "no complication"]{.fragment style='color:red;'}
+- How many draws?  [62 as the data]{.fragment style='color:red;'}
+- With replacement or without replacement? [With replacement]{.fragment style='color:red;'}
+
+When sampling from the null distribution, what would be the expected proportion of "complications"?  [0.1]{.fragment  style='color:red;'}
+
+
+## Simulation! {.smaller}
+
+```{r}
+#| echo: true
+set.seed(1234) # The seed is set for the sake of stable presentation outcomes.
+outcomes <- c("complication", "no complication")
+sim1 <- sample(outcomes, size = 62, prob = c(0.1, 0.9), replace = TRUE)
+sim1
+sum(sim1 == "complication") / 62
+```
+
+Oh OK, this was exactly the consultant's rate. But maybe it was a rare event? Let us repeat it. 
+
+## More simulation! {.smaller}
+
+```{r}
+#| echo: true
+one_sim <- function() {
+  sample(outcomes, size = 62, prob = c(0.1, 0.9), replace = TRUE)
+}
+
+sum(one_sim() == "complication") / 62
+sum(one_sim() == "complication") / 62
+sum(one_sim() == "complication") / 62
+sum(one_sim() == "complication") / 62
+sum(one_sim() == "complication") / 62
+sum(one_sim() == "complication") / 62
+sum(one_sim() == "complication") / 62
+```
+
+
+## Automating with `tidymodels`^[Of course, you can also do it in your own way without packages.] {.smaller}
+
+
+:::: {.columns}
+
+::: {.column width='40%'}
+```{r}
+#| echo: true
+organ_donor
+```
+
+:::
+
+::: {.column width='60%'}
+
+```{r}
+#| echo: true
+set.seed(10)
+null_dist <- organ_donor |>
+  specify(response = outcome, success = "complication") |>
+  hypothesize(
+    null = "point",
+    p = c("complication" = 0.10, "no complication" = 0.90)
+  ) |>
+  generate(reps = 100, type = "draw") |>
+  calculate(stat = "prop")
+null_dist
+```
+
+:::
+
+::::
+
+
+
+## Visualizing the null distribution {.smaller}
+
+```{r}
+#| echo: true
+ggplot(data = null_dist, mapping = aes(x = stat)) +
+  geom_histogram(binwidth = 0.01) +
+  labs(title = "Null distribution")
+```
+
+
+# p-value
+
+## Calculating the p-value, visually {.smaller}
+
+**What is the p-value:** *How often was the simulated sample proportion at least as extreme as the observed sample proportion?*^[This a one-sided hypothesis test because we are looking for extremely lower rates not also extremely higher rates. We do one-sided test if we know the direction of interest, here "low" and "lower" rates.]
+
+```{r}
+#| echo: true
+#| fig.height: 3
+ggplot(data = null_dist, mapping = aes(x = stat)) +
+  geom_histogram(binwidth = 0.01) +
+  labs(title = "Null distribution") +
+  geom_vline(xintercept = 3 / 62, color = "red")
+```
+
+
+## Calculating the p-value, directly
+
+```{r}
+#| echo: true
+null_dist |>
+  summarise(p_value = sum(stat <= 3 / 62) / n())
+```
+
+This is the fraction of simulations where complications was equal or below `r 3/62`. 
+
+
+## Significance level  {.smaller}
+
+- A **significance level** $\alpha$ is a threshold we make up to make our judgment about the plausibility of the null hypothesis being true given the observed data. 
+
+- We often use $\alpha = 0.05 = 5\%$ as the cutoff for whether the p-value is low enough that the data are unlikely to have come from the null model. 
+
+- If p-value < $\alpha$, reject $H_0$ in favor of $H_A$: The data provide convincing evidence for the alternative hypothesis.
+
+- If p-value > $\alpha$, fail to reject $H_0$ in favor of $H_A$: The data do not provide convincing evidence for the alternative hypothesis.
+
+**What is the conclusion of the hypothesis test?**
+
+Since the p-value is greater than the significance level, we fail to reject the null hypothesis. 
+These data do not provide convincing evidence that this consultant incurs a lower complication rate than the 10% overall US complication rate.
+
+## 100 simulations is not sufficient {.smaller}
+
+- We simulate 15,000 times to get an accurate distribution.
+
+```{r}
+#| echo: true
+null_dist <- organ_donor |>
+  specify(response = outcome, success = "complication") |>
+  hypothesize(
+    null = "point",
+    p = c("complication" = 0.10, "no complication" = 0.90)
+  ) |>
+  generate(reps = 15000, type = "simulate") |>
+  calculate(stat = "prop")
+ggplot(data = null_dist, mapping = aes(x = stat)) +
+  geom_histogram(binwidth = 0.01) +
+  geom_vline(xintercept = 3 / 62, color = "red")
+```
+
+
+## Our more robust p-value 
+
+For the null distribution with 15,000 simulations
+
+```{r}
+#| echo: true
+null_dist |>
+  filter(stat <= 3 / 62) |>
+  summarise(p_value = n() / nrow(null_dist))
+```
+
+Oh OK, our first p-value was much more borderline in favor of the alternative hypothesis.
+
+## p-value in model outputs {.smaller}
+
+Model output for a linear model with palmer penguins.
+
+```{r}
+#| echo: true
+linear_reg() |>
+  set_engine("lm") |>
+  fit(bill_length_mm ~ bill_depth_mm, data = penguins) |>
+  tidy()
+```
+
+Model output for a logistic regression model with email from [openintro](https://www.openintro.org/data/index.php?data=email)
+
+```{r}
+#| echo: true
+logistic_reg() |>
+  set_engine("glm") |>
+  fit(spam ~ from + cc, data = email, family = "binomial") |>
+  tidy()
+```
+
+What do the p-values mean? What is the null hypothesis?
+
+. . .
+
+**Null-Hypothesis:** There is no relationship between the predictor variable and the response variable, that means that the coefficient is equal to zero. 
+
+**Smaller p-value** $\to$ more evidence for rejecting the hypothesis that there is no effect. 
+
+## xkcd on p-values {.smaller}
+
+:::: {.columns}
+
+::: {.column width='60%'}
+[![](https://imgs.xkcd.com/comics/p_values_2x.png){height="500px"}](https://xkcd.com/1478/)
+[![](https://imgs.xkcd.com/comics/significant.png){height="500px"}](https://xkcd.com/882/)
+:::
+
+::: {.column width='40%'}
+:::{.fragment}
+- Significance levels are fairly arbitrary. Sometimes they are used (wrongly) as definitive judgments
+- They can even be used to do *p-hacking*: Searching for "significant" effects in observational data
+- In parts of science it has become a "gamed" performance metric.
+- The p-value says nothing about effect size!
+:::
+:::
+
+::::
+
+## p-value misinterpretation {.smaller}
+
+p-values do not measure^[From the American Statistical Association (ASA) 2016]
+
+- the probability that the studied hypothesis is true
+- the probability that the data were produced by random chance alone
+- the size of an effect
+- the "importance of a result" or "evidence regarding a model or hypothesis" (it is only against the null hypothesis).
+
+. . .
+
+Correct:   
+The p-value is the probability of obtaining test results at least as extreme as the result actually observed, under the assumption that the null hypothesis is correct.
+
+p-values and significance tests, when properly applied and interpreted, increase the rigor of the conclusions drawn from data.^[From the American Statistical Association (ASA) 2019]
+
+
 
 # Collaborative Work with Git
 
@@ -324,8 +696,6 @@ Competition: Guess the weight of the meat of an Ox? (Galton, 1907)
 ```{r}
 #| echo: true
 #| fig-height: 2
-library(tidyverse)
-library(readxl)
 galton <- read_csv("data/galton.csv")
 galton |> ggplot(aes(Estimate)) + geom_histogram(binwidth = 5)
 ```
@@ -342,8 +712,6 @@ A linear model for body mass of penguins: $y_i = \beta_0 + \beta_1 x_i + \dots +
 
 ```{r}
 #| echo: true
-library(tidymodels)
-library(palmerpenguins)
 peng_workflow <- workflow() |> add_recipe(recipe(body_mass_g ~ ., data = penguins) |> step_rm(year)) |> 
   add_model(linear_reg() |> set_engine("lm"))
 peng_fit <- peng_workflow |> fit(data = penguins)
@@ -655,7 +1023,6 @@ boots_peng |> unnest(coefs)
 ```{r}
 #| echo: true
 #| fig.width: 18
-library(patchwork)
 g1 <- boots_peng |> unnest(coefs) |> filter(term == "islandDream") |> 
   ggplot(aes(x = estimate)) + geom_histogram() + xlab("coefficients islandDream") +
   geom_vline(xintercept = 0, color = "gray") + theme_minimal(base_size = 24)

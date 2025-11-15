@@ -27,6 +27,7 @@ library(tidyverse)
 library(palmerpenguins)
 library(tidymodels)
 library(openintro)
+library(patchwork) # For pasting ggplots together
 ```
 
 ## Recap: Linear Model  {.smaller background-color="aquamarine"}
@@ -148,7 +149,8 @@ penguins_with_dummies |>
 ::: 
 
 Equation:   
-average `flipper_length_mm` $= 190 + 5.87\cdot$ `speciesChinstrap` $+ 27.2\cdot$ `speciesGentoo`
+average `flipper_length_mm` $= \beta_0 + \beta_1\cdot$ `speciesChinstrap` $+ \beta_2\cdot$ `speciesGentoo`    
+With fitted parameters $\beta_0 \approx 190, \beta_1 \approx 5.87$ and $\beta_2 = 27.2$ 
 
 ::: aside 
 
@@ -187,14 +189,19 @@ linear_reg() |>
 ```
 
 ```{r}
-#| fig-width: 3
-penguins |>
+#| echo: true
+jitterplots <- penguins |> 
+  ggplot(aes(species, flipper_length_mm)) +
+  geom_jitter(width = 0.1, alpha = 0.3) +
+  stat_summary(fun.y = mean, geom = "point", size = 5, color = "red")
+boxplots <- penguins |>
   ggplot(aes(species, flipper_length_mm)) +
   geom_boxplot() +
   stat_summary(fun.y = mean, geom = "point", size = 5, color = "red")
+jitterplots + boxplots
 ```
 
-The red dots are the average values for species. 
+The red dots are the mean values for species. 
 
 # Linear models and R-squared
 
@@ -257,11 +264,10 @@ linear_reg() |>
   glance()
 ```
 
-The command `glance` shows summary statistics of model fits. 
+The command `glance` shows summary statistics of model fits in a single row.
 
 
-**Interpretation R-squared?** [75.9% of the variance of flipper length can be explained by a linear relation with body mass.   
-Warning: With "explain" we do not claim that there is a causal relation ship.]{.fragment}
+**Interpretation R-squared?** 75.9% of the variance of flipper length can be explained by a linear relation with body mass. [Warning: "Explain" $\neq$ causal claim!]{.fragment style='color:red;'}
 
 . . .
 
@@ -276,13 +282,10 @@ linear_reg() |>
 
 5.52% of the variance of bill depth can be explained by a linear relation with bill length. 
 
-. . . 
-
-**Technical:** The idea of the `glance()` function is to construct a single row summary "glance" of a model, fit, or other object. 
 
 ## R-squared and correlation {.smaller}
 
-For a linear model with one predictor, the square of the correlation coefficient is the same as the R-squared of the model. 
+For a linear model with one predictor, the square of the correlation coefficient is the same as the R-squared of the model. Hence, the name $R^2$! Check with code:
 
 ```{r}
 #| echo: true
@@ -315,11 +318,13 @@ cor(
 
 . . . 
 
-Hence, the name $R^2$!
 
 # Linear models with more predictors
 
-## More predictors: Coefficients {.smaller}
+- Hey, we had already two predictors created all of a sudden when we were using a categorical variable with 3 categories
+- We can also add more numerical predictors
+
+## Add predictors $\to$ More coefficients {.smaller}
 
 ```{r}
 #| echo: true
@@ -388,15 +393,18 @@ average `flipper_length_mm` $= 122 + 0.0131\cdot$ `body_mass_g` $+ 0.549\cdot$ `
 average `flipper_length_mm` $= 158 + 0.0109\cdot$ `body_mass_g` $+ 0.592\cdot$ `bill_length_mm` $- 1.68\cdot$ `bill_length_mm`   
 83.1% explained variance
 
+Often more predictors bring higher R-squared. However, doing it blindly makes  interpretation complicated and can lead to **overfitting**! (Treated later.)
+
 
 # Interaction Effects
 
 Adding products of variables as new variable.
 
-## Adding a categorical variable as main effect {.smaller}
+## Categorical variable as main effect {.smaller}
 
 ```{r}
 #| echo: true
+#| code-fold: false
 linear_reg() |>
   set_engine("lm") |>
   fit(flipper_length_mm ~ body_mass_g + species, data = penguins) |>
@@ -408,6 +416,7 @@ A **main effect** by categorical dummy variables allows for different intercepts
 
 ```{r}
 #| echo: true
+#| code-fold: false
 linear_reg() |>
   set_engine("lm") |>
   fit(flipper_length_mm ~ body_mass_g + species, data = penguins) |>
@@ -421,6 +430,7 @@ Adding species increases R-squared better than adding bill length and bill depth
 
 ```{r}
 #| echo: true
+#| code-fold: false
 linear_reg() |>
   set_engine("lm") |>
   fit(flipper_length_mm ~ body_mass_g * species, data = penguins) |>
@@ -470,6 +480,7 @@ average `flipper_length_mm` $= 165 + 6.06 + (0.00668 + 0.00236)\cdot$ `body_mass
 
 ```{r}
 #| echo: true
+#| code-fold: false
 linear_reg() |>
   set_engine("lm") |>
   fit(flipper_length_mm ~ body_mass_g + species, data = penguins) |>
@@ -478,6 +489,7 @@ linear_reg() |>
 
 ```{r}
 #| echo: true
+#| code-fold: false
 linear_reg() |>
   set_engine("lm") |>
   fit(flipper_length_mm ~ body_mass_g * species, data = penguins) |>
@@ -525,7 +537,7 @@ glimpse(email) # Part of the openintro data package
 
 
 
-## Variables {.smaller}
+## Email Example: Variables {.smaller}
 
 `?email` shows all variable descriptions. For example: 
 
@@ -542,7 +554,7 @@ glimpse(email) # Part of the openintro data package
 The development, extraction, or discovery of such variables is called **feature engineering**, **feature extraction** or **feature discovery**. Usually, a combination of *domain knowledge* and *data science* skill is needed to do this. 
 :::
 
-## Data exploration {.smaller}
+## Email Example: Data exploration {.smaller}
 
 Would you expect spam to be longer or shorter?
 
@@ -727,6 +739,7 @@ With `tidymodels` we fit a GLM in the same way as a linear model except we
 
 ```{r}
 #| echo: true
+#| code-fold: false
 spam_fit <- logistic_reg() |>
   set_engine("glm") |>
   fit(spam ~ num_char, data = email, family = "binomial")
@@ -803,6 +816,7 @@ That means the odds of being spam decrease by 6%.
 
 ```{r}
 #| echo: true
+#| code-fold: false
 library(palmerpenguins)
 sex_fit <- logistic_reg() |>
   set_engine("glm") |>
@@ -842,6 +856,10 @@ na.omit(penguins) |>
 
 
 # Sensitivity and specificity
+
+- Two performance measures for a prediction model with binary outcome. 
+- Also called a "binary classifier. 
+- Today, just the idea. 
 
 ## False positive and negative {.smaller}
 

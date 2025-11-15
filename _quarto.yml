@@ -15,12 +15,18 @@ project:
     - material/M05.qmd
     - material/M06.qmd
     - material/M07.qmd
+    - material/M08.qmd
+    - material/M09.qmd
+    - material/M10.qmd
     - lectures/W02.qmd
     - lectures/W03.qmd
     - lectures/W04.qmd
     - lectures/W05.qmd
     - lectures/W06.qmd
     - lectures/W07.qmd
+    - lectures/W08.qmd
+    - lectures/W09.qmd
+    - lectures/W10.qmd
     
 execute:
   freeze: auto  # re-render only when source changes
@@ -30,8 +36,9 @@ website:
   announcement: 
     icon: info-circle
     dismissable: true
-    content: "*All [Homework Projects](https://{{< var org.name >}}.github.io/Website/homework.html) listed. Tools module passing requirements specified in [Syllabus](https://{{< var org.name >}}.github.io/Website#tools-module).*"
-    type: primary
+    content: "[**Data Science Tools Final Project Check-In**](https://forms.office.com/e/75qEdyZbim) open! Deadline Sat, Nov 8."
+#"All [Homework Projects](https://{{< var org.name >}}.github.io/Website/homework.html) listed. Tools module passing requirements specified in [Syllabus](https://{{< var org.name >}}.github.io/Website#tools-module).*"
+    type: warning
     position: below-navbar
   navbar:
     left:
@@ -61,6 +68,9 @@ website:
           - material/M05.qmd
           - material/M06.qmd
           - material/M07.qmd
+          - material/M08.qmd
+          - material/M09.qmd
+          - material/M10.qmd
       - setup.qmd
       - literature.qmd
       # - text: "Onboarding Late-arriving"

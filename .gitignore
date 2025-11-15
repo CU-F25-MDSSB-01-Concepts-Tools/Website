@@ -54,3 +54,6 @@ rsconnect/
 /_freeze/
 
 air.toml
+
+# No xlsx files (typically student data)
+*.xlsx

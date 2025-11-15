@@ -166,7 +166,6 @@ Molnar, C. (2022). [Modeling mindsets: The many cultures of learning from data.]
 
 
 
-
 # Linear Model
 The first work-horse model in data science
 
@@ -217,22 +216,34 @@ where [$a$ is the *slope*]{style="color:red;"}, [$b$ is the *intercept*]{style="
 #| output-location: column
 a <- 0.5
 b <- 1
-func <- function(x) a*x + b
-ggplot() + geom_function(fun = func, size = 2) +
- # Set axis limits and make axis equal
-	xlim(c(-0.5,2)) + ylim(c(0,2)) + coord_fixed() + 
-	geom_line( # intercept line:
-	 data=tibble(x=c(0,0),y=c(0,1)), 
-	 mapping = aes(x,y), 
-	 color = "blue", size = 2) +
-	geom_line( # slope:
-	 data=tibble(x=c(1.5,1.5),y=c(1.25,1.75)), 
-	 mapping = aes(x,y), 
-	 color = "red", size = 2) +
-	geom_line( # x-interval of length one:
-	 data=tibble(x=c(0.5,1.5),y=c(1.25,1.25)), 
-	 mapping = aes(x,y), color = "gray") +
-	theme_classic(base_size = 24)
+func <- function(x) a * x + b
+ggplot() +
+  geom_function(fun = func, size = 2) +
+  # Set axis limits and make axis equal
+  xlim(c(-0.5, 2)) +
+  ylim(c(0, 2)) +
+  coord_fixed() +
+  geom_line(
+    # intercept line:
+    data = tibble(x = c(0, 0), y = c(0, 1)),
+    mapping = aes(x, y),
+    color = "blue",
+    size = 2
+  ) +
+  geom_line(
+    # slope:
+    data = tibble(x = c(1.5, 1.5), y = c(1.25, 1.75)),
+    mapping = aes(x, y),
+    color = "red",
+    size = 2
+  ) +
+  geom_line(
+    # x-interval of length one:
+    data = tibble(x = c(0.5, 1.5), y = c(1.25, 1.25)),
+    mapping = aes(x, y),
+    color = "gray"
+  ) +
+  theme_classic(base_size = 24)
 ```
 
 ## Penguins: Linear model {.smaller}
@@ -244,12 +255,10 @@ ggplot() + geom_function(fun = func, size = 2) +
 #| output-location: column
 #| fig-height: 9
 penguins |>
- ggplot(aes(x = body_mass_g, 
-            y = flipper_length_mm)) +
- geom_point() +
- geom_smooth(method = "lm", 
-             se = FALSE) + 
- theme_classic(base_size = 24)
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic(base_size = 24)
 ```
 
 ## Penguins: A smooth curve {.smaller}
@@ -261,11 +270,10 @@ penguins |>
 #| output-location: column
 #| fig-height: 7
 penguins |>
- ggplot(aes(x = body_mass_g, 
-            y = flipper_length_mm)) +
- geom_point() +
- geom_smooth(method = "loess") + 
- theme_classic(base_size = 24)
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  theme_classic(base_size = 24)
 ```
 
 This is a less theory-driven and more data-driven model. Why?    
@@ -290,13 +298,10 @@ How does the relation between flipper length and body mass change with different
 #| output-location: column
 #| fig-height: 7
 penguins |>
- ggplot(aes(x = body_mass_g, 
-            y = flipper_length_mm, 
-            color = species)) +
- geom_point() +
- geom_smooth(method = "lm",
-             se = FALSE) + 
- theme_classic(base_size = 24)
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm, color = species)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic(base_size = 24)
 ```
 
 ## ggplot-hint: How to color penguins but keep one model? {.smaller}
@@ -308,11 +313,10 @@ Put the mapping of the color aesthetic into the `geom_point` command.
 #| output-location: column
 #| fig-height: 6
 penguins |>
- ggplot(aes(x = body_mass_g, 
-            y = flipper_length_mm)) +
- geom_point(aes(color = species)) +
- geom_smooth(method = "lm",	se = FALSE) + 
- theme_classic(base_size = 24)
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm)) +
+  geom_point(aes(color = species)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic(base_size = 24)
 ```
 
 ## Beware of Simpson's paradox {.smaller background-color="aquamarine"} 
@@ -335,15 +339,11 @@ How does the relation between bill length and body mass change with different sp
 #| output-location: column
 #| fig-height: 7
 penguins |>
- ggplot(aes(x = bill_length_mm, 
-            y = bill_depth_mm)) +
- geom_point(aes(color = species)) +
- geom_smooth(mapping = aes(color = species),
-             method = "lm",
-             se = FALSE) + 
- geom_smooth(method = "lm",
-													se = FALSE) + 
- theme_classic(base_size = 24)
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(aes(color = species)) +
+  geom_smooth(mapping = aes(color = species), method = "lm", se = FALSE) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic(base_size = 24)
 ```
 
 
@@ -379,15 +379,15 @@ Extending the range of the model:
 #| output-location: column
 #| fig-height: 5.5
 penguins |>
- ggplot(aes(x = body_mass_g, 
-            y = flipper_length_mm)) +
- geom_point() +
- geom_smooth(
-  method = "lm", 
-  se = FALSE, 
- 	fullrange = TRUE) +
-	xlim(c(0,7000)) + 
-  ylim(c(0,230)) +
+  ggplot(aes(x = body_mass_g, y = flipper_length_mm)) +
+  geom_point() +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    fullrange = TRUE
+  ) +
+  xlim(c(0, 7000)) +
+  ylim(c(0, 230)) +
   theme_classic(base_size = 24)
 ```
 
@@ -439,8 +439,8 @@ linear_reg()
 
 ```{r}
 #| echo: true
-linear_reg() |> 
-	set_engine("lm")
+linear_reg() |>
+  set_engine("lm")
 ```
 
 ## Step 3: Fit model and estimate parameters {.smaller}
@@ -451,9 +451,9 @@ Use of **formula syntax**
 
 ```{r}
 #| echo: true
-linear_reg() |> 
-	set_engine("lm") |> 
-	fit(flipper_length_mm ~ body_mass_g, data = penguins)
+linear_reg() |>
+  set_engine("lm") |>
+  fit(flipper_length_mm ~ body_mass_g, data = penguins)
 ```
 
 [`parsnip`](http://parsnip.tidymodels.org) is package in `tidymodels` which is to provide a tidy, unified interface to models that can be used to try a range of models. 
@@ -466,9 +466,9 @@ Note: The fit command does not follow the tidyverse principle the data comes fir
 
 ```{r}
 #| echo: true
-linear_reg() |> 
-	set_engine("lm") |> 
-	fit(flipper_length_mm ~ body_mass_g, data = penguins)
+linear_reg() |>
+  set_engine("lm") |>
+  fit(flipper_length_mm ~ body_mass_g, data = penguins)
 ```
 
 . . .
@@ -485,10 +485,10 @@ Penguins with zero mass have a flipper length of 138 mm. However, this is not in
 
 ```{r}
 #| echo: true
-linear_reg() |> 
-	set_engine("lm") |> 
-	fit(flipper_length_mm ~ body_mass_g, data = penguins) |> 
-	tidy()
+linear_reg() |>
+  set_engine("lm") |>
+  fit(flipper_length_mm ~ body_mass_g, data = penguins) |>
+  tidy()
 ```
 
 ## Parameter estimation {.smaller background-color="aquamarine"}
@@ -517,11 +517,11 @@ This is the typical [**inferential question**]{style='color:blue}.
 
 ```{r}
 #| echo: true
-  pengmod <- linear_reg() |> 
-    set_engine("lm") |> 
-    fit(flipper_length_mm ~ body_mass_g, data = penguins)
+pengmod <- linear_reg() |>
+  set_engine("lm") |>
+  fit(flipper_length_mm ~ body_mass_g, data = penguins)
 class(pengmod) # attributes
-typeof(pengmod) 
+typeof(pengmod)
 names(pengmod)
 ```
 
@@ -564,16 +564,25 @@ The residuals are the gray lines between predicted values on the regression line
 ```{r}
 #| echo: true
 #| code-fold: true
-pengmod <- 
-  linear_reg() |> 
-  set_engine("lm") |> 
+pengmod <-
+  linear_reg() |>
+  set_engine("lm") |>
   fit(flipper_length_mm ~ body_mass_g, data = penguins)
-penguins |> bind_cols(predict(pengmod,penguins)) |> 
+penguins |>
+  bind_cols(predict(pengmod, penguins)) |>
   ggplot(aes(body_mass_g, flipper_length_mm)) +
-  geom_segment(aes(x = body_mass_g, y = flipper_length_mm, xend = body_mass_g, yend = .pred), color = "gray") +
+  geom_segment(
+    aes(
+      x = body_mass_g,
+      y = flipper_length_mm,
+      xend = body_mass_g,
+      yend = .pred
+    ),
+    color = "gray"
+  ) +
   geom_point(alpha = 0.3) +
-  geom_smooth(method="lm") + 
-  geom_point(aes(y=.pred), color = "red", alpha =  0.3)
+  geom_smooth(method = "lm") +
+  geom_point(aes(y = .pred), color = "red", alpha = 0.3)
 ```
 
 ## Check: Fitted values and Residuals {.smaller background-color="aquamarine" .scrollable}
@@ -602,22 +611,27 @@ penguins$flipper_length_mm
 Example: Total corona cases in Germany in the first wave 2020. 
 
 ```{r}
-whofull <- read_csv("WHO-COVID-19-global-data.csv", show_col_types = FALSE) |> 
-	filter(Country == "Germany") 
-who <- whofull |> 
-	filter(Date_reported < "2020-03-20", Date_reported > "2020-02-25") 
-who |> 
-	ggplot(aes(Date_reported, Cumulative_cases)) + 
-	geom_line() + geom_point() + geom_smooth(method = "lm")
+whofull <- read_csv("WHO-COVID-19-global-data.csv", show_col_types = FALSE) |>
+  filter(Country == "Germany")
+who <- whofull |>
+  filter(Date_reported < "2020-03-20", Date_reported > "2020-02-25")
+who |>
+  ggplot(aes(Date_reported, Cumulative_cases)) +
+  geom_line() +
+  geom_point() +
+  geom_smooth(method = "lm")
 ```
 
 ## $\log$ transformation {.smaller}
 
 Instead of `Cumulative_cases` we look at $\log($`Cumulative_cases`$)$
 ```{r}
-	who |> 
-	ggplot(aes(Date_reported, log(Cumulative_cases))) + geom_line() + geom_point() +
-	geom_smooth(method = "lm") + theme_minimal(base_size = 20)
+who |>
+  ggplot(aes(Date_reported, log(Cumulative_cases))) +
+  geom_line() +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_minimal(base_size = 20)
 ```
 
 Almost perfect fit of the linear model: $\log(y)=\log(\beta_0) + \beta_1\cdot x$   
@@ -634,14 +648,25 @@ Exponentiation gives the model: $y=\beta_0 e^{\beta_1\cdot x}$
 For comparison: Logistic function [$y = \frac{N \beta_0 e^{\beta_1\cdot x}}{N + \beta_0 e^{\beta_1\cdot x}}$]{style='color:blue;'}   for $N=200000$
 
 ```{r}
-wholm <- 	who |> 
- lm(log(Cumulative_cases) ~ Date_reported, data = _) 
-who |> 
-	ggplot(aes(Date_reported, Cumulative_cases)) + geom_line() + geom_point() +
- geom_function(fun = function(x) exp(coef(wholm)[1] + coef(wholm)[2]*as.numeric(x)), color = "red") + 
- geom_function(
-  fun = function(x) 200000*exp(coef(wholm)[1] + coef(wholm)[2]*as.numeric(x))/(200000 + exp(coef(wholm)[1] + coef(wholm)[2]*as.numeric(x))), color = "blue") +
- theme_minimal(base_size = 20)
+wholm <- who |>
+  lm(log(Cumulative_cases) ~ Date_reported, data = _)
+who |>
+  ggplot(aes(Date_reported, Cumulative_cases)) +
+  geom_line() +
+  geom_point() +
+  geom_function(
+    fun = function(x) exp(coef(wholm)[1] + coef(wholm)[2] * as.numeric(x)),
+    color = "red"
+  ) +
+  geom_function(
+    fun = function(x) {
+      200000 *
+        exp(coef(wholm)[1] + coef(wholm)[2] * as.numeric(x)) /
+        (200000 + exp(coef(wholm)[1] + coef(wholm)[2] * as.numeric(x)))
+    },
+    color = "blue"
+  ) +
+  theme_minimal(base_size = 20)
 ```
 
 Logistic growth (as in the SI model) mimicks exponential growth initially. 
@@ -650,9 +675,11 @@ Logistic growth (as in the SI model) mimicks exponential growth initially.
 ## $\log$ transformation {.smaller}
 
 ```{r}
-	who |> 
-	ggplot(aes(Date_reported, log10(Cumulative_cases))) + geom_line() + geom_point() +
-	geom_smooth(method = "lm") 
+who |>
+  ggplot(aes(Date_reported, log10(Cumulative_cases))) +
+  geom_line() +
+  geom_point() +
+  geom_smooth(method = "lm")
 ```
 
 An important difference of `log10(Cumulative_cases) ~ Date_Reported` to the penguin model `flipper_length_mm ~ body_mass_g`?
@@ -671,26 +698,48 @@ Because there is a *mechanistic explanation* behind: The SI model.
 ## However, it works only in a certain range {.smaller}
 
 ```{r}
-who |> 
-	ggplot(aes(Date_reported, Cumulative_cases)) + geom_point() +
- geom_function(fun = function(x) exp(coef(wholm)[1] + coef(wholm)[2]*as.numeric(x)), color = "red") + 
- geom_function(
-  fun = function(x) 200000*exp(coef(wholm)[1] + coef(wholm)[2]*as.numeric(x))/(200000 + exp(coef(wholm)[1] + coef(wholm)[2]*as.numeric(x))), color = "blue") +
- theme_minimal(base_size = 20) +
- geom_line(data = whofull |> filter(Date_reported < "2020-06-30")) + ylim(c(0,300000))
+who |>
+  ggplot(aes(Date_reported, Cumulative_cases)) +
+  geom_point() +
+  geom_function(
+    fun = function(x) exp(coef(wholm)[1] + coef(wholm)[2] * as.numeric(x)),
+    color = "red"
+  ) +
+  geom_function(
+    fun = function(x) {
+      200000 *
+        exp(coef(wholm)[1] + coef(wholm)[2] * as.numeric(x)) /
+        (200000 + exp(coef(wholm)[1] + coef(wholm)[2] * as.numeric(x)))
+    },
+    color = "blue"
+  ) +
+  theme_minimal(base_size = 20) +
+  geom_line(data = whofull |> filter(Date_reported < "2020-06-30")) +
+  ylim(c(0, 300000))
 ```
 
 ## However, it works only in a certain range (log scale on y) {.smaller}
 
 ```{r}
-who |> 
-	ggplot(aes(Date_reported, Cumulative_cases)) + geom_point() +
- geom_function(fun = function(x) exp(coef(wholm)[1] + coef(wholm)[2]*as.numeric(x)), color = "red") + 
- geom_function(
-  fun = function(x) 200000*exp(coef(wholm)[1] + coef(wholm)[2]*as.numeric(x))/(200000 + exp(coef(wholm)[1] + coef(wholm)[2]*as.numeric(x))), color = "blue") +
- theme_minimal(base_size = 20) +
- geom_line(data = whofull |> filter(Date_reported < "2020-06-30")) + ylim(c(0,300000)) +
- scale_y_log10()
+who |>
+  ggplot(aes(Date_reported, Cumulative_cases)) +
+  geom_point() +
+  geom_function(
+    fun = function(x) exp(coef(wholm)[1] + coef(wholm)[2] * as.numeric(x)),
+    color = "red"
+  ) +
+  geom_function(
+    fun = function(x) {
+      200000 *
+        exp(coef(wholm)[1] + coef(wholm)[2] * as.numeric(x)) /
+        (200000 + exp(coef(wholm)[1] + coef(wholm)[2] * as.numeric(x)))
+    },
+    color = "blue"
+  ) +
+  theme_minimal(base_size = 20) +
+  geom_line(data = whofull |> filter(Date_reported < "2020-06-30")) +
+  ylim(c(0, 300000)) +
+  scale_y_log10()
 ```
 
 

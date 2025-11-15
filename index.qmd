@@ -2,10 +2,6 @@
 title: "Data Science Concepts / Data Science Tools"
 ---
 
-::: {.callout-important}
-[**Room Change!** Come to SH-229 Video Conference in South Hall from Sep 29 on!]{.red}
-:::
-
 :::{.callout-warning collapse=true appearance='default' icon=true}
 ## Note for students of **Master program: Data Science for Society and Business (online)**
 
@@ -68,8 +64,11 @@ Note: The R and python courses are provided in the same time slot. Details in th
 Concepts: 
 [**Jan Lorenz**](http://janlo.de) Email: <jlorenz@constructor.univeristy>
 
-Tools in R and python:   
+Tools in R:   
 **Armin Müller** Email: <armmueller@constructor.university>
+
+Tools in python:   
+**Aiman Alam** Email: <aalam@constructor.university>
 
 Student Assistants:    
 **Matvei Trifanov** Email: <mtrifanov@constructor.university>  
@@ -141,7 +140,7 @@ Weight: 100%
 Scope: All intended learning outcomes of the module.  
 Completion: to pass this module, the examination has to be passed with at least 45%  
 
-An exam will take place after all lectures in December. The date will be published by the university adminstration later. The date range is in the [Academic Calendar]({{< var link.academic_calendar >}}).
+An exam will take place after all lectures in December. The date will be published by the university adminstration later. The date range is in the [Academic Calendar]({{< var link.academic-calendar >}}).
 
 There are no additional achievements necessary and there are no bonus options. 
 
