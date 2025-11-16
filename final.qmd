@@ -48,9 +48,11 @@ All members receive the same grade for it. However, the module grade can be diff
 
 - Delivery is via GitHub in a private repository (the same way as Homework Projects). 
 - The repository for the final project will be created in the [{{< var org.name >}}]({{< var org.link >}}) by the instructors **upon team and project approval**. 
-- The source file as well as the rendered html-file should be included.
-- The assessment will start after the deadline with the latest commit. 
-- Assessment will be done based on reading the HTML-file. Additionally and if necessary, the Quarto Markdown File and other provided files may be looked at. Ideally, the HTML-Report is sufficient to assess the project!  
+- **The assessment will be done of the HTML file `report.html`.** You write the report in Quarto Markdown (`report.qmd`) or Jupyter Notebook (`report.ipynb`) and render it to HTML.
+- The source files (`report.qmd` or `report.ipynb`) must be included.
+    - Note: In large teams it can be helpful that members work on individual files for some time to avoid to much technical coordination (e.g. `analysis_NAME.qmd`). This is OK. However, in the end you need to put everything together in one file `report.html`! Reseve some time for it as a team. Individual files (and rendered files) should be removed from the repository before delivery time.
+- The assessment will start after the deadline with the latest commit. Help us by calling your final commit message `DELIVERY`.
+- Assessment will be done based on reading the HTML-file `report.html`. Additionally and if necessary, the Quarto Markdown File and other provided files may be looked at. Ideally, the HTML-Report is sufficient to assess the project!  
 (To test if the HTML file looks good for the instructors do the following: Clone the repository anew to a temporaty directory on your computer, open the HTML file from this newly cloned directory. Check if it looks good. This is what instructors will do.)
 
 
@@ -85,16 +87,16 @@ Nevertheless, the assessment goes along some criteria with some approximate weig
 ## Advice for data science team work (with git)
 
 - Select your language R or python!
-- Put the data you need into a folder `data`. For large data sets better not to commit and push it, but to document where the data can be retrieved and where it should be put to load it with your code.  
+- Put the data you need into a folder `data`. Very large datasets need not be committed and pushed. Document where the data can be retrieved and where it should be put to Use it with your code.  
 - All team members need to clone the repository to their local computers.
 - Try both:
     - Working together at the same time with realtime communction. 
     - Working together remotely based on a plan who should do what. Feel free to use GitHub issues in your repository for this!
 - Every team member should finally have pushed some work to GitHub!
-- Commit early and often! Then we can help you when you have questions or need directions. 
+- Commit early and often! We help you when you have questions or need directions based on committed code. 
 - Before you start to work as a team member: Always do `git pull` first to receive potentially new content!
 - Try to finish an individual work session with comments on next steps and open questions. Push the files in a state such that it renders. 
-- *Conflicts in git:* Git conflicts will probably occur when you work in teams while pulling and pushing. These can be solved. If you do not manage, ask for help.
+- **Conflicts in git:** Git conflicts will probably occur when you work in teams while pulling and pushing. These can be solved. If you do not manage, ask for help. Sometimes git-conflicts become too confusing that [Burn it all down](https://happygitwithr.com/burn) can be the best approach to have a fresh start on your local machine by cloning again. (See also <https://xkcd.com/1597/>.) Check what is in the remote repo before and save relevant local work somewhere.  
 - **Conflicts in the team.** Please communicate about tensions in your team and try to solve them. However, you are not obliged to finish your project as a dysfunctional team. To avoid being bound to the same grade in a dysfunctional team, every team member has the right to leave the team and continue independently. This can only be realized upon prior communication with team members and consequently with the instructors! 
 
 
