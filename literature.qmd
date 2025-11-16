@@ -5,7 +5,8 @@ title: "Learning Resources"
 <!-- LITERATURE / READING LIST -->
 <!-- Please describe required texts, computer software, and module materials and their cost estimates (if applicable). You may also provide advice on cost-effective means of obtaining module materials, such as through the library or other open-source materials.  -->
 
-All the materials here are freely accessible, many are community standards. The [Schedule](schedule.qmd) might refer to specific sections in these materials. 
+All the materials here are freely accessible, many are community standards. 
+The [Schedule](schedule.qmd) might refer to specific sections in these materials. 
 
 ## R
 
