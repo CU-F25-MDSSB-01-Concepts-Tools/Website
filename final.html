@@ -213,6 +213,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">W#10</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./material/M11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">W#11</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -361,9 +367,13 @@ The team’s work is graded as one piece.
 <ul>
 <li>Delivery is via GitHub in a private repository (the same way as Homework Projects).</li>
 <li>The repository for the final project will be created in the <a href="https://github.com/CU-F25-MDSSB-01-Concepts-Tools">CU-F25-MDSSB-01-Concepts-Tools</a> by the instructors <strong>upon team and project approval</strong>.</li>
-<li>The source file as well as the rendered html-file should be included.</li>
-<li>The assessment will start after the deadline with the latest commit.</li>
-<li>Assessment will be done based on reading the HTML-file. Additionally and if necessary, the Quarto Markdown File and other provided files may be looked at. Ideally, the HTML-Report is sufficient to assess the project!<br>
+<li><strong>The assessment will be done of the HTML file <code>report.html</code>.</strong> You write the report in Quarto Markdown (<code>report.qmd</code>) or Jupyter Notebook (<code>report.ipynb</code>) and render it to HTML.</li>
+<li>The source files (<code>report.qmd</code> or <code>report.ipynb</code>) must be included.
+<ul>
+<li>Note: In large teams it can be helpful that members work on individual files for some time to avoid to much technical coordination (e.g.&nbsp;<code>analysis_NAME.qmd</code>). This is OK. However, in the end you need to put everything together in one file <code>report.html</code>! Reseve some time for it as a team. Individual files (and rendered files) should be removed from the repository before delivery time.</li>
+</ul></li>
+<li>The assessment will start after the deadline with the latest commit. Help us by calling your final commit message <code>DELIVERY</code>.</li>
+<li>Assessment will be done based on reading the HTML-file <code>report.html</code>. Additionally and if necessary, the Quarto Markdown File and other provided files may be looked at. Ideally, the HTML-Report is sufficient to assess the project!<br>
 (To test if the HTML file looks good for the instructors do the following: Clone the repository anew to a temporaty directory on your computer, open the HTML file from this newly cloned directory. Check if it looks good. This is what instructors will do.)</li>
 </ul>
 </section>
@@ -397,7 +407,7 @@ The team’s work is graded as one piece.
 <h2 data-number="6" class="anchored" data-anchor-id="advice-for-data-science-team-work-with-git"><span class="header-section-number">6</span> Advice for data science team work (with git)</h2>
 <ul>
 <li>Select your language R or python!</li>
-<li>Put the data you need into a folder <code>data</code>. For large data sets better not to commit and push it, but to document where the data can be retrieved and where it should be put to load it with your code.<br>
+<li>Put the data you need into a folder <code>data</code>. Very large datasets need not be committed and pushed. Document where the data can be retrieved and where it should be put to Use it with your code.<br>
 </li>
 <li>All team members need to clone the repository to their local computers.</li>
 <li>Try both:
@@ -406,10 +416,11 @@ The team’s work is graded as one piece.
 <li>Working together remotely based on a plan who should do what. Feel free to use GitHub issues in your repository for this!</li>
 </ul></li>
 <li>Every team member should finally have pushed some work to GitHub!</li>
-<li>Commit early and often! Then we can help you when you have questions or need directions.</li>
+<li>Commit early and often! We help you when you have questions or need directions based on committed code.</li>
 <li>Before you start to work as a team member: Always do <code>git pull</code> first to receive potentially new content!</li>
 <li>Try to finish an individual work session with comments on next steps and open questions. Push the files in a state such that it renders.</li>
-<li><em>Conflicts in git:</em> Git conflicts will probably occur when you work in teams while pulling and pushing. These can be solved. If you do not manage, ask for help.</li>
+<li><strong>Conflicts in git:</strong> Git conflicts will probably occur when you work in teams while pulling and pushing. These can be solved. If you do not manage, ask for help. Sometimes git-conflicts become too confusing that <a href="https://happygitwithr.com/burn">Burn it all down</a> can be the best approach to have a fresh start on your local machine by cloning again. (See also <a href="https://xkcd.com/1597/" class="uri">https://xkcd.com/1597/</a>.) Check what is in the remote repo before and save relevant local work somewhere.<br>
+</li>
 <li><strong>Conflicts in the team.</strong> Please communicate about tensions in your team and try to solve them. However, you are not obliged to finish your project as a dysfunctional team. To avoid being bound to the same grade in a dysfunctional team, every team member has the right to leave the team and continue independently. This can only be realized upon prior communication with team members and consequently with the instructors!</li>
 </ul>
 </section>
