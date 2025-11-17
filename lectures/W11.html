@@ -915,7 +915,11 @@ They have thousands of parameters with all these trees!</li>
 </div>
 </div>
 </div></div>
-<p>All details about what variable importance actually is are skipped here.</p>
+<ul>
+<li>The computation of variable importance is typically consider a step of <span class="green"><strong>post-processing</strong></span> of complex models like random forests because it is computed after the model is fitted.</li>
+<li>In contrast, <strong>pre-processing</strong> happens before fitting the model.</li>
+</ul>
+<p>All details about exact definition and different methods to compute variable importance are skipped here.</p>
 </section>
 <section id="classification-with-random-forrest" class="slide level2">
 <h2>Classification with random forrest</h2>
@@ -1747,7 +1751,6 @@ For example outcomes of estimation games, or linear regression models?</p>
 <li><span class="math inline">\(\text{MSE} = \text{Bias-squared} + \text{Variance}\)</span> shows us that we can make a<br>
 <strong>bias-variance decomposition</strong></li>
 <li>That means some part of the error is a systematic (the bias) and another part due to random variation (the variance).</li>
-<li>The bias-variance tradeoff is also an important concept in statistical learning!</li>
 </ul>
 </div>
 </section>
@@ -1765,9 +1768,27 @@ For example outcomes of estimation games, or linear regression models?</p>
 <li>Of course, high trueness and high precision! But, …</li>
 <li>Focusing on the <strong>crowd</strong> being wise instead of its <strong>individuals</strong>: High trueness, low precision.</li>
 </ul>
-
-
 </div>
+</section>
+<section id="summary-crowd-wisdom" class="slide level2">
+<h2>Summary Crowd Wisdom</h2>
+<ul>
+<li>The <strong>wisdom of the crowd</strong> relies on aggregating diverse estimates.</li>
+<li>More generally as these simple guessing games, <strong>crowd wisdom</strong> is this idea:<br>
+<em>Many problems can be solved better by aggregating the answers of many individuals than by relying on a single expert.</em></li>
+<li>The <strong>random forest</strong> method of statistical learning is built on this idea:<br>
+<em>Instead of relying on on heavyily fine tuned decision tree, we create a forrest of many partly randomly generated trees and aggregate their predictions.</em>
+<ul>
+<li>It turns out that such forest typically produce predictions that <em>generalize</em> better to new data.</li>
+</ul></li>
+<li>The <strong>bias-variance decomposition</strong> helps to understand different sources of errors. It is used to understand error in predicion models (not shown here).
+<ul>
+<li>In an underfitted model, the error stems mostly from variance</li>
+<li>In an overfitted model, the error stems mostly from bias (with respect to the training data</li>
+</ul></li>
+</ul>
+
+
 </section></section>
 
     </div>
