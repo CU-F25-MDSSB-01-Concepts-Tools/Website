@@ -23,8 +23,8 @@ Date format MM-DD (month-day) (09-05 is Sep, 5)
 | 9    | 10-27  | W#08 [Linear Model: Categorical Predictors, More Predictors, Interaction; Categorical Response, Logistic Regression](material/M08.qmd) | 10-30    | python |
 | 10   | 11-03  | W#09 [**Data Science Tools Final Project Check-In**](https://forms.office.com/e/75qEdyZbim) [Prediction (Building a Spam Filter), Classification and Regression with Decision Trees](material/M09.qmd) | 11-06    | python   |
 | 11   | 11-10  | W#10 [Overfitting, Clustering Algorithms](material/M10.qmd)  | 11-13    | python       |
-| 12   | 11-17  | W#11 Collaborative Git, Bootstrapping, Cross validation, Bias-Variance Tradeoff | 11-20    | python  |
-| 13   | 11-24  | W#12 Probability, Random Variables, Probability Distributions, Central Limit Theorem | 11-27    | python   |
+| 12   | 11-17  | W#11 [Collaborative Git, More Prediction Modeling, Quantifying Uncertainty, Crowd Wisdom](material/M11.qmd) | 11-20    | python  |
+| 13   | 11-24  | W#12 Hypothesis Testing, Probability, Random Variables, Probability Distributions, Central Limit Theorem | 11-27    | python   |
 | 14   | 12-01  | ***No Class*** Exam Preparation with a Mock Exam       | 12-04    | python |
 | *Extra* | 12-08  | *Q&A Session before the exam*  | |  |
 | Exam | tbd  | **The exam takes place as an online exam** in the date range marked in the [academic calendar]({{< var link.academic-calendar >}}) (to be scheduled by admin) |  |  |

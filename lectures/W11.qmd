@@ -1,5 +1,5 @@
 ---
-title: "W#11: Final Project, Collaborative Git, Bootstrapping, Cross validation, Bias-Variance Tradeoff"
+title: "W#11: Collaborative Git, More Prediction Modeling, Quantifying Uncertainty, Crowd Wisdom "
 author: Jan Lorenz
 format: 
   revealjs: 
@@ -258,8 +258,8 @@ What is a *branch* and what a *rebase*? These are features of git well worth to 
   - `push`
 - **The second team member (and all others):** 
   - `pull` the changes of your colleague. 
-  
-Practice a bit more pulling and pushing commits and check the merging. 
+
+Practice a bit more pulling and pushing commits and check the merging.
 
 
 ## Step 6: Create a merge conflict
@@ -304,7 +304,6 @@ Now you know how to solve merge conflicts. Practice a bit in your team.
 
 ## Workflow prediction model
 
-::: {.incremental}
 1. Data splitting into training and test data  
 `initial_split()`, `training()`, `testing()` $\to$ `train` and `test` datasets
 2. Recipe for preprocessing  
@@ -319,7 +318,6 @@ E.g. `decision_tree()`, set engine `rpart`, mode `regression` or `classification
 `predict()` with fitted workflow and `test` data
 7. Evaluate performance using the orignal variable (ground truth) in test data  
 `metrics()` by specifying `truth` and `estimate` columns
-:::
 
 
 ## Decision Tree
@@ -370,46 +368,62 @@ cat("Cost complexity:", extract_fit_engine(peng_regtree_fit)$control$cp, "\n",
     "Min split:", extract_fit_engine(peng_regtree_fit)$control$minsplit)
 ```
 
+```{r}
+#| include: false
+first_peng_regtree_pred <- peng_regtree_pred
+```
+
 - Cost complexity (`cp`): Controls pruning of the tree. Higher values result in smaller trees. 
 - Minimum split (`minsplit`): Minimum number of observations in a node to be allowed to split further. Higher values result in smaller trees.
 - Note: Terminology in `tidymodels` and original `rpart` differ. `tidymodels` tries to unifying terminology across models. Thus, `cp` is called `cost_complexity` and `minsplit` is called `min_n`.
 
-## How to evaluate performance on training data only? {.smaller}
+. . .
+
+- [**Is the decision tree a deterministic algorithm?**]{.green}    
+    [Yes, given the same training data and hyperparameters, it always results in the same tree.]{.fragment}
+
+. . . 
+
+However, the Test-Train-Split is and the performance measures would be different for each new split!
+
+## How reliable are performance metrics? {.smaller}
 
 - Model performance changes with the random selection of the training data. How can we then reliably compare models?
-- Anyway, the training data is not a good source for model performance. It is not an independent piece of information. Predicting the training data only reveals what the model already "knows". 
-- Also, we should save the testing data only for the final validation, so we should not use it systematically to compare models.
 
-A solution: **Cross validation**
+. . .
 
-## Cross validation {.smaller}
+A solution: [**Cross-validation**]{.green}
 
-More specifically, **$v$-fold cross validation**:
+. . .
+
+More specifically, [**$v$-fold cross-validation**]{.green}:
 
 - Shuffle your data and make a partition with $v$ parts
   - Recall from set theory: A **partition** is a division of a set into mutually disjoint parts which union cover the whole set. Here applied to observations (rows) in a data frame.
 - Use 1 part for validation, and the remaining $v-1$ parts for training
 - Repeat $v$ times
 
-## Cross validation
+## Cross-validation
 
 ![](img/cross-validation.png)
 
 
-## Crossvalidation
+## Cross-validation
+
+Cross-validation replacing the Train-Test-Split in the workflow:
 
 ```{r}
 #| echo: true
 #| output-location: column
 
 set.seed(1) # Test with other seeds to see how the Train-Test-Split changes results!
-# 1. 5-fold Cross-Validation
+# 1. 5-fold Cross validation
 peng_folds <- vfold_cv(na.omit(penguins), v = 5, strata = sex)
 set.seed(NULL) # Reset random. See that the decision tree algorithm is deterministic! Test it!
 # 2. Preprocessing-Recipe: Same as before
 # 3. Model: Same as before
 # 4. Workflow: Same as before
-# 5. Fit: We use peng_regtree_wf and use fit_resamples() made for folds
+# 5. Fit: We use peng_regtree_wf and use fit_resamples() to fit for all folds
 peng_regtree_fit <- peng_regtree_wf |> 
   fit_resamples(resamples = peng_folds)
 # 6./7. (Predict) and evaluate performance for all folds
@@ -417,6 +431,33 @@ peng_regtree_fit |>
   collect_metrics(summarize = FALSE, type = "wide")
 ```
 
+. . . 
+
+::: {.columns}
+::: {.column}
+
+Interpretation:
+
+- Cross-validation shows variation
+- The original fit was worse than average
+
+:::
+::: {.column}
+For comparision: Original split
+
+```{r}
+#| echo: false
+first_peng_regtree_pred |>
+  metrics(truth = body_mass_g, estimate = .pred)
+```
+
+:::
+:::
+
+
+::: aside
+Besides `vfold_cv()` the only new function are `fit_resamples()` and `collect_metrics()`.
+:::
 
 ## Tuning 
 
@@ -445,19 +486,51 @@ peng_tune_results <- peng_wf |>
   tune_grid(
     resamples = peng_folds,
     grid = expand_grid(
-        cost_complexity = c(0.01, 0.05, 0.02, 0.01, 0.005),
+        cost_complexity = c(0.05, 0.02, 0.01, 0.005),
         min_n = c(2, 10, 20, 40)
     ), 
     metrics = metric_set(rmse)
   )
 # 4.c. EXAMINE TUNING RESULTS
 peng_tune_results |>
-  collect_metrics()
+  collect_metrics(summarize = TRUE) |> select(-.config, -.estimator)
+```
+
+`collect_metrics(summarize = TRUE)` averages performance across folds and repeats!   
+In total there are 400 fits (16 parameter combinations $\times$ 5 folds $\times$ 5 repeats). 
+
+## Tuning continued
+
+Visualization for evalution
+
+```{r}
+#| echo: true
+#| output-location: column
 # 4.d. VISUALIZE TUNING RESULTS
-autoplot(peng_tune_results)
+autoplot(peng_tune_results) +
+  theme_minimal(base_size = 18)
+```
+
+## Tuning continued
+
+Selection of best parameters
+
+```{r}
+#| echo: true
+#| output-location: column
 # 4.e. SEE BEST PARAMETERS AND SELECT BEST
-show_best(peng_tune_results, metric = "rmse")
 best_params <- select_best(peng_tune_results, metric = "rmse")
+show_best(peng_tune_results, metric = "rmse") |> 
+  select(-.estimator, -.config)
+```
+
+Best parameters: `min_n` = `r best_params$min_n`, `cost_complexity` = `r best_params$cost_complexity`
+
+## Fit with tune parameters
+
+```{r}
+#| echo: true
+#| output-location: column
 # 5. Fit: FINALIZE AND FIT WITH BEST PARAMETERS and fit
 peng_regtree_fit <- peng_wf |>
   finalize_workflow(best_params) |>
@@ -468,8 +541,35 @@ peng_regtree_fit |>
   metrics(truth = body_mass_g, estimate = .pred)
 ```
 
+- Although, best parameters differ from default, performance is the same. 
+- This can happen, especially when the model is simple and the dataset is small.
 
-## Random forest
+. . . 
+
+How can we improve the performance with the idea of trees?   
+[**Create several trees and aggregate them in a random forest!**]{.green .fragment}
+
+## Random forests
+
+![](https://upload.wikimedia.org/wikipedia/commons/4/4e/Random_forest_explain.png)
+
+::: aside
+Source: <https://de.wikipedia.org/wiki/Random_Forest>
+:::
+
+
+## How a random forest is made
+
+- Build many decision trees independently (default: 500 trees), each trained on the full dataset  
+  In each tree do the following at each decision node: 
+    - Randomly select `mtry` features from all available features (e.g., 2 out of 6, rule of thumb: square root of the number of features)
+    - Find the best split only among those randomly selected features.   
+      The randomness in variable selection at each split ensures trees are different from each other, this shall reduce overfitting.
+- Make predictions by 
+  - averaging predictions across all trees (regression) or 
+  - majority vote (classification)
+
+## Random forest regression
 
 ```{r}
 #| echo: true
@@ -489,23 +589,51 @@ peng_regforest_fit <- workflow() |>
 # 5. Fit
   fit(data = peng_train)
 peng_regforest_fit
-# 6./7. Predict and Evaluatue with test data (as before)
-peng_regforest_fit |>
-  augment(peng_test) |>
-  metrics(truth = body_mass_g, estimate = .pred)
-# Variable importance
-extract_fit_engine(peng_regforest_fit) |> 
-  vip()
 ```
 
+With `set_engine("ranger", importance = "impurity")` we specify the method of specification for the computation of [**variable importance**]{.green}.  
 
-## Decision tree classification
+
+## Random forest regression continued
 
 ```{r}
 #| echo: true
 #| output-location: column
-set.seed(12345) # Just to fix the presentation, test without when doing yourself!
 
+# 6./7. Predict and Evaluatue with test data (as before)
+peng_regforest_fit |>
+  augment(peng_test) |>
+  metrics(truth = body_mass_g, estimate = .pred)
+``` 
+
+- Random forest often outperform decision tree and linear models. (Here, only a little bit.) 
+- However, they have no natural visualization and are less interpretable.    
+  They have thousands of parameters with all these trees! 
+
+
+## Variable importance
+
+**Variable importance** identify features that matter for good predicitions. 
+
+```{r}
+#| echo: true
+#| output-location: column
+# 6./7. Predict and Evaluatue with test data (as before)
+# Variable importance
+extract_fit_engine(peng_regforest_fit) |> 
+  vip() + theme_minimal(base_size = 18) 
+```
+
+All details about what variable importance actually is are skipped here. 
+
+## Classification with random forrest
+
+First the spam prediction decision tree 
+```{r}
+#| echo: true
+#| output-location: column
+
+set.seed(12345) # Just to fix the presentation, test without when doing yourself!
 # 1. Train-Test-Split
 email_split <- initial_split(email, prop = 0.7, strata = spam)
 email_train <- training(email_split)
@@ -531,10 +659,7 @@ email_classtree_fit <- email_classtree_wf |>
 class_metrics <- metric_set(accuracy, sensitivity, specificity)
 email_classtree_fit |>
   augment(email_test) |>
-  class_metrics(truth = spam, estimate = .pred_class)
-# Variable importance
-extract_fit_engine(email_classtree_fit) |> 
-  vip()
+  class_metrics(truth = spam, estimate = .pred_class, event_level = "second")
 ```
 
 ## Random forest classification
@@ -542,7 +667,6 @@ extract_fit_engine(email_classtree_fit) |>
 ```{r}
 #| echo: true
 #| output-location: column
-set.seed(12345) # Just to fix the presentation, test without when doing yourself!
 
 # 1. Train-Test-Split
 email_split <- initial_split(na.omit(email), prop = 0.8)
@@ -565,382 +689,65 @@ email_forest_fit <- workflow() |>
   # 5. Fit
   fit(data = email_train)
 email_forest_fit # Look at the fit object
+```
+
+## Random forest classification continued
+
+```{r}
+#| echo: true
+#| output-location: column
 # 6./7. Predict with test data and evaluate performance
 email_forest_fit |>
   augment(email_test) |>
-  class_metrics(truth = spam, estimate = .pred_class)
+  class_metrics(truth = spam, estimate = .pred_class, event_level = "second")
 ```
 
-
-## How a random forest is made
-
-- Many decision trees are built independently (default: 500 trees), each trained on the full dataset
-  At each split in each tree:
-    - Randomly select `mtry` variables from all available features (e.g., 2 out of 6, rule of thumb: square root of the number of features)
-    - Find the best split using only those randomly selected variables. 
-    - Grow each tree until terminal nodes contain fewer than `min_n` observations (default, stop when nodes have less than 5 samples)
-
-Make predictions by averaging predictions across all trees (regression) or voting (classification)
-The randomness in variable selection at each split ensures trees are different from each other, which reduces overfitting and improves generalization
-
-The key insight: By limiting choices at each split to a random subset of features, we prevent any single strong predictor from dominating all trees, creating a diverse "forest" of models that collectively perform better than any individual tree.
-
-
-
-# Hypothesis testing
-Large part of the content adapted from <http://datasciencebox.org>.
-
-
-## Organ donors
-
-**Background story:** People providing an organ for donation sometimes seek the help of a special "medical consultant". These consultants assist the patient in all aspects of the surgery, with the goal of reducing the possibility of complications during the medical procedure and recovery. Patients might choose a consultant based in part on the historical complication rate of the consultant's clients. 
-
-. . . 
-
-**Example track record:** One consultant tried to attract patients by noting that the average complication rate for liver donor surgeries in the US is about 10%, but her clients have only had 3 complications in the 62 liver donor surgeries she has facilitated. She claims this is strong evidence that her work meaningfully contributes to reducing complications (and therefore she should be hired!).
-
-. . . 
-
-[Is this strong evidence for a good track record?]{style='color:red;'}
-
-## Data
-
-```{r}
-#| echo: true
-organ_donor <- tibble(
-  outcome = c(rep("complication", 3), rep("no complication", 59))
-)
-```
-
-```{r }
-#| echo: true
-organ_donor |>
-  count(outcome)
-```
-
-
-## Parameter vs. statistic
-
-A **parameter** for a hypothesis test is the "true" value of interest. We typically estimate the parameter using a **sample statistic** as a **point estimate**.
-
-$q$: true rate of complication, here 0.1 (10% complication rate in US)
-
-$\hat{q}$: rate of complication in the sample = $\frac{3}{62}$ = 
-`r round(3/62, 3)` (This is the point estimate.)
-
-
-## Correlation vs. causation 
-
-**Is it possible to infer the consultant's claim using the data?**
-
-No. The claim is: *There is a causal connection*. However, the data are observational.
-For example, maybe patients who can afford a medical consultant can afford better medical care, which can also lead to a lower complication rate (for example).
+In particular specificity (true negative rate) is better than for the decision tree!
 
 . . .
 
-**What is possible?**
+How does prediction work for classification with random forests? How do we aggregate the classification of all the trees in the forrest? (For regression we were averaging.)  
+[**Majority vote across all trees!**]{.green .fragment}
 
-While it is not possible to assess the causal claim, it is still possible to test for an association using these data. For this question we ask, **could the low complication rate of $\hat{q}$ = `r round(3/62, 3)` be due to chance?**
-
-
-
-## Two claims
-
-- [**Null hypothesis $H_0$:**]{style='color:blue;'} "There is nothing going on"
-
-Complication rate for this consultant is no different than the US average of 10%
-
-- [**Alternative hypothesis $H_1$:**]{style='color:blue;'} "There is something going on"
-
-Complication rate for this consultant is **lower** than the US average of 10%
-
-
-## Understand hypothesis testing as a court trial
-
-- **Null hypothesis**, $H_0$: Defendant is innocent
-- **Alternative hypothesis**, $H_A$: Defendant is guilty
-
-
-- **Present the evidence:** Collect data
-
-- **Judge the evidence:** "Could these data plausibly have happened by chance if the null hypothesis were true?"
-    * Yes: Fail to reject $H_0$
-    * No: Reject $H_0$
-    
-
-## Hypothesis testing framework
-
-- Start with a null hypothesis, $H_0$, that represents the status quo
-
-- Set an alternative hypothesis, $H_A$, that represents the research question, i.e. what we are testing for
-
-- Conduct a hypothesis test under the assumption that the null hypothesis is true and calculate a **p-value**.    
-**Definition p-value:** *Probability of observed or more extreme outcome given that the null hypothesis is true.*
-    - if the test results suggest that the data do not provide convincing evidence for the alternative hypothesis, stick with the null hypothesis
-    - if they do, then reject the null hypothesis in favor of the alternative
-
-
-## Setting the hypotheses
-
-Which of the following is the correct set of hypotheses for the claim that the consultant has lower complication rates?
-
-(a) $H_0: q = 0.10$; $H_A: q \ne 0.10$ 
-
-(b) $H_0: q = 0.10$; $H_A: q > 0.10$ 
-
-(c) $H_0: q = 0.10$; $H_A: q < 0.10$ 
-
-(d) $H_0: \hat{q} = 0.10$; $H_A: \hat{q} \ne 0.10$ 
-
-(e) $H_0: \hat{q} = 0.10$; $H_A: \hat{q} > 0.10$ 
-
-(f) $H_0: \hat{q} = 0.10$; $H_A: \hat{q} < 0.10$ 
-
-. . . 
-
-(c) is correct.   
-Hypotheses are about the true rate of complication $q$ not the observed ones $\hat{q}$
-
-
-# Simulation for Hypothesis Testing
-
-## Simulating the null distribution
-
-Since $H_0: q = 0.10$, we need to simulate a null distribution where the probability of success (complication) for each trial (patient) is 0.10.
-
-**How should we simulate the null distribution for this study using a bag of chips?**
-
-- How many chips? [For example 10 which makes 10% choices possible]{.fragment style='color:red;'}
-- How many colors? [2]{.fragment style='color:red;'}
-- What should colors represent? ["complication", "no complication"]{.fragment style='color:red;'}
-- How many draws?  [62 as the data]{.fragment style='color:red;'}
-- With replacement or without replacement? [With replacement]{.fragment style='color:red;'}
-
-When sampling from the null distribution, what would be the expected proportion of "complications"?  [0.1]{.fragment  style='color:red;'}
-
-
-## Simulation!
+## Variable importance
 
 ```{r}
 #| echo: true
-set.seed(1234) # The seed is set for the sake of stable presentation outcomes.
-outcomes <- c("complication", "no complication")
-sim1 <- sample(outcomes, size = 62, prob = c(0.1, 0.9), replace = TRUE)
-sim1
-sum(sim1 == "complication") / 62
+#| output-location: column
+
+# Variable importance
+extract_fit_engine(email_classtree_fit) |> 
+  vip() + theme_minimal(base_size = 18)
 ```
-
-Oh OK, this was exactly the consultant's rate. But maybe it was a rare event? Let us repeat it. 
-
-## More simulation!
 
 ```{r}
 #| echo: true
-one_sim <- function() {
-  sample(outcomes, size = 62, prob = c(0.1, 0.9), replace = TRUE)
-}
+#| output-location: column
 
-sum(one_sim() == "complication") / 62
-sum(one_sim() == "complication") / 62
-sum(one_sim() == "complication") / 62
-sum(one_sim() == "complication") / 62
-sum(one_sim() == "complication") / 62
-sum(one_sim() == "complication") / 62
-sum(one_sim() == "complication") / 62
+# Variable importance
+extract_fit_engine(email_forest_fit) |> 
+  vip() + theme_minimal(base_size = 18)
 ```
 
 
-## Automating with `tidymodels`^[Of course, you can also do it in your own way without packages.]
 
 
-:::: {.columns}
+## More prediction summary
 
-::: {.column width='40%'}
-```{r}
-#| echo: true
-organ_donor
-```
-
+::: {.incremental}
+- A **decision tree** is *deterministic*. However, results change with different train-test-splits.
+- **Cross-validation** helps to assess model performance more reliably.
+- **Tuning hyperparameters** can improve model performance, but often defaults are good. 
+    - It is all about quantifying when *overfitting* kicks in and *out-of-sample performance* degrades.
+- **Random forests** take the idea of decision trees further by creating many trees and aggregating their predictions. They are not deterministic but *stochastic* even with the same training data.
+- Why are random forrests better than individual trees?
+- By limiting choices at each split to a random subset of features, we prevent any single strong predictor from dominating all trees, creating a diverse "forest" of models that collectively perform better than any individual tree.
 :::
 
-::: {.column width='60%'}
-
-```{r}
-#| echo: true
-set.seed(10)
-null_dist <- organ_donor |>
-  specify(response = outcome, success = "complication") |>
-  hypothesize(
-    null = "point",
-    p = c("complication" = 0.10, "no complication" = 0.90)
-  ) |>
-  generate(reps = 100, type = "draw") |>
-  calculate(stat = "prop")
-null_dist
-```
-
-:::
-
-::::
 
 
 
-## Visualizing the null distribution
-
-```{r}
-#| echo: true
-ggplot(data = null_dist, mapping = aes(x = stat)) +
-  geom_histogram(binwidth = 0.01) +
-  labs(title = "Null distribution")
-```
-
-
-# p-value
-
-## Calculating the p-value, visually
-
-**What is the p-value:** *How often was the simulated sample proportion at least as extreme as the observed sample proportion?*^[This a one-sided hypothesis test because we are looking for extremely lower rates not also extremely higher rates. We do one-sided test if we know the direction of interest, here "low" and "lower" rates.]
-
-```{r}
-#| echo: true
-#| fig.height: 3
-ggplot(data = null_dist, mapping = aes(x = stat)) +
-  geom_histogram(binwidth = 0.01) +
-  labs(title = "Null distribution") +
-  geom_vline(xintercept = 3 / 62, color = "red")
-```
-
-
-## Calculating the p-value, directly
-
-```{r}
-#| echo: true
-null_dist |>
-  summarise(p_value = sum(stat <= 3 / 62) / n())
-```
-
-This is the fraction of simulations where complications was equal or below `r 3/62`. 
-
-
-## Significance level 
-
-- A **significance level** $\alpha$ is a threshold we make up to make our judgment about the plausibility of the null hypothesis being true given the observed data. 
-
-- We often use $\alpha = 0.05 = 5\%$ as the cutoff for whether the p-value is low enough that the data are unlikely to have come from the null model. 
-
-- If p-value < $\alpha$, reject $H_0$ in favor of $H_A$: The data provide convincing evidence for the alternative hypothesis.
-
-- If p-value > $\alpha$, fail to reject $H_0$ in favor of $H_A$: The data do not provide convincing evidence for the alternative hypothesis.
-
-**What is the conclusion of the hypothesis test?**
-
-Since the p-value is greater than the significance level, we fail to reject the null hypothesis. 
-These data do not provide convincing evidence that this consultant incurs a lower complication rate than the 10% overall US complication rate.
-
-## 100 simulations is not sufficient
-
-- We simulate 15,000 times to get an accurate distribution.
-
-```{r}
-#| echo: true
-null_dist <- organ_donor |>
-  specify(response = outcome, success = "complication") |>
-  hypothesize(
-    null = "point",
-    p = c("complication" = 0.10, "no complication" = 0.90)
-  ) |>
-  generate(reps = 15000, type = "simulate") |>
-  calculate(stat = "prop")
-ggplot(data = null_dist, mapping = aes(x = stat)) +
-  geom_histogram(binwidth = 0.01) +
-  geom_vline(xintercept = 3 / 62, color = "red")
-```
-
-
-## Our more robust p-value 
-
-For the null distribution with 15,000 simulations
-
-```{r}
-#| echo: true
-null_dist |>
-  filter(stat <= 3 / 62) |>
-  summarise(p_value = n() / nrow(null_dist))
-```
-
-Oh OK, our first p-value was much more borderline in favor of the alternative hypothesis.
-
-## p-value in model outputs
-
-Model output for a linear model with palmer penguins.
-
-```{r}
-#| echo: true
-linear_reg() |>
-  set_engine("lm") |>
-  fit(bill_length_mm ~ bill_depth_mm, data = penguins) |>
-  tidy()
-```
-
-Model output for a logistic regression model with email from [openintro](https://www.openintro.org/data/index.php?data=email)
-
-```{r}
-#| echo: true
-logistic_reg() |>
-  set_engine("glm") |>
-  fit(spam ~ from + cc, data = email, family = "binomial") |>
-  tidy()
-```
-
-What do the p-values mean? What is the null hypothesis?
-
-. . .
-
-**Null-Hypothesis:** There is no relationship between the predictor variable and the response variable, that means that the coefficient is equal to zero. 
-
-**Smaller p-value** $\to$ more evidence for rejecting the hypothesis that there is no effect. 
-
-## xkcd on p-values
-
-:::: {.columns}
-
-::: {.column width='60%'}
-[![](https://imgs.xkcd.com/comics/p_values_2x.png){height="500px"}](https://xkcd.com/1478/)
-[![](https://imgs.xkcd.com/comics/significant.png){height="500px"}](https://xkcd.com/882/)
-:::
-
-::: {.column width='40%'}
-:::{.fragment}
-- Significance levels are fairly arbitrary. Sometimes they are used (wrongly) as definitive judgments
-- They can even be used to do *p-hacking*: Searching for "significant" effects in observational data
-- In parts of science it has become a "gamed" performance metric.
-- The p-value says nothing about effect size!
-:::
-:::
-
-::::
-
-## p-value misinterpretation
-
-p-values do not measure^[From the American Statistical Association (ASA) 2016]
-
-- the probability that the studied hypothesis is true
-- the probability that the data were produced by random chance alone
-- the size of an effect
-- the "importance of a result" or "evidence regarding a model or hypothesis" (it is only against the null hypothesis).
-
-. . .
-
-Correct:   
-The p-value is the probability of obtaining test results at least as extreme as the result actually observed, under the assumption that the null hypothesis is correct.
-
-p-values and significance tests, when properly applied and interpreted, increase the rigor of the conclusions drawn from data.^[From the American Statistical Association (ASA) 2019]
-
-
-
-
-
-# Bootstrapping
+# Bootstrapping to Quantify Uncertainty
 
 ## Purpose: Quantify uncertainty
 
@@ -1050,7 +857,7 @@ galton |> slice_sample(n = 787, replace = TRUE)
 
 ::: {.column width='30%'}
 ::: {.fragment}
-Do some mean bootstrapping manually:
+Compute some `mean`s of bootstrapping samples manually:
 
 ```{r}
 #| echo: true
@@ -1078,10 +885,10 @@ The function `bootstraps` from `rsample` does this type of bootstrapping for us.
 ```{r}
 #| echo: true
 boots_galton <- galton |> bootstraps(times = 1000)
-boots_galton
+boots_galton |> head(5)
 ```
 
-The column `splits` contains a list of split objects. 
+The column `splits` contains split objects. 
 
 ```{r}
 #| echo: true
@@ -1098,7 +905,7 @@ From each split we can extract the bootstrapped resample with `analysis`.
 boots_galton$splits[[1]] |> analysis()
 ```
 
-(The `assessment` set contains the observations that were not selected randomly in the resample. We do not use it in the following.)
+Note: An `assessment` set contains the observations not selected randomly in the resample. We ignore it here.
 :::
 :::
 
@@ -1118,7 +925,7 @@ boots_galton_mean <- boots_galton |>
   mutate(
    mean = map_dbl(splits, 
                   \(x) analysis(x)$Estimate |> mean()))
-boots_galton_mean
+boots_galton_mean |> head(5)
 ```
 :::
 
@@ -1232,9 +1039,9 @@ What is the correct interpretation?
 . . . 
 
 Correct: 2.  
-1. The confidence is about a parameter (here the population mean) not about sample values!  
+1. The confidence is about a statistic (here, population mean) not about sample values!  
 3. We know the mean of the sample precisely!   
-The confidence interval assesses where 95% of the values are when do new samples.   
+The confidence interval assesses where 95% of the values are when we sample anew.   
 
 ## CI: Precision vs. Confidence
 
@@ -1334,7 +1141,7 @@ g1 + g2 + g3
 
 
 
-# Wisdom of the crowd, Bias and Diversity
+# Bias, Variance, MSE, and Crowd Wisdom
 
 ## Galton's data
 
@@ -1487,9 +1294,5 @@ Assume the dots are estimates. **Which is a wise crowd?**
 - Focusing on the **crowd** being wise instead of its **individuals**: High trueness, low precision. 
 
 
-
-# Bias-variance trade-off in a script
-
-`penguins_bias_variance.R`
 
 

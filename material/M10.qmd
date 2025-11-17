@@ -3,7 +3,7 @@ week: "10"
 title: "W#10"
 ---
 
-## Overfitting, Clustering Algorithms, Bias and Variance in Crowd Wisdom {.unnumbered}
+## Overfitting, Clustering Algorithms {.unnumbered}
 
 Reconsider the Lecture Material, consider the Additional Readings and Material, and check the Achievements for yourself. Work on the Homework Projects reach out for help if you get stuck.
 
