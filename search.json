@@ -144,7 +144,7 @@
     "href": "lectures/W12.html#square-and-diagonal-matrices",
     "title": "W#12: Hypothesis Testing, Matrices, Probability",
     "section": "Square and Diagonal Matrices",
-    "text": "Square and Diagonal Matrices\n\n\n\nA square matrix has the same number of rows and columns, \\(n\\)-by-\\(n\\)\nA diagonal matrix is a matrix where all elements outside the main diagonal are zero.\n\\(\\left[\\begin{array}{ccc}\na_{11} &  & 0 \\\\\n& & \\ddots &  \\\\\n0 &  & a_{nn} \\\\\n\\end{array}\\right]\\)\nThe identity matrix\n\\(\\left[\\begin{array}{ccc}\n1 & 0 & 0 & 0 \\\\\n0 & 1 & 0 & 0 \\\\\n0 & 0 & 1 & 0 \\\\\n0 & 0 & 0 & 1\n\\end{array}\\right]\\)\n\n\ndiag works two ways\n\ndiag(c(1, 2, 3))\n\n     [,1] [,2] [,3]\n[1,]    1    0    0\n[2,]    0    2    0\n[3,]    0    0    3\n\n\n\nD &lt;- matrix(1:9, nrow = 3)\nD\n\n     [,1] [,2] [,3]\n[1,]    1    4    7\n[2,]    2    5    8\n[3,]    3    6    9\n\ndiag(D)\n\n[1] 1 5 9"
+    "text": "Square and Diagonal Matrices\n\n\n\nA square matrix has the same number of rows and columns, \\(n\\)-by-\\(n\\)\nA diagonal matrix is a matrix where all elements outside the main diagonal are zero.\n\\(\\left[\\begin{array}{ccc}\na_{11} &  & 0 \\\\\n& \\ddots &  \\\\\n0 &  & a_{nn} \\\\\n\\end{array}\\right]\\)\nThe identity matrix\n\\(\\left[\\begin{array}{ccc}\n1 & 0 & 0 & 0 \\\\\n0 & 1 & 0 & 0 \\\\\n0 & 0 & 1 & 0 \\\\\n0 & 0 & 0 & 1\n\\end{array}\\right]\\)\n\n\ndiag works two ways\n\ndiag(c(1, 2, 3))\n\n     [,1] [,2] [,3]\n[1,]    1    0    0\n[2,]    0    2    0\n[3,]    0    0    3\n\n\n\nD &lt;- matrix(1:9, nrow = 3)\nD\n\n     [,1] [,2] [,3]\n[1,]    1    4    7\n[2,]    2    5    8\n[3,]    3    6    9\n\ndiag(D)\n\n[1] 1 5 9"
   },
   {
     "objectID": "lectures/W12.html#transposition-of-matrices",
@@ -207,7 +207,7 @@
     "href": "lectures/W12.html#summary-matrices-in-data-science",
     "title": "W#12: Hypothesis Testing, Matrices, Probability",
     "section": "Summary Matrices in Data Science",
-    "text": "Summary Matrices in Data Science\n\nKnowledge in linear algebra can be gained by practice with our computational tools.\nStudying linear algebra helps to understand the mathematical background of data science methods.\n\n\nThree fundamental matrix operations in data science:\n\nSolving Linear Systems of the type \\(Ax = b\\) is a fundamental matrix operation, e.g. for fitting linear models.\nSolving the Eigenvalue Problem \\(A\\lambda = \\lambda x\\) is another fundamental one that appears in PCA. PCA is the eigen-decomposition of the correlation matrix.\nFinally, every matrix can be decomposed via the Singular Value Decomposition (SVD) \\(A = U\\Sigma V^T\\) where \\(U\\) and \\(V\\) are orthogonal matrices and \\(\\Sigma\\) is a diagonal matrix with singular values on the diagonal. SVD is used in recommender systems or for dimensionality reduction."
+    "text": "Summary Matrices in Data Science\n\nKnowledge in linear algebra can be gained by practice with our computational tools.\nStudying linear algebra helps to understand the mathematical background of data science methods.\n\n\nThree fundamental matrix operations in data science:\n\nSolving Linear Systems of the type \\(Ax = b\\) is a fundamental matrix operation, e.g. for fitting linear models.\nSolving the Eigenvalue Problem \\(Ax = \\lambda x\\) (\\(\\lambda\\) is one number) is another fundamental one that appears in PCA. PCA is the eigen-decomposition of the correlation matrix.\nFinally, every matrix can be decomposed via the Singular Value Decomposition (SVD) \\(A = U\\Sigma V^T\\) where \\(U\\) and \\(V\\) are orthogonal matrices and \\(\\Sigma\\) is a diagonal matrix with singular values on the diagonal. SVD is used in recommender systems or for dimensionality reduction."
   },
   {
     "objectID": "lectures/W12.html#probability-topics-for-data-science",
@@ -256,7 +256,7 @@
     "href": "lectures/W12.html#basic-probability-rules",
     "title": "W#12: Hypothesis Testing, Matrices, Probability",
     "section": "Basic probability rules",
-    "text": "Basic probability rules\n\n\n\nThe probability of an event is the sum the probabilities of its atomic events.\n\n\\(\\text{Pr}(\\emptyset) = 0\\) ::: {.fragment}\nFor any events \\(A,B \\subset S\\) it holds\n\n\\(\\text{Pr}(A \\cup B) = \\text{Pr}(A) + \\text{Pr}(B) - \\text{Pr}(A \\cap B)\\)\n\\(\\text{Pr}(A \\cap B) = \\text{Pr}(A) + \\text{Pr}(B) - \\text{Pr}(A \\cup B)\\)\n\\(\\text{Pr}(A^c) = 1 - \\text{Pr}(A)\\)\n\n\n\n\n \n\n:::"
+    "text": "Basic probability rules\n\n\n\nThe probability of an event is the sum the probabilities of its atomic events.\n\n\\(\\text{Pr}(\\emptyset) = 0\\)\n\n\n\nFor any events \\(A,B \\subset S\\) it holds\n\n\\(\\text{Pr}(A \\cup B) = \\text{Pr}(A) + \\text{Pr}(B) - \\text{Pr}(A \\cap B)\\)\n\\(\\text{Pr}(A \\cap B) = \\text{Pr}(A) + \\text{Pr}(B) - \\text{Pr}(A \\cup B)\\)\n\\(\\text{Pr}(A^c) = 1 - \\text{Pr}(A)\\)"
   },
   {
     "objectID": "lectures/W12.html#conditional-probability",

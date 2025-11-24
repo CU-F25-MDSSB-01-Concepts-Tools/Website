@@ -2573,7 +2573,7 @@ Convention: Capital letters for matrices (<span class="math inline">\(A\)</span>
 <li>A <strong>diagonal matrix</strong> is a matrix where all elements outside the main diagonal are zero.<br>
 <span class="math inline">\(\left[\begin{array}{ccc}
 a_{11} &amp;  &amp; 0 \\
-&amp; &amp; \ddots &amp;  \\
+&amp; \ddots &amp;  \\
 0 &amp;  &amp; a_{nn} \\
 \end{array}\right]\)</span></li>
 <li>The <strong>identity matrix</strong><br>
@@ -3321,7 +3321,7 @@ bill_depth_mm   -1.62201792</code></pre>
 <p>Three fundamental matrix operations in data science:</p>
 <ul>
 <li class="fragment">Solving <strong>Linear Systems</strong> of the type <span class="math inline">\(Ax = b\)</span> is a fundamental matrix operation, e.g.&nbsp;for fitting linear models.</li>
-<li class="fragment">Solving the <strong>Eigenvalue Problem</strong> <span class="math inline">\(A\lambda = \lambda x\)</span> is another fundamental one that appears in PCA. PCA is the eigen-decomposition of the correlation matrix.</li>
+<li class="fragment">Solving the <strong>Eigenvalue Problem</strong> <span class="math inline">\(Ax = \lambda x\)</span> (<span class="math inline">\(\lambda\)</span> is one number) is another fundamental one that appears in PCA. PCA is the eigen-decomposition of the correlation matrix.</li>
 <li class="fragment">Finally, every matrix can be decomposed via the <strong>Singular Value Decomposition</strong> (SVD) <span class="math inline">\(A = U\Sigma V^T\)</span> where <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are orthogonal matrices and <span class="math inline">\(\Sigma\)</span> is a diagonal matrix with singular values on the diagonal. SVD is used in recommender systems or for dimensionality reduction.</li>
 </ul>
 </div>
@@ -3437,7 +3437,10 @@ is a <span class="red"><strong>probability function</strong></span> when</p>
 <ul>
 <li>The probability of an event is the sum the probabilities of its atomic events.<br>
 </li>
-<li><span class="math inline">\(\text{Pr}(\emptyset) = 0\)</span> ::: {.fragment}</li>
+<li><span class="math inline">\(\text{Pr}(\emptyset) = 0\)</span></li>
+</ul>
+<div class="fragment">
+<ul>
 <li>For any events <span class="math inline">\(A,B \subset S\)</span> it holds
 <ul>
 <li><span class="math inline">\(\text{Pr}(A \cup B) = \text{Pr}(A) + \text{Pr}(B) - \text{Pr}(A \cap B)\)</span></li>
@@ -3445,11 +3448,11 @@ is a <span class="red"><strong>probability function</strong></span> when</p>
 <li><span class="math inline">\(\text{Pr}(A^c) = 1 - \text{Pr}(A)\)</span></li>
 </ul></li>
 </ul>
-</div></div>
-<div class="column fragment" style="width:20%;">
+</div>
+</div><div class="column fragment" style="width:20%;">
 <p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Venn0111.svg/1280px-Venn0111.svg.png" height="100"> <img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Venn0001.svg/1280px-Venn0001.svg.png" height="100"></p>
 <p><img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Venn1010.svg/1280px-Venn1010.svg.png" height="100"></p>
-</div><p>:::</p>
+</div></div>
 </section>
 <section id="conditional-probability" class="slide level2" data-background-color="aquamarine">
 <h2>Conditional probability</h2>
