@@ -144,7 +144,7 @@
     "href": "lectures/W12.html#square-and-diagonal-matrices",
     "title": "W#12: Hypothesis Testing, Matrices, Probability",
     "section": "Square and Diagonal Matrices",
-    "text": "Square and Diagonal Matrices\n\n\n\nA square matrix has the same number of rows and columns, \\(n\\)-by-\\(n\\)\nA diagonal matrix is a matrix where all elements outside the main diagonal are zero.\n\\(\\left[\\begin{array}{ccc}\na_{11} &  & 0 \\\\\n& \\ddots &  \\\\\n0 &  & a_{nn} \\\\\n\\end{array}\\right]\\)\nThe identity matrix\n\\(\\left[\\begin{array}{ccc}\n1 & 0 & 0 & 0 \\\\\n0 & 1 & 0 & 0 \\\\\n0 & 0 & 1 & 0 \\\\\n0 & 0 & 0 & 1\n\\end{array}\\right]\\)\n\n\ndiag works two ways\n\ndiag(c(1, 2, 3))\n\n     [,1] [,2] [,3]\n[1,]    1    0    0\n[2,]    0    2    0\n[3,]    0    0    3\n\n\n\nD &lt;- matrix(1:9, nrow = 3)\nD\n\n     [,1] [,2] [,3]\n[1,]    1    4    7\n[2,]    2    5    8\n[3,]    3    6    9\n\ndiag(D)\n\n[1] 1 5 9"
+    "text": "Square and Diagonal Matrices\n\n\n\nA square matrix has the same number of rows and columns, \\(n\\)-by-\\(n\\)\nA diagonal matrix is a matrix where all elements outside the main diagonal are zero.\n\\(\\left[\\begin{array}{ccc}\na_{11} &  & 0 \\\\\n& \\ddots &  \\\\\n0 &  & a_{nn} \\\\\n\\end{array}\\right]\\)\nThe identity matrix\n\\(\\left[\\begin{array}{ccc}\n1 & 0 & 0 & 0 \\\\\n0 & 1 & 0 & 0 \\\\\n0 & 0 & 1 & 0 \\\\\n0 & 0 & 0 & 1\n\\end{array}\\right]\\)\n\n\ndiag works two ways\n\ndiag(c(1, 2, 3))\n\n     [,1] [,2] [,3]\n[1,]    1    0    0\n[2,]    0    2    0\n[3,]    0    0    3\n\n\n\nD &lt;- matrix(1:9, nrow = 3)\nD\n\n     [,1] [,2] [,3]\n[1,]    1    4    7\n[2,]    2    5    8\n[3,]    3    6    9\n\ndiag(D)\n\n[1] 1 5 9\n\n\n\nD &lt;- matrix(1:9, nrow = 3)\nD\n\n     [,1] [,2] [,3]\n[1,]    1    4    7\n[2,]    2    5    8\n[3,]    3    6    9\n\ndiag(D)\n\n[1] 1 5 9"
   },
   {
     "objectID": "lectures/W12.html#transposition-of-matrices",
@@ -228,14 +228,14 @@
     "href": "lectures/W12.html#example-events",
     "title": "W#12: Hypothesis Testing, Matrices, Probability",
     "section": "Example events",
-    "text": "Example events\nFor Coin toss \\(S = \\{H,T\\}\\), the 4 events are the two atomic events, the whole sample space and the empty set \\(\\{\\} = \\emptyset \\subset \\{H,T\\}\\). Interpretation:\n\n\\(\\{H,T\\}\\) = “The coin comes up HEAD or TAIL.” (The sure event \\(\\to\\) Will have prob. 1)\nEvent \\(\\{\\}\\) = “The coin comes up neither HEADS nor TAILS.” (The impossible event \\(\\to\\) Will have prob. 0)\n\n\nFor Two successive coin tosses: \\(S = \\{HH, HT, TH, TT\\}\\):\n\nEvent \\(\\{HH, TH\\}\\) = “The first toss comes up HEAD or TAIL and the second is HEADS.”\n\nEvent \\(\\{HT, TH, HH\\}\\) = “We have HEAD once or twice and it does not matter what coins.”\nThe event \\(\\{TT, HH\\}\\) = “Both coins show the same side.”"
+    "text": "Example events\nCoin Toss \\(S = \\{H,T\\}\\): The 4 events are the two atomic events, the whole sample space and the empty set \\(\\{\\} = \\emptyset \\subset \\{H,T\\}\\). Interpretation:\n\n\\(\\{H,T\\}\\) = “The coin comes up HEAD or TAIL.” (Sure event \\(\\to\\) Will have prob. 1)\nEvent \\(\\{\\}\\) = “The coin comes up neither HEADS nor TAILS.” (Impossible event \\(\\to\\) Will have prob. 0)\n\n\nTwo Successive Coin Tosses \\(S = \\{HH, HT, TH, TT\\}\\):\n\nEvent \\(\\{HH, TH\\}\\) = “The first toss comes up HEAD or TAIL and the second is HEADS.”\n\nEvent \\(\\{HT, TH, HH\\}\\) = “We have HEAD once or twice no matter which coin(s).”\nThe event \\(\\{TT, HH\\}\\) = “Both coins show the same side.”"
   },
   {
     "objectID": "lectures/W12.html#example-events-1",
     "href": "lectures/W12.html#example-events-1",
     "title": "W#12: Hypothesis Testing, Matrices, Probability",
     "section": "Example Events",
-    "text": "Example Events\nFor selection person from a group:\nEvent \\(\\{2,5,6\\}\\) = The selected person is either 2, 5, or 6.\n(Not all three people which is a different random variable!)\n\nFor COVID-19 Rapid Test + PCR Test for confirmation:\n\nEvent \\(\\{TP, FP\\}\\) = The test is positive.\nEvent \\(\\{TN, FP\\}\\) = The person does not have COVID-19.\nEvent \\(\\{TP, TN\\}\\) = The rapid test delivers the correct result."
+    "text": "Example Events\nSelection Person from a Group:\nEvent \\(\\{2,5,6\\}\\) = “The selected person is either 2, 5, or 6.” (Not all three people which is a different random variable!)\n\nCOVID-19 Rapid Test + PCR Test for confirmation:\n\nEvent \\(\\{TP, FP\\}\\) = “The test is positive.”\nEvent \\(\\{TN, FP\\}\\) = “The person does not have COVID-19.”\nEvent \\(\\{TP, TN\\}\\) = “The rapid test delivers the correct result.”"
   },
   {
     "objectID": "lectures/W12.html#the-probability-function",
@@ -284,7 +284,7 @@
     "href": "lectures/W12.html#probabilities-in-confusion-matrix",
     "title": "W#12: Hypothesis Testing, Matrices, Probability",
     "section": "4 probabilities in confusion matrix",
-    "text": "4 probabilities in confusion matrix\n\n\n\n\nSensitivity and Specificity\n\\(\\to \\atop \\ \\) Sensitivity is the true positive rate: TP / (TP + FN)\n\\(\\ \\atop \\to\\) Specificity is the true negative rate: TN / (TN + FP)\nPositive/negative predictive value\n\\(\\scriptsize\\downarrow \\ \\) Positive predictive value: TP / (TP + FP)\n\\(\\scriptsize\\ \\downarrow\\) Negative predictive value: TN / (TN + FN)\n\n\nSensitivity: Probability for positive test given the person has condition \\(\\text{Pr}(PP|P)\\)\nSpecificity: Probability for negative test given the person does not have condition \\(\\text{Pr}(PN|N)\\)\n\n\nPositive predictive value: Probability of having it given the test is positive \\(\\text{Pr}(P|PP)\\)\nNegative predictive value Probability of not having it given the test is negative: \\(\\text{Pr}(N|PN)\\)"
+    "text": "4 probabilities in confusion matrix\n\n\n\n\nSensitivity and Specificity\n\\(\\to \\atop \\ \\) Sensitivity is the true positive rate: TP / (TP + FN)\n\\(\\ \\atop \\to\\) Specificity is the true negative rate: TN / (TN + FP)\nPositive/negative predictive value\n\\(\\scriptsize\\downarrow \\ \\) Positive predictive value: TP / (TP + FP)\n\\(\\scriptsize\\ \\downarrow\\) Negative predictive value: TN / (TN + FN)\n\n\nSensitivity: \\(\\text{Pr}(PP|P)\\) positive test given the person has condition\nSpecificity: \\(\\text{Pr}(PN|N)\\) negative test given the person does not have condition\n\n\nPositive predictive value: \\(\\text{Pr}(P|PP)\\) having the condition given the test is positive\nNegative predictive value: \\(\\text{Pr}(N|PN)\\) not having the condition given the test is negative"
   },
   {
     "objectID": "lectures/W12.html#prevalence",
@@ -2261,7 +2261,7 @@
     "href": "material/M11.html#lecture-material",
     "title": "W#11",
     "section": "1 Lecture Material",
-    "text": "1 Lecture Material\nSlides: Direct Link",
+    "text": "1 Lecture Material\nSlides: Direct Link\n\nFind the live recording in the Course’s Team’s Recording Folder.",
     "crumbs": [
       "Syllabus",
       "Schedule",
