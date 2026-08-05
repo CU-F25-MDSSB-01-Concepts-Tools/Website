@@ -624,7 +624,10 @@ extract_fit_engine(peng_regforest_fit) |>
   vip() + theme_minimal(base_size = 18) 
 ```
 
-All details about what variable importance actually is are skipped here. 
+- The computation of variable importance is typically consider a step of [**post-processing**]{.green} of complex models like random forests because it is computed after the model is fitted.
+- In contrast, **pre-processing** happens before fitting the model.
+
+All details about exact definition and different methods to compute variable importance are skipped here. 
 
 ## Classification with random forrest
 
@@ -732,6 +735,7 @@ extract_fit_engine(email_forest_fit) |>
 
 
 
+
 ## More prediction summary
 
 ::: {.incremental}
@@ -741,7 +745,7 @@ extract_fit_engine(email_forest_fit) |>
     - It is all about quantifying when *overfitting* kicks in and *out-of-sample performance* degrades.
 - **Random forests** take the idea of decision trees further by creating many trees and aggregating their predictions. They are not deterministic but *stochastic* even with the same training data.
 - Why are random forrests better than individual trees?
-- By limiting choices at each split to a random subset of features, we prevent any single strong predictor from dominating all trees, creating a diverse "forest" of models that collectively perform better than any individual tree.
+  - By limiting choices at each split to a random subset of features, we prevent any single strong predictor from dominating all trees, creating a diverse "forest" of models that collectively perform better than any individual tree.
 :::
 
 
@@ -751,8 +755,8 @@ extract_fit_engine(email_forest_fit) |>
 
 ## Purpose: Quantify uncertainty
 
-- **Uncertainty** is a central concern in **inferential data analysis**. 
-- We want to **estimate** a **parameter** of a **population** from a **sample**.
+- **Uncertainty** is a central concern in [**inferential data analysis**]{.red}. 
+- We want to **estimate** a **parameter** of a [**population**]{.red} from a [**sample**]{.red}.
 
 . . .
 
@@ -1271,7 +1275,6 @@ For example outcomes of estimation games, or linear regression models?
 - $\text{MSE} = \text{Bias-squared} + \text{Variance}$ shows us that we can make a  
 **bias-variance decomposition**
 - That means some part of the error is a systematic (the bias) and another part due to random variation (the variance).
-- The bias-variance tradeoff is also an important concept in statistical learning! 
 
 
 ## 2-d Accuracy: Trueness and Precision
@@ -1293,6 +1296,15 @@ Assume the dots are estimates. **Which is a wise crowd?**
 - Of course, high trueness and high precision! But, ...
 - Focusing on the **crowd** being wise instead of its **individuals**: High trueness, low precision. 
 
+## Summary Crowd Wisdom
 
-
+- The **wisdom of the crowd** relies on aggregating diverse estimates.
+- More generally as these simple guessing games, **crowd wisdom** is this idea:   
+  *Many problems can be solved better by aggregating the answers of many individuals than by relying on a single expert.*
+- The **random forest** method of statistical learning is built on this idea:    
+  *Instead of relying on on heavyily fine tuned decision tree, we create a forrest of many partly randomly generated trees and aggregate their predictions.*
+  - It turns out that such forest typically produce predictions that *generalize* better to new data. 
+- The **bias-variance decomposition** helps to understand different sources of errors. It is used to understand error in predicion models (not shown here). 
+  - In an underfitted model, the error stems mostly from variance
+  - In an overfitted model, the error stems mostly from bias (with respect to the training data
 

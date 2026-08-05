@@ -18,9 +18,8 @@ These projects will appear here once they are deployed:
 
 1. Project_NYCFlights
 2. Project_COVID19
-3. Project_DataScienceProfiles (to come)
-4. Project_FuelWatch (to come)
-5. Project_Stock (to come)
+3. Project_DataScienceProfiles
+4. Project_FuelWatch
 
 Please read the next sections. 
 

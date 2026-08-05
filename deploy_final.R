@@ -32,6 +32,23 @@ teams <- team |>
 team_email <- team |> left_join(teams, by = "Team")
 repo_set_template("janlorenz/FinalProject_Template")
 
+# # For late student:
+# team <- tibble(
+#   Name = "Tamjeed Ur Rahman Syed",
+#   Email = "tsyed@constructor.university",
+#   Topic = "COVID19_9",
+#   GitHub = "Tsyed0604"
+# )
+# teams <- team |>
+#   summarize(
+#     Names = paste(Name, collapse = ", "),
+#     Emails = paste(Email, collapse = ", "),
+#     RepoName = RepoName[1],
+#     InitalQuestion = `Initial Questions`[1],
+#     Feedback = `Question Feedback`[1],
+#     .by = Team
+#   )
+
 # THIS creates errors probably because github needs some time to process previous commands
 # org_create_assignment(
 #   org = orgname,

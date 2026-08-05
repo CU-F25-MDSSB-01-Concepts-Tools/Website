@@ -312,7 +312,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = manufacturer)) +
 `x |> f(a,b)` is the same as `f(x,a,b)`
 
 **The outcome of a command is put into the first argument of the next function call.**
-Practice it. See that it is exactly identical! (Example: try `c()` as `f` and just number like `1` or `2` as `a` and `b`; or `paste()` with `"a"` as `"b"`.)
+Practice it. See that it is exactly identical! (Example: try `c()` as `f` and just numbera like `1` or `2` as `a` and `b`; or `paste()` with `"a"` as `"b"`.)
 
 
 ```{webr-r}

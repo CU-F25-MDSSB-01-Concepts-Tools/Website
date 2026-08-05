@@ -19,6 +19,7 @@ project:
     - material/M09.qmd
     - material/M10.qmd
     - material/M11.qmd
+    - material/M12.qmd
     - lectures/W02.qmd
     - lectures/W03.qmd
     - lectures/W04.qmd
@@ -29,6 +30,7 @@ project:
     - lectures/W09.qmd
     - lectures/W10.qmd
     - lectures/W11.qmd
+    - lectures/W12.qmd
     
 execute:
   freeze: auto  # re-render only when source changes
@@ -74,6 +76,7 @@ website:
           - material/M09.qmd
           - material/M10.qmd
           - material/M11.qmd
+          - material/M12.qmd
       - setup.qmd
       - literature.qmd
       # - text: "Onboarding Late-arriving"

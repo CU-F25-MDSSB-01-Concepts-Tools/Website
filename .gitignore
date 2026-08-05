@@ -57,3 +57,6 @@ air.toml
 
 # No xlsx files (typically student data)
 *.xlsx
+
+# No additional files of html rendering
+*_files/

@@ -13,9 +13,6 @@ format:
     preview-links: true
     logo: img/ConstructorUniversity.png
     footer: "MDSSB-DSCO-02: Data Science Concepts"
-bibliography: "/home/janlo/Documents/literature/litlorenz_zot.bib"
-editor_options: 
-  chunk_output_type: console
 ---
 
 ## Preliminaries

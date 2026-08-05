@@ -146,5 +146,12 @@ Additionally, the HTML file can be made accessible directly as a webpage with a 
 
 4. **What about the word count?**
 
-
     Please do not count words. Also the instructors will not count words. Anyway at least half of the work lies in code and visuals. A minimal word count needs to be in the requirements as a guideline. It will not be used as a strict criterion. Quality over quantity. Massive text which is mostly meangingless or unrelated to the data analysis is worse than no text at all.
+
+5. **I did my project and it looks fine but the feedback says I submitted nothing or incomplete material. How can I test that my submission on GitHub is as it should be?**
+   
+   Sometimes, students forget to `git add` and (most importantly) `git push` all necessary files. This can imply that the student did everything fine b ut when instructors clone the repository it is incomplete or not even touched. How can you check? To test if the HTML file looks good for the instructors do the following:
+   
+   Go to the repository on GitHub [{{< var org.name >}}]({{< var org.link >}}). Clone your repository anew to a temporary directory on your computer, open the HTML file from this newly cloned directory. Check if it looks good. This is what instructors will do. Then you can delete the temporary directory again. 
+   
+   LEARNING: What is on your computer is not always the same to what is in GitHub. This is not unusual in git workflows. Always check what is in GitHub if you are unsure! For checking the HTML file the easiest way is to make the temporary clone as described above.
